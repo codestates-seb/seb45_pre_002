@@ -1,3 +1,29 @@
+# Stackoverflow Clone Project
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/97720335/234835985-4f9ad932-0653-4ebd-a937-b552dc54bdf9.png" width="70%" />
+</div>
+
+<br>
+
+- `팀 명` : 200🆗
+- `프로젝트명` : Stackoverflow Clone Project
+- `프로젝트 기간` : 2023.08.04 - 2023.08.23
+- `배포 링크` : [StackOverFlow](미정)
+
+개발자들의 최대 커뮤니티, 스택 오버 플로우의 클론 페이지를 만들어보았습니다 
+
+<br>
+
+## 🐼 Team Member
+|이재우<br>✨(BE 팀장)</br>|임다영<br>(BE)</br>|장근호<br>(BE)</br>|김민수<br>✨(FE 팀장)</br>|김종회<br>(FE)</br>|백아름<br>(FE)</br>|
+|:---:|:---:|:---:|:---:|:---:|:---:|
+|[@leesaewoo](https://github.com/leesaewoo)|[@Dayong-Im](https://github.com/Dayong-Im)|[@SEBBE45JGH](https://github.com/SEBBE45JGH)|[@minpppal](https://github.com/minpppal)|[@Dr-eong](https://github.com/Dr-eong)|[@bkhrm](https://github.com/bkhrm)|
+|<div style="display: flex; align-items: flex-start;"><img src="https://avatars.githubusercontent.com/u/39489835?s=400&v=4" alt="icon" width="80" height="80" /></div>|<div style="display: flex; align-items: flex-start;"><img src="https://avatars.githubusercontent.com/u/83412506?v=4" alt="icon" width="80" height="80" /></div>|<div style="display: flex; align-items: flex-start;"><img src="https://avatars.githubusercontent.com/u/130126943?v=4" alt="icon" width="80" height="80" /></div>|<div style="display: flex; align-items: flex-start;"><img src="https://avatars.githubusercontent.com/u/123739304?v=4" alt="icon" width="80" height="80" /></div>|<div style="display: flex; align-items: flex-start;"><img src="https://avatars.githubusercontent.com/u/96914194?v=4" alt="icon" width="80" height="80" /></div>|<div style="display: flex; align-items: flex-start;"><img src="https://avatars.githubusercontent.com/u/126218999?v=4" alt="icon" width="80" height="80" /></div>|
+|- User<br>- Security<br>- JWT<br>- AWS deployment|- Answer<br>- Answer Comment<br>- Answer Vote<br>- CRUD<br>- AWS deployment|- Question<br>- Question Comment<br>- Question Vote<br>- CRUD<br>| - Main page(infinite scroll) <br> - My page/edit/delete <br> - Question Read, User Update features <br> - loading component | - Detail page <br> -Common component <br>-sidebar /buttons <br>-Questio Edit page <br>-Answer Edit Page|- Login / Signup page <br> - user CR<br>- JWT <br>- Footer component |- Ask question page <br> - Question Create feature <br> - Header component <br> - Nav component |
+
+<br>
+
+
 ## 🌱 Git
 ### branch
 > `Pull Request` 와 `Code Review` 가 이루어진 후, 병합을 진행해야 한다.
