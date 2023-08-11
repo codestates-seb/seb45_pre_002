@@ -1,0 +1,9 @@
+.sidebar-right {
+    width: 250px;
+    height: 100%;
+    background-color: white; /* 다른 색상으로 구분 */
+        position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
