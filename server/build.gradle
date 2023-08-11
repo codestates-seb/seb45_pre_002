@@ -23,9 +23,16 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//JUnit5에서 제공되는 메서드는 AssertJ에 비해 가독성이 떨어지는 부분이 있어 둘을 적절이 사용하는게 좋다.
+	testImplementation group: 'io.quarkus', name: 'quarkus-junit5', version: '3.2.2.Final'
+	testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.23.1'
 }
 
 tasks.named('test') {
