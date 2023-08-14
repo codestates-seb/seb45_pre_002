@@ -29,4 +29,13 @@ public class MemberService {
     private void verifyExistMember(Member member) {
         //문제가 생기면 Exception 발생
     }
+
+    public Member updateMember(Member member) {
+        patchVerifiedMember(member);
+        return repository.save(member);
+    }
+
+    public Member patchVerifiedMember(Member member) {
+
+    }
 }

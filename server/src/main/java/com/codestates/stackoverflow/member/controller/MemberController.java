@@ -16,6 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.net.URI;
 
 @CrossOrigin(origins = "*")
@@ -50,5 +52,13 @@ public class MemberController {
         URI location = UriCreator.createUri(USER_DEFAULT_URL, member.getMember_id());
 
         return new ResponseEntity<>(location, HttpStatus.OK);
+    }
+    @PatchMapping("/{member_id}")
+    public ResponseEntity patchMember (@PathVariable("member_id") @Positive long memberId,
+                                       @Valid @RequestBody MemberDto.PatchDto requestbody) {
+        requestbody.setMemberId(memberId);
+
+        Member member = service.updateMember()
+
     }
 }
