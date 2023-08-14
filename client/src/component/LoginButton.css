@@ -1,0 +1,18 @@
+#loginBtn {
+	width: 60px;
+	height: 33px;
+	font-size: 13px;
+	border: none;
+	background-color: #e3ecf3;
+	color: #477399;
+	border-radius: 6px;
+}
+
+#loginBtn:hover {
+	background-color: #b9d2e8;
+	cursor: pointer;
+}
+#loginBtn a {
+	text-decoration: none;
+	color: #477399;
+}
