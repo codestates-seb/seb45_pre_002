@@ -3,8 +3,8 @@ import "./App.css";
 import Header from "./component/Header";
 import SignupForm from "./page/SignupForm";
 import Footer from "./component/Footer";
-import SidebarLeft from "./component/SidebarLeft";
-import SidebarRight from "./component/SidebarRight";
+// import SidebarLeft from "./component/SidebarLeft";
+// import SidebarRight from "./component/SidebarRight";
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import LoginForm from './page/LoginForm';
 
@@ -14,8 +14,8 @@ function App() {
     <div className="App">
       <Header />
       <div className="content">
-        <SidebarLeft />
-        <SidebarRight />
+        {/* <SidebarLeft />
+        <SidebarRight /> */}
           <Routes>
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignupForm />} />
@@ -28,3 +28,4 @@ function App() {
 }
 
 export default App;
+

@@ -1,14 +1,67 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Yeon+Sung&display=swap');
-
-* {
-    font-family: 'Noto Sans KR', sans-serif;
+h1 {
+    margin-bottom: 50px
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50rem
 }
 
-input {
-    height: 30px;
-    margin: 10px;
+.container input {
+    width: 240px;
+    box-sizing: content-box;
+    height: 33px;
+    border-radius: 6px;
+    margin: 0px;
+    margin-bottom: 18px;
+    border: 1px black solid;
+    padding-left: 5px;
+
 }
 
-button {
-    height: 30px;
+.container span {
+    font-weight: bold;
+    font-size: 15px;
+    margin: 0px;
+    margin-bottom: 7px;
+}
+
+.signup-button {
+    background-color: #3F96F7;
+    width: 240px;
+    height: 33px;
+    box-sizing: content-box;
+    border: none;
+    border-radius: 6px;
+    margin-top: 51px;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+.signup-button:hover {
+    background-color: #2d75c6;;
+}
+
+.username-container {
+    display: flex;
+    flex-direction: column;   
+}
+
+.email-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.password-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.password-text {
+    display: flex;
+    justify-content: space-between;
 }

@@ -34,14 +34,12 @@ function submitToServer(data) {
     },
     body: JSON.stringify(data),
   })
-
     .then((res) => {
       if (res.status === 200) {
-        console.log(res.json())
+        console.log(res.json());
         alert("회원가입 성공!");
 
-        window.location.href = '/question';
-
+        window.location.href = "/question";
       } else {
         alert("오류 발생: " + res.statusText);
       }
@@ -81,17 +79,22 @@ function SignupForm() {
   };
 
   return (
-    <div>
+    <div className="container">
+      <h1>회원가입</h1>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={formData.username}
-          onChange={handleChange}
-        />
-        {errors.username && <p>{errors.username}</p>}
-        <div>
+        <div className="username-container">
+          <span>Username</span>
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+          {errors.username && <p>{errors.username}</p>}
+        </div>
+        <div className="email-container">
+          <span>Email</span>
           <input
             type="email"
             name="email"
@@ -101,7 +104,8 @@ function SignupForm() {
           />
           {errors.email && <p>{errors.email}</p>}
         </div>
-        <div>
+        <div className="password-container">
+          <span className="password">Password</span>
           <input
             type="password"
             name="password"
@@ -110,9 +114,12 @@ function SignupForm() {
             onChange={handleChange}
           />
         </div>
-        {errors.password && <p>{errors.password}</p>}
-
-        <button type="submit">회원가입</button>
+        <div>
+          {errors.password && <p>{errors.password}</p>}
+          <button className="signup-button" type="submit">
+            회원가입
+          </button>
+        </div>
       </form>
     </div>
   );
