@@ -24,6 +24,12 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	//spring security dependencies 추가
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
@@ -33,6 +39,11 @@ dependencies {
 	//JUnit5에서 제공되는 메서드는 AssertJ에 비해 가독성이 떨어지는 부분이 있어 둘을 적절이 사용하는게 좋다.
 	testImplementation group: 'io.quarkus', name: 'quarkus-junit5', version: '3.2.2.Final'
 	testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.23.1'
+
+	//인증메일 관련
+	implementation 'javax.mail:javax.mail-api:1.6.2'
+	implementation 'com.sun.mail:javax.mail:1.6.2'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {
