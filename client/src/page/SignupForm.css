@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Yeon+Sung&display=swap');
+
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+input {
+    height: 30px;
+    margin: 10px;
+}
+
+button {
+    height: 30px;
+}
