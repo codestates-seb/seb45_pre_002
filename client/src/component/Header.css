@@ -1,31 +1,93 @@
-/* Header 스타일링 */
-.header {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 20px;
-  }
-  
-  /* 네비게이션 메뉴 스타일링 */
-  .nav-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .nav-list li {
-    margin: 0 15px;
-  }
-  
-  .nav-list a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .nav-list a:hover {
-    text-decoration: underline;
-  }
-  
+
+header {
+	width: 100vw;
+	height: 52px;
+	padding: 0 8px;
+	display: flex;
+	align-items: center;
+	background-color: white;
+	border-top: 3px solid rgb(244, 130, 37);
+	border-bottom: 1px solid rgb(214, 217, 220);
+	position: fixed;
+}
+
+.header-logo {
+	padding: 6px 12px;
+}
+
+.header-logo:hover {
+	background-color: #e3e4e6;
+}
+
+.header-logo img {
+	width: 150px;
+	height: 30px;
+}
+
+.header-nav,
+.header-search-form,
+.header-login-signup {
+	display: flex;
+	align-items: center;
+}
+
+.header-nav {
+	width: 233.56px;
+	justify-content: space-around;
+}
+
+.header-nav ul {
+	display: flex;
+	gap: 4px;
+}
+
+.header-nav ul li {
+	font-size: 13px;
+	color: rgb(82, 89, 96);
+	list-style: none;
+	padding: 6px 12px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.header-nav ul li:hover {
+	color: #000000;
+	background-color: #e3e4e6;
+	border-radius: 20px;
+	cursor: pointer;
+}
+
+.header-search-form {
+	display: flex;
+	align-items: center;
+	margin: 0 8px;
+	position: relative;
+}
+
+.header-search-form input {
+	width: 656.53px;
+	height: 32.59px;
+	outline: none;
+	border: 1px solid rgb(186, 191, 196);
+	padding: 7.8px 9.1px 7.8px 32px;
+	border-radius: 6px;
+}
+
+.fa-magnifying-glass {
+	font-size: 18px;
+	color: rgb(131, 140, 149);
+	position: absolute;
+	top: 8px;
+	left: 8px;
+}
+.search:focus {
+	border: 1px solid #3f96f7;
+	box-shadow: 0 0 6px #e0eaf6;
+}
+
+.search::placeholder {
+	color: rgb(59, 64, 69);
+	font-size: 13px;
+}
+
