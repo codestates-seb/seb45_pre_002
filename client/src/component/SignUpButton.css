@@ -1,0 +1,20 @@
+#signup {
+	width: 68px;
+	height: 33px;
+	font-size: 13px;
+	margin-left: 4px;
+	border: none;
+	background-color: #3f96f7;
+	color: white;
+	border-radius: 6px;
+	margin-right: 12px;
+}
+
+#signup:hover {
+	background-color: #2d75c6;
+	cursor: pointer;
+}
+#signup a {
+	text-decoration: none;
+	color: white;
+}
