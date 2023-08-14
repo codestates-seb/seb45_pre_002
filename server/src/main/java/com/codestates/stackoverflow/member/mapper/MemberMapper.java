@@ -31,8 +31,6 @@ public class MemberMapper {
             responseDto.setEmail(member.getEmail());
             responseDto.setPassword(member.getPassword());
             responseDto.setUsername(member.getUsername());
-            responseDto.setCreated_at(member.getCreated_at());
-            responseDto.setLast_modified_at(member.getLast_modified_at());
 
             return responseDto;
         }

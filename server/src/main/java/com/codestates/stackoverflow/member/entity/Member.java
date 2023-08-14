@@ -1,5 +1,6 @@
 package com.codestates.stackoverflow.member.entity;
 
+import com.codestates.stackoverflow.audit.Auditable;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -14,7 +15,7 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member {
+public class Member extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +27,7 @@ public class Member {
 
     private String password;
 
-    private Date created_at = Calendar.getInstance().getTime();
+//    private Date createdAt = Calendar.getInstance().getTime();
 
-    private Date last_modified_at = Calendar.getInstance().getTime();
+//    private Date lastModifiedAt = Calendar.getInstance().getTime();
 }
