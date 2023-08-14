@@ -52,11 +52,13 @@ function submitToServer(data) {
 }
 
 function SignupForm() {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     username: "",
     email: "",
     password: "",
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -75,6 +77,7 @@ function SignupForm() {
     } else {
       setErrors(validationErrors);
     }
+    setFormData(initialFormData);
   };
 
   return (

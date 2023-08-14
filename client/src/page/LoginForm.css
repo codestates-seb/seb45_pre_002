@@ -1,0 +1,62 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container input {
+    width: 240px;
+    box-sizing: content-box;
+    height: 33px;
+    border-radius: 6px;
+    margin: 0px;
+    margin-bottom: 18px;
+    border: 1px black solid;
+    padding-left: 5px;
+
+}
+
+.container span {
+    font-weight: bold;
+    font-size: 15px;
+    margin: 0px;
+    margin-bottom: 7px;
+}
+
+.login-button {
+    background-color: #3F96F7;
+    width: 240px;
+    height: 33px;
+    box-sizing: content-box;
+    border: none;
+    border-radius: 6px;
+    margin-top: 51px;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+
+}
+
+.login-button:hover {
+    background-color: #2d75c6;;
+}
+.email-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.password-text {
+    display: flex;
+    justify-content: space-between;
+}
+
+.password-text .forgot {
+    color: #3F96F7;
+    cursor: pointer;
+}
+
+.password-text .forgot:hover {
+    color: #2d75c6;
+}
