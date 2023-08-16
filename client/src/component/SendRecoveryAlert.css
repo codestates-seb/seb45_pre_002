@@ -1,0 +1,18 @@
+.recovery-email-alert {
+	background-color: #dbf0e2;
+	padding: 20px 30px;
+	border-radius: 8px;
+}
+
+.alert-description {
+	font-size: 20px;
+	text-align: center;
+	line-height: 40px;
+}
+
+.fa-circle-check {
+	color: green;
+	font-size: 30px;
+	margin-right: 8px;
+	vertical-align: middle;
+}
