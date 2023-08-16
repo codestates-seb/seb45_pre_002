@@ -27,6 +27,10 @@ public class Member extends Auditable {
 
     private String password;
 
+    private boolean userStatus = false;
+
+    private String code;
+
 //    private Date createdAt = Calendar.getInstance().getTime();
 
 //    private Date lastModifiedAt = Calendar.getInstance().getTime();

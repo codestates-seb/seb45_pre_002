@@ -1,5 +1,9 @@
 package com.codestates.stackoverflow.member.controller;
 
+import com.codestates.stackoverflow.mail.EmailDto;
+
+import com.codestates.stackoverflow.mail.EmailConfig;
+import com.codestates.stackoverflow.mail.EmailController;
 import com.codestates.stackoverflow.member.dto.MemberDto;
 import com.codestates.stackoverflow.member.mapper.MemberMapper;
 import com.codestates.stackoverflow.member.service.MemberService;
@@ -27,8 +31,10 @@ import java.net.URI;
 @RequestMapping("/members")
 @RequiredArgsConstructor
 @Validated
-public class MemberController {
+public class MemberController{
 
+    private final EmailController emailController;
+    private final EmailDto emailDto;
     private final static String USER_DEFAULT_URL = "/members";
 
     private final MemberMapper mapper;
@@ -51,10 +57,15 @@ public class MemberController {
 
         member = service.createMember(member);
 
+        emailDto.setEmail(member.getEmail());
+
         URI location = UriCreator.createUri(USER_DEFAULT_URL, member.getMember_id());
 
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
+
+
+
     @PatchMapping("/{member_id}")
     public ResponseEntity patchMember (@PathVariable("member_id") @Positive long memberId, @Valid @RequestBody MemberDto.PatchDto Member) {
         Member.setMemberId(memberId);
@@ -70,4 +81,5 @@ public class MemberController {
         Member member = service.findMember(memberId);
         return new ResponseEntity<>(mapper.memberToResponse(member), HttpStatus.OK);
     }
+
 }

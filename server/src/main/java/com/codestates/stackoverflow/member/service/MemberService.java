@@ -67,5 +67,4 @@ public class MemberService {
         //TODO:member안에 해당하는 email이 없을 경우 에러 발생.
         //TODO:email이 없다면 당연히 해당 memberId에 저장될 username, password도 없기 때문에 이메일만 사용.
     }
-
 }
