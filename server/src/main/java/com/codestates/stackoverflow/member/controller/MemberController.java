@@ -4,6 +4,7 @@ import com.codestates.stackoverflow.member.dto.MemberDto;
 import com.codestates.stackoverflow.member.mapper.MemberMapper;
 import com.codestates.stackoverflow.member.service.MemberService;
 import com.codestates.stackoverflow.utils.UriCreator;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.sound.midi.Patch;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
@@ -54,11 +56,18 @@ public class MemberController {
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
     @PatchMapping("/{member_id}")
-    public ResponseEntity patchMember (@PathVariable("member_id") @Positive long memberId,
-                                       @Valid @RequestBody MemberDto.PatchDto requestbody) {
-        requestbody.setMemberId(memberId);
+    public ResponseEntity patchMember (@PathVariable("member_id") @Positive long memberId, @Valid @RequestBody MemberDto.PatchDto Member) {
+        Member.setMemberId(memberId);
 
-        Member member = service.updateMember()
+        Member response =service.updateMember(mapper.patchToMember(Member));
 
+        return new ResponseEntity<>(mapper.memberToResponse(response), HttpStatus.OK) ;
+    }
+
+    @GetMapping("/{member_id}")
+    public ResponseEntity getMember(
+            @PathVariable("member_id") @Positive long memberId) {
+        Member member = service.findMember(memberId);
+        return new ResponseEntity<>(mapper.memberToResponse(member), HttpStatus.OK);
     }
 }

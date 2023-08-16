@@ -4,6 +4,8 @@ import com.codestates.stackoverflow.member.dto.MemberDto;
 import org.springframework.stereotype.Component;
 import com.codestates.stackoverflow.member.entity.Member;
 
+import javax.validation.Valid;
+
 @Component
 public class MemberMapper {
 
@@ -18,6 +20,20 @@ public class MemberMapper {
             member.setUsername(postDto.getUsername());
 
             return member;
+        }
+    }
+
+    public Member patchToMember(@Valid MemberDto.PatchDto requestbody) {
+        if(requestbody == null) {
+            return null;
+        }
+        else {
+            Member responseDto = new Member();
+            responseDto.setEmail(requestbody.getEmail());
+            responseDto.setPassword(requestbody.getPassword());
+            responseDto.setUsername(requestbody.getUsername());
+
+            return responseDto;
         }
     }
 
