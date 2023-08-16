@@ -44,6 +44,14 @@ dependencies {
 	implementation 'javax.mail:javax.mail-api:1.6.2'
 	implementation 'com.sun.mail:javax.mail:1.6.2'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	//JWT
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 }
 
 tasks.named('test') {

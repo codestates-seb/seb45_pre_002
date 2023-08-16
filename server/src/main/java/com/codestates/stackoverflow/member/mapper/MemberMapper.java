@@ -43,7 +43,7 @@ public class MemberMapper {
         }
         else {
             MemberDto.ResponseDto responseDto = new MemberDto.ResponseDto();
-            responseDto.setMember_id(member.getMember_id());
+            responseDto.setMember_id(member.getMemberId());
             responseDto.setEmail(member.getEmail());
             responseDto.setPassword(member.getPassword());
             responseDto.setUsername(member.getUsername());

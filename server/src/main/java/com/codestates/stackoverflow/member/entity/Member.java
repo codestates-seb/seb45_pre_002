@@ -3,12 +3,11 @@ package com.codestates.stackoverflow.member.entity;
 import com.codestates.stackoverflow.audit.Auditable;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Setter
@@ -19,7 +18,7 @@ public class Member extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long member_id;
+    private long memberId;
 
     private String email;
 
@@ -27,11 +26,10 @@ public class Member extends Auditable {
 
     private String password;
 
-    private boolean userStatus = false;
-
     private String code;
 
-//    private Date createdAt = Calendar.getInstance().getTime();
+    private boolean userStatus = false;
 
-//    private Date lastModifiedAt = Calendar.getInstance().getTime();
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
 }

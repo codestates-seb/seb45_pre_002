@@ -4,6 +4,7 @@ import com.codestates.stackoverflow.exception.BusinessLogicException;
 import com.codestates.stackoverflow.exception.ExceptionCode;
 import com.codestates.stackoverflow.member.entity.Member;
 import com.codestates.stackoverflow.member.repository.MemberRepository;
+import com.codestates.stackoverflow.security.utils.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,16 @@ public class MemberService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final CustomAuthorityUtils authorityUtils;
+
     public Member createMember(Member member) {
         verifyExistMember(member);
+
         String encodedPassword = passwordEncoder.encode(member.getPassword());
+
         member.setPassword(encodedPassword);
+        member.setRoles(authorityUtils.createRoles());
+
         return repository.save(member);
     }
 
@@ -35,7 +42,7 @@ public class MemberService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Member updateMember(Member member) {
-        Member updateMember = findVerifiedMember(member.getMember_id());
+        Member updateMember = findVerifiedMember(member.getMemberId());
 
         Optional.ofNullable(member.getEmail())
                 .ifPresent(name -> updateMember.setEmail(name));

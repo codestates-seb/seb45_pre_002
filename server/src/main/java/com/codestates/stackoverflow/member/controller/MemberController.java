@@ -2,26 +2,19 @@ package com.codestates.stackoverflow.member.controller;
 
 import com.codestates.stackoverflow.mail.EmailDto;
 
-import com.codestates.stackoverflow.mail.EmailConfig;
 import com.codestates.stackoverflow.mail.EmailController;
 import com.codestates.stackoverflow.member.dto.MemberDto;
 import com.codestates.stackoverflow.member.mapper.MemberMapper;
 import com.codestates.stackoverflow.member.service.MemberService;
 import com.codestates.stackoverflow.utils.UriCreator;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Session;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.codestates.stackoverflow.member.entity.Member;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.sound.midi.Patch;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
@@ -33,8 +26,6 @@ import java.net.URI;
 @Validated
 public class MemberController{
 
-    private final EmailController emailController;
-    private final EmailDto emailDto;
     private final static String USER_DEFAULT_URL = "/members";
 
     private final MemberMapper mapper;
@@ -57,14 +48,10 @@ public class MemberController{
 
         member = service.createMember(member);
 
-        emailDto.setEmail(member.getEmail());
-
-        URI location = UriCreator.createUri(USER_DEFAULT_URL, member.getMember_id());
+        URI location = UriCreator.createUri(USER_DEFAULT_URL, member.getMemberId());
 
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
-
-
 
     @PatchMapping("/{member_id}")
     public ResponseEntity patchMember (@PathVariable("member_id") @Positive long memberId, @Valid @RequestBody MemberDto.PatchDto Member) {
@@ -82,4 +69,8 @@ public class MemberController{
         return new ResponseEntity<>(mapper.memberToResponse(member), HttpStatus.OK);
     }
 
+    @PostMapping("/jwtTest") // jwt 테스트용 추후 삭제
+    public String jwtTest() {
+        return "test passed";
+    }
 }

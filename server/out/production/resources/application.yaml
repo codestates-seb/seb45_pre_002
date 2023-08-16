@@ -20,3 +20,6 @@ logging:
         type:
           descriptor:
             sql: trace
+
+jwt:
+  key: ${JWT_SECRET_KEY}               # 민감한 정보는 시스템 환경 변수에서 로드.
