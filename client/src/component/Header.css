@@ -15,6 +15,7 @@ header {
 	position: fixed;
 	border-top: 3px solid rgb(244, 130, 37);
 	border-bottom: 1px solid rgb(214, 217, 220);
+	background-color: white;
 }
 
 .header-logo {
@@ -97,3 +98,8 @@ header {
 	font-size: 13px;
 }
 
+/*FIXME:  테스트용 사용자 이름 */
+.username {
+	font-size: 14px;
+	margin: 0 8px;
+}
