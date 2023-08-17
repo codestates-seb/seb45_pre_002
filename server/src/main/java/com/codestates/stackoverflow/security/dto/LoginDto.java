@@ -12,7 +12,22 @@ import javax.validation.constraints.Size;
 @Setter
 public class LoginDto {
 
-    private String email;
+    @Getter
+    @Setter
+    public static class PostDto {
+        private String email;
 
-    private String password;
+        private String password;
+    }
+
+    @Getter
+    @Setter
+    public static class ResponseDto {
+
+        private long member_id;
+
+        private String email;
+
+        private String username;
+    }
 }

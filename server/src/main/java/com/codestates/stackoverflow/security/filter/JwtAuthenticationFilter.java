@@ -1,6 +1,9 @@
 package com.codestates.stackoverflow.security.filter;
 
+import com.codestates.stackoverflow.exception.BusinessLogicException;
+import com.codestates.stackoverflow.exception.ExceptionCode;
 import com.codestates.stackoverflow.member.entity.Member;
+import com.codestates.stackoverflow.member.repository.MemberRepository;
 import com.codestates.stackoverflow.security.dto.LoginDto;
 import com.codestates.stackoverflow.security.provider.JwtTokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,11 +29,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final AuthenticationManager authenticationManager;
 
+    private final MemberRepository memberRepository;
+
     @SneakyThrows // 예외 발생 시 RuntimeException 처리
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
             ObjectMapper objectMapper = new ObjectMapper();
-            LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
+            LoginDto.PostDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.PostDto.class);
 
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
 
@@ -42,9 +47,22 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication authResult) throws IOException, ServletException {
         Member member = (Member) authResult.getPrincipal();
 
-        String accessToken = delegateAccessToken(member);
+        Member findMember = memberRepository.findByEmail(member.getUsername()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        String accessToken = delegateAccessToken(findMember);
 
         response.setHeader("Authorization", accessToken);
+
+        //로그인한 멤버의 memberId, email, username 을 JSON 형식으로 응답하는 기능 추가
+        LoginDto.ResponseDto loginDto = new LoginDto.ResponseDto();
+        loginDto.setMember_id(findMember.getMemberId());
+        loginDto.setEmail(findMember.getEmail());
+        loginDto.setUsername(findMember.getUsername());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonResponse = objectMapper.writeValueAsString(loginDto);
+        response.setContentType("application/json");
+        response.getWriter().write(jsonResponse);
     }
 
     private String delegateAccessToken(Member member) {
