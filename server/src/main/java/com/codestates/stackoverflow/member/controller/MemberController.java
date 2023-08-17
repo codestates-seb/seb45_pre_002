@@ -1,8 +1,5 @@
 package com.codestates.stackoverflow.member.controller;
 
-import com.codestates.stackoverflow.mail.EmailDto;
-
-import com.codestates.stackoverflow.mail.EmailController;
 import com.codestates.stackoverflow.member.dto.MemberDto;
 import com.codestates.stackoverflow.member.mapper.MemberMapper;
 import com.codestates.stackoverflow.member.service.MemberService;
@@ -15,11 +12,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.codestates.stackoverflow.member.entity.Member;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
 @RequestMapping("/members")
 @RequiredArgsConstructor
@@ -54,18 +52,22 @@ public class MemberController{
     }
 
     @PatchMapping("/{member_id}")
-    public ResponseEntity patchMember (@PathVariable("member_id") @Positive long memberId, @Valid @RequestBody MemberDto.PatchDto Member) {
-        Member.setMemberId(memberId);
+    public ResponseEntity patchMember (@PathVariable("member_id") @Positive long memberId, @Valid @RequestBody MemberDto.PatchDto patchDto) {
 
-        Member response =service.updateMember(mapper.patchToMember(Member));
+        Member member = mapper.patchToMember(patchDto);
 
-        return new ResponseEntity<>(mapper.memberToResponse(response), HttpStatus.OK) ;
+        member.setMemberId(memberId);
+
+        Member response = service.updateMember(member);
+
+        return new ResponseEntity<>(mapper.memberToResponse(response), HttpStatus.OK);
     }
 
     @GetMapping("/{member_id}")
     public ResponseEntity getMember(
             @PathVariable("member_id") @Positive long memberId) {
         Member member = service.findMember(memberId);
+
         return new ResponseEntity<>(mapper.memberToResponse(member), HttpStatus.OK);
     }
 

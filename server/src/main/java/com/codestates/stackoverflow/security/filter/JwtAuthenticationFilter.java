@@ -58,5 +58,4 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         return accessToken;
     }
-
 }
