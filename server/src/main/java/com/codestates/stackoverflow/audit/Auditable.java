@@ -13,8 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @EntityListeners(AuditingEntityListener.class)
-@MappedSuperclass
-@Getter
+@MappedSuperclass //JPA Entity 클래스들이 해당 추상 클래스를 상속할 경우 createDate, lastModifiedAt 을 컬럼으로 인식
 public class Auditable {
 
     @CreatedDate

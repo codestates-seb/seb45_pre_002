@@ -10,6 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class MemberDto {
@@ -52,9 +53,9 @@ public class MemberDto {
 
         private String password;
 
-        private Date created_at;
+        private String created_at;
 
-        private Date last_modified_at;
+        private String last_modified_at;
     }
 
     @Getter
