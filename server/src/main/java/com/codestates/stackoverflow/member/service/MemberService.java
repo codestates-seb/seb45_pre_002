@@ -35,11 +35,6 @@ public class MemberService {
         return repository.save(member);
     }
 
-    public boolean authenticateMember(String email, String password) {
-        //TODO: email과 password를 기준으로 멤버 인증, 해당 메서드는 security 패키지로 이동하는게 좋아보임
-        return true;
-    }
-
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Member updateMember(Member member) {
         Member updateMember = findVerifiedMember(member.getMemberId());
@@ -63,9 +58,11 @@ public class MemberService {
     public Member findVerifiedMember(long memberId) {
         Optional<Member> optionalMember =
                 repository.findById(memberId);
+
         Member findMember =
                 optionalMember.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
         return findMember;
     }
 
@@ -75,7 +72,5 @@ public class MemberService {
         if (member.isPresent()) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
         }
-        //TODO:member안에 해당하는 email이 없을 경우 에러 발생.
-        //TODO:email이 없다면 당연히 해당 memberId에 저장될 username, password도 없기 때문에 이메일만 사용.
     }
 }
