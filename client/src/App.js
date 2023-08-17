@@ -10,6 +10,9 @@ import LoginForm from "./page/LoginForm";
 import ForgotPassword from "./page/ForgotPassword";
 import Main from "./page/Main";
 import VerificationComponent from "./page/VerificationComponent";
+import MyInfo from "./page/MyInfo";
+import LoginPasswordReset from "./page/LoginPasswordReset";
+import Reply from "./page/Reply";
 
 function App() {
 	return (
@@ -39,9 +42,19 @@ function App() {
 						<Route
 							path="/verify"
 							element={<VerificationComponent />}></Route>
+						<Route
+							path="/myinfo"
+							element={<MyInfo />}></Route>
+						<Route
+							path="/changepw"
+							element={<LoginPasswordReset />}></Route>
+						<Route
+							path="/reply"
+							element={<Reply />}></Route>													
 					</Routes>
-					<Footer />
+					
 				</div>
+				<Footer />
 			</div>
 		</BrowserRouter>
 	);

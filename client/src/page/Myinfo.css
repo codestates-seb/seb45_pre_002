@@ -1,0 +1,95 @@
+.myinfo-container {
+    display: flex;
+    align-items: start;
+    gap: 20px;
+    padding: 50px;
+    margin: 50px;
+    min-height: 80vh;  
+  }
+
+  .profile-container {
+    display: flex;
+    justify-content: end;    
+    flex-grow: 1;
+  }
+
+  .profile-change {
+    all: unset;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    background-color: white;
+    border: #BABFC5 solid 1px;
+    min-width: 47px;
+    min-height: 26px;
+    cursor: pointer;
+  }
+  .profile-change:hover {
+    background-color: #F4F5F8;
+    border: #E4E6EF solid 1px;
+
+  }
+
+  .password-change {
+    all: unset;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    background-color: white;
+    border: #BABFC5 solid 1px;
+    border-radius: 5px;
+    min-width: 95px;
+    min-height: 30px;
+    cursor: pointer;
+  }
+  
+  .password-change:hover {
+    background-color: #F4F5F8;
+    border: #E4E6EF solid 1px;
+
+  }
+
+  .profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .userinfo-container {
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    /* align-items: center; */
+  }
+
+  .info-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .info-username {
+    margin-right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    width: 130px;
+    height: 40px;
+  }
+
+  .username-change {
+    margin-right: 10px;
+    font-size: 24px;
+    border: none;
+    width: 130px;
+    height: 40px;
+    border-radius: 5px;
+
+  }
+
+  .changepassword-container {
+    display: flex;
+    justify-content: baseline;
+    flex-grow: 1;
+  }

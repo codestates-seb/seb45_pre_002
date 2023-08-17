@@ -1,0 +1,62 @@
+.verification-container,
+.verification-container form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.verification-container {
+	width: 100vw;
+	height: 50rem;
+}
+
+.verification-container form {
+	width: 340px;
+	height: 340px;
+	box-shadow: 3px 3px 30px 0 #d6d6d6;
+	border-radius: 8px;
+}
+
+.verification-container p {
+	font-size: 18px;
+}
+
+.verification-input--container {
+	display: flex;
+}
+
+.verification-input {
+	width: 35px;
+	height: 40px;
+	font-size: 30px;
+	margin: 40px 5px;
+	outline: none;
+	border-radius: 6px;
+}
+.verification-input:focus {
+	border: 1px solid #3f96f7;
+	box-shadow: 0 0 0 4px #e0eaf6;
+}
+
+.verification-button {
+	background-color: #3f96f7;
+	width: 247px;
+	height: 33px;
+	border: none;
+	border-radius: 6px;
+	font-size: 13px;
+	font-weight: bold;
+	color: white;
+	cursor: pointer;
+}
+
+.verification-button:hover {
+	background-color: #2d75c6;
+}
+
+.warning-message {
+	color: crimson;
+	font-size: 14px;
+	font-weight: 700;
+}

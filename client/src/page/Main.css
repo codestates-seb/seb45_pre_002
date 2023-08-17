@@ -1,0 +1,10 @@
+.main-image {
+    background-size: 100% 100%; /* 이미지의 너비는 100%로, 높이는 원본 비율 유지 */
+    background-repeat: no-repeat;
+    background-position: center center; /* 이미지를 가운데로 정렬시킴 */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 960px;
+  }

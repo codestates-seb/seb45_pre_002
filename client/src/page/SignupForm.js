@@ -27,7 +27,7 @@ function checkUsernameExists(username) {
 }
 
 function submitToServer(data) {
-  fetch("https://70a5-61-101-53-142.ngrok-free.app/members", {
+  fetch("https://67b0-61-101-53-142.ngrok-free.app/members/signup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

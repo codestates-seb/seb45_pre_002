@@ -1,11 +1,17 @@
+//로그인 불가 상태에서 비밀번호 생각나지 않을 때: 비밀번호 초기화 셋팅
+
 import React from "react";
-import "./PasswordReset.css";
+import "./ForgotPasswordReset.css";
 import { Link } from "react-router-dom";
 
-function PasswordReset() {
+function ForgotPasswordReset() {
+  const handleOkClick = () => {
+    alert("비밀번호 변경이 완료되었습니다.");
+  };
+
   return (
-    <div className="container">
-      <div className="content">
+    <div className="reset-container">
+      <div className="reset-content">
         <input
           type="password"
           className="password-input"
@@ -25,7 +31,7 @@ function PasswordReset() {
           placeholder="Confirm New Password"
         />
         <div className="button">
-          <button id="okBtn" type="button">
+          <button id="okBtn" type="button" onClick={handleOkClick}>
             <Link to="/login">Ok</Link>
           </button>
         </div>
@@ -39,4 +45,4 @@ function PasswordReset() {
   );
 }
 
-export default PasswordReset;
+export default ForgotPasswordReset;
