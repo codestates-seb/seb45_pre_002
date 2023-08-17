@@ -1,5 +1,6 @@
 package com.codestates.stackoverflow.security.config;
 
+import com.codestates.stackoverflow.member.repository.MemberRepository;
 import com.codestates.stackoverflow.security.filter.JwtAuthenticationFilter;
 import com.codestates.stackoverflow.security.provider.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
+
+    private final MemberRepository memberRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -64,7 +67,7 @@ public class SecurityConfig {
         public void configure(HttpSecurity httpSecurity) throws Exception {
             AuthenticationManager authenticationManager = httpSecurity.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtTokenProvider, authenticationManager);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtTokenProvider, authenticationManager, memberRepository);
             jwtAuthenticationFilter.setFilterProcessesUrl("/members/login");
 
             httpSecurity.addFilter(jwtAuthenticationFilter);
