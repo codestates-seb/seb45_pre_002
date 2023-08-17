@@ -23,15 +23,15 @@ public class MemberMapper {
         }
     }
 
-    public Member patchToMember(@Valid MemberDto.PatchDto requestbody) {
-        if(requestbody == null) {
+    public Member patchToMember(@Valid MemberDto.PatchDto patchDto) {
+        if(patchDto == null) {
             return null;
         }
         else {
             Member responseDto = new Member();
-            responseDto.setEmail(requestbody.getEmail());
-            responseDto.setPassword(requestbody.getPassword());
-            responseDto.setUsername(requestbody.getUsername());
+            responseDto.setEmail(patchDto.getEmail());
+            responseDto.setPassword(patchDto.getPassword());
+            responseDto.setUsername(patchDto.getUsername());
 
             return responseDto;
         }

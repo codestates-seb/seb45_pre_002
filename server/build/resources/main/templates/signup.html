@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layouts/common-layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Hello Spring Security Coffee Shop</title>
+</head>
+<body>
+<hr />
+<div class="container" layout:fragment="content">
+    <!-- (1) 회원 가입 폼 -->
+    <form action="/members/signup" method="post">
+        <div class="row">
+            <div class="col-xs-2">
+                <input type="email" name="email" class="form-control" placeholder="Email"/>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px">
+            <div class="col-xs-2">
+                <input type="text" name="username" class="form-control" placeholder="User Name"/>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px">
+            <div class="col-xs-2">
+                <input type="password" name="password" class="form-control" placeholder="Password"/>
+            </div>
+        </div>
+
+        <button class="btn btn-outline-secondary" style="margin-top: 20px">회원 가입</button>
+    </form>
+</div>
+</body>
+</html>

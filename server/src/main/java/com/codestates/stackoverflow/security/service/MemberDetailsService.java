@@ -36,7 +36,6 @@ public class MemberDetailsService implements UserDetailsService {
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            //TODO: Member 에 roles 필드와 getRoles 메서드 추가하기
             return authorityUtils.createAuthorities(this.member.getRoles());
         }
 

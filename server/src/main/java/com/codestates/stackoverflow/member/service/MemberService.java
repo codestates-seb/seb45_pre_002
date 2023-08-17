@@ -45,16 +45,19 @@ public class MemberService {
         Member updateMember = findVerifiedMember(member.getMemberId());
 
         Optional.ofNullable(member.getEmail())
-                .ifPresent(name -> updateMember.setEmail(name));
+                .ifPresent(email -> updateMember.setEmail(email));
         Optional.ofNullable(member.getUsername())
-                .ifPresent(phone -> updateMember.setUsername(phone));
+                .ifPresent(username -> updateMember.setUsername(username));
         Optional.ofNullable(member.getPassword())
-                .ifPresent(memberStatus -> updateMember.setPassword(memberStatus));
-        return repository.save(member);
+                .ifPresent(password -> updateMember.setPassword(passwordEncoder.encode(password)));
+
+        return updateMember;
     }
 
     @Transactional(readOnly = true)
-    public Member findMember(long memberId) {return findVerifiedMember(memberId); }
+    public Member findMember(long memberId) {
+        return findVerifiedMember(memberId);
+    }
 
     @Transactional(readOnly = true)
     public Member findVerifiedMember(long memberId) {
@@ -69,8 +72,9 @@ public class MemberService {
     private void verifyExistMember(Member info) {
         Optional<Member> member = repository.findByEmail(info.getEmail());
         //member에 repository에 저장된 이메일을 저장.
-        if (member.isPresent())
+        if (member.isPresent()) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+        }
         //TODO:member안에 해당하는 email이 없을 경우 에러 발생.
         //TODO:email이 없다면 당연히 해당 memberId에 저장될 username, password도 없기 때문에 이메일만 사용.
     }
