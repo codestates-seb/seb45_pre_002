@@ -2,6 +2,8 @@ package com.codestates.stackoverflow.security.config;
 
 import com.codestates.stackoverflow.member.repository.MemberRepository;
 import com.codestates.stackoverflow.security.filter.JwtAuthenticationFilter;
+import com.codestates.stackoverflow.security.handler.MemberAuthenticationFailureHandler;
+import com.codestates.stackoverflow.security.handler.MemberAuthenticationSuccessHandler;
 import com.codestates.stackoverflow.security.provider.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +33,9 @@ public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    private final MemberRepository memberRepository;
+    private final MemberAuthenticationSuccessHandler memberAuthenticationSuccessHandler;
+
+    private final MemberAuthenticationFailureHandler memberAuthenticationFailureHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -67,8 +71,10 @@ public class SecurityConfig {
         public void configure(HttpSecurity httpSecurity) throws Exception {
             AuthenticationManager authenticationManager = httpSecurity.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtTokenProvider, authenticationManager, memberRepository);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtTokenProvider, authenticationManager);
             jwtAuthenticationFilter.setFilterProcessesUrl("/members/login");
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(memberAuthenticationSuccessHandler);
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(memberAuthenticationFailureHandler);
 
             httpSecurity.addFilter(jwtAuthenticationFilter);
         }
