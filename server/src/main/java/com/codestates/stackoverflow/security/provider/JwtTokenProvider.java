@@ -1,10 +1,12 @@
 package com.codestates.stackoverflow.security.provider;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,6 +20,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class JwtTokenProvider {
 
+    @Getter
     @Value("${jwt.key}")
     private String secretKey;
 
@@ -61,5 +64,24 @@ public class JwtTokenProvider {
         byte[] secretKeyBytes = Decoders.BASE64.decode(secretKey);
         Key key = Keys.hmacShaKeyFor(secretKeyBytes);
         return key;
+    }
+
+    public Jws<Claims> getClaims(String jws, String base64EncodedSecretKey) {
+        Key key = getKeyFromBase64EncodedSecretKey();
+
+        Jws<Claims> claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(jws);
+
+        return claims;
+    }
+
+    public Key getKeyFromBase64EncodedSecretKey() {
+        byte[] decodedKey = Decoders.BASE64.decode(secretKey);
+
+        Key secretKey = Keys.hmacShaKeyFor(decodedKey);
+
+        return secretKey;
     }
 }

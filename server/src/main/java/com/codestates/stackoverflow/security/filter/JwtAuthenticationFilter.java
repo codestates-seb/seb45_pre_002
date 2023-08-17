@@ -26,8 +26,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private final JwtTokenProvider jwtTokenProvider;
-
     private final AuthenticationManager authenticationManager;
 
     @SneakyThrows // 예외 발생 시 RuntimeException 처리

@@ -2,9 +2,13 @@ package com.codestates.stackoverflow.security.config;
 
 import com.codestates.stackoverflow.member.repository.MemberRepository;
 import com.codestates.stackoverflow.security.filter.JwtAuthenticationFilter;
+import com.codestates.stackoverflow.security.filter.JwtVerificationFilter;
+import com.codestates.stackoverflow.security.handler.MemberAccessDeniedHandler;
+import com.codestates.stackoverflow.security.handler.MemberAuthenticationEntryPoint;
 import com.codestates.stackoverflow.security.handler.MemberAuthenticationFailureHandler;
 import com.codestates.stackoverflow.security.handler.MemberAuthenticationSuccessHandler;
 import com.codestates.stackoverflow.security.provider.JwtTokenProvider;
+import com.codestates.stackoverflow.security.utils.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,19 +41,29 @@ public class SecurityConfig {
 
     private final MemberAuthenticationFailureHandler memberAuthenticationFailureHandler;
 
+    private final CustomAuthorityUtils authorityUtils;
+
+    private final MemberAuthenticationEntryPoint authenticationEntryPoint;
+
+    private final MemberAccessDeniedHandler accessDeniedHandler;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.headers().frameOptions().sameOrigin()
                 .and()
                 .csrf().disable()
                 .cors().configurationSource(corsConfigurationSource())
-                .and()// 추후 cors(withDefaults())로 변경 cors().disable()
+                .and()
                 .headers().frameOptions().disable() //h2사용을 위해 추가
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler)
+                .and()
                 .apply(new CustomFilterConfig())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
@@ -71,12 +85,16 @@ public class SecurityConfig {
         public void configure(HttpSecurity httpSecurity) throws Exception {
             AuthenticationManager authenticationManager = httpSecurity.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtTokenProvider, authenticationManager);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager);
             jwtAuthenticationFilter.setFilterProcessesUrl("/members/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(memberAuthenticationSuccessHandler);
             jwtAuthenticationFilter.setAuthenticationFailureHandler(memberAuthenticationFailureHandler);
 
-            httpSecurity.addFilter(jwtAuthenticationFilter);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenProvider, authorityUtils);
+
+            httpSecurity
+                    .addFilter(jwtAuthenticationFilter)
+                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
     }
 

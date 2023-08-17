@@ -72,7 +72,7 @@ public class MemberController{
     }
 
     @PostMapping("/jwtTest") // jwt 테스트용 추후 삭제
-    public String jwtTest() {
-        return "test passed";
+    public ResponseEntity jwtTest() {
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }
