@@ -1,5 +1,6 @@
 package com.codestates.stackoverflow.questioncomment.entity;
 
+import com.codestates.stackoverflow.audit.Auditable;
 import com.codestates.stackoverflow.member.entity.Member;
 import com.codestates.stackoverflow.question.entity.Questions;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class QuestionComment {
+public class QuestionComment extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
