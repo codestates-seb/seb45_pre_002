@@ -52,6 +52,7 @@ public class MemberAuthenticationSuccessHandler implements AuthenticationSuccess
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonResponse = objectMapper.writeValueAsString(loginDto);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonResponse);
     }
 
