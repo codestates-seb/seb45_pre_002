@@ -32,13 +32,15 @@ public class QuestionsController {
     //TODO: 이미지 삽입
     @PostMapping
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionsPatchDto questionsDto) {
-       // Questions questions = questionsService.createQuestion(questionsMapper.questionPostDtoToQuestion(questionPostDto),
-            //    questionPostDto.getUserId());
+/*
+        Questions questions = questionsService.createQuestion(questionsMapper.questionPostDtoToQuestion(questionPostDto),
+                questionPostDto.getUserId());
 
-       // return new ResponseEntity<>(
-               // new ResponseDto<>(questionsMapper.questionToQuestionsSimpleResponseDto(question), HttpStatus.CREATED);
-      //  )
+        return new ResponseEntity<>(
+                new ResponseDto<>(questionsMapper.questionToQuestionsSimpleResponseDto(question), HttpStatus.CREATED);
+       )
 
+ */
         return null;
     }
 
@@ -46,15 +48,16 @@ public class QuestionsController {
     @PatchMapping("/{question-id}")
     public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive Long questionsId,
                                         @Valid @RequestBody QuestionsPatchDto questionsPatchDto) {
-       // questionsPatchDto.setQuestionsId(questionsId);
+
+      //  questionsPatchDto.setQuestionsId(questionsId);
       //  Questions questions = questionsService.updateQuestions(questionsMapper.questionsPatchDtoToQuesions(questionsPatchDto),
-               // questionsPatchDto.getUserId());
+         //       questionsPatchDto.getUserId());
 
       //  return new ResponseEntity<>(
-                //new ResponseDto<>(questionsMapper.questionToQuestionsSimpleResponseDto(questions),HttpStatus.OK);
-
-                return null;
+       //         new ResponseDto<>(questionsMapper.questionToQuestionsSimpleResponseDto(questions),HttpStatus.OK);
       //  )
+
+        return null;
     }
 
     // 하나의 게시글만 조회
@@ -62,8 +65,8 @@ public class QuestionsController {
     public ResponseEntity getQuestion (@PathVariable("question-id") @Positive Long questionsId,
                                        HttpServletRequest req, HttpServletResponse res){
 
-       // Questions questions = questionsService.findQuestions(questionsId);
-       // questionsService.updateQuestionsViewCount(questions, questions.getViewCount());
+      //  Questions questions = questionsService.findQuestions(questionsId);
+      //  questionsService.updateQuestionsViewCount(questions, questions.getViewCount());
 
         javax.servlet.http.Cookie[] cookies = req.getCookies();
         Map<String, String> mapCookies = new HashMap<String, String>();
@@ -76,12 +79,12 @@ public class QuestionsController {
 
         String viewCount = (mapCookies.get("view_count"));
 
-        //questionsService.updateQuestionsViewCount (questions, questions,getViewCount());
+       // questionsService.updateQuestionsViewCount (questions, questions,getViewCount());
 
-       // return new ResponseEntity<>(
-                //new ResponseDto(questionsMapper.questionsToQuestionsSimpleResponseDto(questions), HttpStatus.OK);
+     //   return new ResponseEntity<>(
+           //    new ResponseDto(questionsMapper.questionsToQuestionsSimpleResponseDto(questions), HttpStatus.OK);
 
-        //)
+      //  )
 
         return null;
     }
@@ -89,9 +92,10 @@ public class QuestionsController {
     // 전체 질문 조회
     @GetMapping()
     public ResponseEntity getQuestions() {
-       // List<Questions> questionsList = questionsService.getAllQuestions();
 
-       // return new ResponseEntity<>(questionsMapper.questionsListToQuestionsSimpleResponseDto(questionsList), HttpStatus.OK);
+      // List<Questions> questionsList = questionsService.getQuestions();
+
+      //  return new ResponseEntity<>(questionsMapper.questionsListToQuestionsSimpleResponseDto(questionsList), HttpStatus.OK);
 
         return null;
     }
@@ -99,21 +103,24 @@ public class QuestionsController {
     @DeleteMapping (value = "/{question-id}")
     public ResponseEntity deleteQuestions (@PathVariable("question-id") @Positive Long questionId,
                                            @Positive @RequestParam Long userId) {
-       // questionsService.deleteQuestions(questionId, userId);
+      //  questionsService.deleteQuestions(questionId, userId);
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      //  return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        return null;
     }
 
+    /*
+
+    //TODO : VOTEDTO 만들기 -> REQUESTBODY로 받아오기!
     //투표수 up
     @PostMapping("/question-votes")
     public ResponseEntity setUpVote(@PathVariable("question-id") @Positive Long questionId,
                                   @Positive @RequestParam Long userId) {
+        questionsService.setUpVote(questionId, userId);
 
-       // questionsService.setUpVote(questionId, userId);
+        return new ResponseEntity(new ResponseDto<>(questionsService.getVoteCount(questionId)), HttpStatus.OK);
 
-       //return new ResponseEntity(new ResponseDto<>(questionsService.getVoteCount(questionId)), HttpStatus.OK);
-
-        return null;
     }
 
     //투표수 down
@@ -121,10 +128,11 @@ public class QuestionsController {
     public ResponseEntity setDownVote(@PathVariable("question-id") @Positive Long questionId,
                                       @Positive @RequestParam Long userId) {
 
-       // questionsService.setDownVote(questionId, userId);
+        questionsService.setDownVote(questionId, userId);
 
-        //return new ResponseEntity(new ResponseDto<> (questionsService.getVoteCount(questionId)), HttpStatus.OK);
+        return new ResponseEntity(new ResponseDto<> (questionsService.getVoteCount(questionId)), HttpStatus.OK);
 
-        return null;
     }
+
+     */
 }

@@ -19,10 +19,11 @@ public class Questions extends TimeStamp{
     private Long questionId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "member_id")
     @ToString.Exclude
     @Setter
     private Member member;
+
 
     private String questionTitle;
 
