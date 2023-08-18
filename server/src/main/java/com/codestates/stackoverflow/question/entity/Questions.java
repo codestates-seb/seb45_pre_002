@@ -1,5 +1,7 @@
 package com.codestates.stackoverflow.question.entity;
 
+import com.codestates.stackoverflow.answer.entity.Answer;
+import com.codestates.stackoverflow.answercomment.entity.AnswerComment;
 import com.codestates.stackoverflow.member.entity.Member;
 import lombok.*;
 
@@ -18,11 +20,19 @@ public class Questions extends TimeStamp{
     @Column
     private Long questionId;
 
+    //TODO: ToString.Exclude에 대해서 알아보기, ManyToOne Setter
+
     @ManyToOne
     @JoinColumn(name = "member_id")
-    @ToString.Exclude
+    //@ToString.Exclude
     @Setter
     private Member member;
+
+    @OneToMany(targetEntity = AnswerComment.class, mappedBy = "question")
+    private List<AnswerComment> answerComments = new ArrayList<>();
+
+    @OneToMany(targetEntity = Answer.class, mappedBy = "question")
+    private List<Answer> answer = new ArrayList<>();
 
 
     private String questionTitle;
