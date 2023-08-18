@@ -9,3 +9,8 @@
 # ignore build file
 build/*
 !build/build.xml
+# Gradle files
+.gradle/
+build/
+# Gradle files
+.gradle
