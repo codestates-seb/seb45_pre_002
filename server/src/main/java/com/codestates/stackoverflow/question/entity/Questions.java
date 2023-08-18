@@ -3,6 +3,7 @@ package com.codestates.stackoverflow.question.entity;
 import com.codestates.stackoverflow.answer.entity.Answer;
 import com.codestates.stackoverflow.answercomment.entity.AnswerComment;
 import com.codestates.stackoverflow.member.entity.Member;
+import com.codestates.stackoverflow.questioncomment.entity.QuestionComment;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,8 +29,8 @@ public class Questions extends TimeStamp{
     @Setter
     private Member member;
 
-    @OneToMany(targetEntity = AnswerComment.class, mappedBy = "question")
-    private List<AnswerComment> answerComments = new ArrayList<>();
+    @OneToMany(targetEntity = QuestionComment.class, mappedBy = "question")
+    private List<QuestionComment> questionComments = new ArrayList<>();
 
     @OneToMany(targetEntity = Answer.class, mappedBy = "question")
     private List<Answer> answer = new ArrayList<>();
