@@ -23,7 +23,7 @@ public class AnswerComment extends Auditable {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne(targetEntity = Answer.class)
+    @ManyToOne(targetEntity = Answer.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "answer_id")
     private Answer answer;
 }

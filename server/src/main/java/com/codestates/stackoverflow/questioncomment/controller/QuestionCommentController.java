@@ -1,12 +1,15 @@
 package com.codestates.stackoverflow.questioncomment.controller;
 
+import com.codestates.stackoverflow.questioncomment.dto.QuestionCommentDto;
+import com.codestates.stackoverflow.questioncomment.entity.QuestionComment;
+import com.codestates.stackoverflow.questioncomment.mapper.QuestionCommentMapper;
+import com.codestates.stackoverflow.questioncomment.service.QuestionCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/question-comments")
@@ -14,9 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class QuestionCommentController {
 
-    @PostMapping
-    public ResponseEntity postQuestionComment() {
+    private final QuestionCommentMapper questionCommentMapper;
+    private final QuestionCommentService questionCommentService;
 
+    @PostMapping
+    public ResponseEntity postQuestionComment(@Valid @RequestBody QuestionCommentDto.PostDto postDto) {
+        QuestionComment questionComment = questionCommentMapper.postToQuestionComment(postDto);
 
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
