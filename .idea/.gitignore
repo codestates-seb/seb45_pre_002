@@ -7,15 +7,8 @@
 /dataSources/
 /dataSources.local.xml
 # ignore build file
-<<<<<<< HEAD
-build/*
-!build/build.xml
-# Gradle files
-.gradle/
 build/
 # Gradle files
-.gradle
-=======
-sever/build/*
-!sever/build/build.xml
->>>>>>> d45f905ceb09d678d146cd64bddf41d63169d9de
+.gradle/
+# Server build files
+server/build/
