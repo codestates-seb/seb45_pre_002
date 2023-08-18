@@ -12,3 +12,4 @@ build/
 .gradle/
 # Server build files
 server/build/
+server/.gradle/
