@@ -30,8 +30,8 @@ public class AnswerService {
 
     private void verifyExistAnswer(Answer answer) {
         // member가 존재하는지 확인
-        Member member = memberService.findMember(answer.getMemberId().getMemberId());
-        answer.setMemberId(member);
+        Member member = memberService.findMember(answer.getMember().getMemberId());
+        answer.setMember(member);
 
         // 질문이 존재하는지 확인
 //        Question question = questionService.findQuestion(answer.getQuestion().getQuestionId());

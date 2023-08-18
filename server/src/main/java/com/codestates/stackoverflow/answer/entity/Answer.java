@@ -31,7 +31,7 @@ public class Answer extends Auditable {
 
     @ManyToOne
     @JoinColumn(name = "member_id")
-    private Member memberId;
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "question_id")
