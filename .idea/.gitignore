@@ -7,5 +7,5 @@
 /dataSources/
 /dataSources.local.xml
 # ignore build file
-build/*
-!build/build.xml
+sever/build/*
+!sever/build/build.xml
