@@ -1,5 +1,6 @@
 package com.codestates.stackoverflow.questioncomment.mapper;
 
+import com.codestates.stackoverflow.member.entity.Member;
 import com.codestates.stackoverflow.question.entity.Questions;
 import com.codestates.stackoverflow.questioncomment.dto.QuestionCommentDto;
 import com.codestates.stackoverflow.questioncomment.entity.QuestionComment;
@@ -16,6 +17,7 @@ public class QuestionCommentMapper {
             QuestionComment questionComment = new QuestionComment();
             questionComment.setBody(postDto.getBody());
             questionComment.setQuestion(postToQuestion(postDto));
+            questionComment.setMember(postToMember(postDto));
 
             return questionComment;
         }
@@ -27,9 +29,21 @@ public class QuestionCommentMapper {
         }
         else {
             Questions question = new Questions();
-            //question.setQuestionId(postDto.getQuestionId());
+            question.setQuestionId(postDto.getQuestion_id());
 
             return question;
+        }
+    }
+
+    private Member postToMember(QuestionCommentDto.PostDto postDto) {
+        if(postDto == null) {
+            return null;
+        }
+        else {
+            Member member = new Member();
+            member.setMemberId(postDto.getMember_id());
+
+            return member;
         }
     }
 }

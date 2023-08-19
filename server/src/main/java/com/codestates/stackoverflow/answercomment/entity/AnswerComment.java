@@ -26,4 +26,18 @@ public class AnswerComment extends Auditable {
     @ManyToOne(targetEntity = Answer.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "answer_id")
     private Answer answer;
+
+    public void setMember(Member member) {
+        this.member = member;
+        if(!member.getAnswerComments().contains(this)) {
+            member.getAnswerComments().add(this);
+        }
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
+        if(!member.getAnswerComments().contains(this)) {
+            member.getAnswerComments().add(this);
+        }
+    }
 }
