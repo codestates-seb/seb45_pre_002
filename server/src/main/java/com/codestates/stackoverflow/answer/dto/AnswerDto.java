@@ -24,7 +24,38 @@ public class AnswerDto {
 
     }
 
-//    public static class PatchDto {
-//
-//    }
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class PatchDto {
+
+        private long memberId;
+
+        @NotBlank(message = "내용을 입력해 주세요.")
+        private String Body;
+
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ResponseDto {
+
+        private long answerId;
+
+        private long memberId;
+
+        private long questionId;
+
+        private boolean accepted;
+
+        private String body;
+
+        private String createdAt;
+
+        private String lastModifiedAt;
+
+    }
 }

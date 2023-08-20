@@ -12,11 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.net.URI;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -35,7 +34,7 @@ public class AnswerController {
     private final MemberService memberService;
 
     @PostMapping
-    public ResponseEntity postAnswer(@RequestBody AnswerDto.PostDto postDto) {
+    public ResponseEntity postAnswer(@Valid @RequestBody AnswerDto.PostDto postDto) {
 
         memberService.findMember(postDto.getMemberId());
 
@@ -44,6 +43,36 @@ public class AnswerController {
         URI location = UriCreator.createUri(USER_DEFAULT_URL, answer.getAnswerId());
 
         return new ResponseEntity<>(location, HttpStatus.OK);
+    }
+    @PatchMapping("/{answer-id}")
+    public ResponseEntity patchAnswer(@PathVariable("answer-id") @Positive long answerId,
+                                      @Valid @RequestBody AnswerDto.PatchDto patchDto){
+
+        Answer answer = mapper.patchToAnswer(patchDto);
+
+        answer.setAnswerId(answerId);
+
+        Answer response = service.updateAnswer(answer);
+
+        return new ResponseEntity<>(mapper.answerToResponse(response), HttpStatus.OK);
+
+    }
+
+    @GetMapping
+    public ResponseEntity getAnswers(
+            @Positive long answerId) {
+        Answer answer = service.findAnswer(answerId);
+
+        return new ResponseEntity<>(mapper.answerToResponse(answer), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{answer-id}")
+    public ResponseEntity deleteAnswer(@Positive long answerId) {
+
+        service.deleteAnswer(answerId);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+
     }
 
 }
