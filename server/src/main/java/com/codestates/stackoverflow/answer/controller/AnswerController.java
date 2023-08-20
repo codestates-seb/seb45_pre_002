@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
@@ -36,7 +37,7 @@ public class AnswerController {
     @PostMapping
     public ResponseEntity postAnswer(@Valid @RequestBody AnswerDto.PostDto postDto) {
 
-        memberService.findMember(postDto.getMemberId());
+        memberService.findMember(postDto.getMember_id());
 
         Answer answer = service.createAnswer(mapper.postToAnswer(postDto));
 
@@ -59,11 +60,10 @@ public class AnswerController {
     }
 
     @GetMapping
-    public ResponseEntity getAnswers(
-            @Positive long answerId) {
-        Answer answer = service.findAnswer(answerId);
+    public ResponseEntity getAnswers() {
+        List<Answer> answer = service.findAnswer();
 
-        return new ResponseEntity<>(mapper.answerToResponse(answer), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.answersToListResponseDto(answer), HttpStatus.OK);
     }
 
     @DeleteMapping("/{answer-id}")

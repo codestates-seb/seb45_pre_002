@@ -8,6 +8,7 @@ import com.codestates.stackoverflow.exception.ExceptionCode;
 import com.codestates.stackoverflow.member.entity.Member;
 import com.codestates.stackoverflow.member.service.MemberService;
 import com.codestates.stackoverflow.question.entity.Questions;
+import com.codestates.stackoverflow.question.repository.QuestionsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.swing.text.html.Option;
+import java.awt.desktop.QuitStrategy;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,13 +30,23 @@ public class AnswerService {
 
     private final MemberService memberService;
 
+    private final QuestionsRepository questionsRepository;
+
 //    private final QuestionService questionService;
 
     private final AnswerMapper answerMapper;
 
     public Answer createAnswer(Answer answer) {
 
-        verifyExistAnswer(answer);
+        Member findMember = memberService.findVerifiedMember(answer.getMember().getMemberId());
+        Questions findQuestion = questionsRepository.findById(answer.getQuestion().getQuestionId())
+                        .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        answer.setMember(findMember);
+        answer.setQuestion(findQuestion);
+
+        findMember.getAnswers().add(answer);
+        findQuestion.getAnswer().add(answer);
 
         return answerRepository.save(answer);
 
@@ -50,7 +63,11 @@ public class AnswerService {
     }
 
     @Transactional(readOnly = true)
-    public Answer findAnswer(long answerId) { return findVerifiedAnswer(answerId); }
+    public List<Answer> findAnswer() {
+        List<Answer> answers = answerRepository.findAll();
+
+        return answers;
+    }
 
 
     public void deleteAnswer(long answerId) {
@@ -75,7 +92,7 @@ public class AnswerService {
         answer.setMember(member);
 
         // 질문이 존재하는지 확인
-//        Questions question = questions.findQuestion(answer.getQuestion().getQuestionId());
+//        Questions question = question.findQuestion(answer.getQuestion().getQuestionId());
 //        answer.setQuestion(question);
 
     }

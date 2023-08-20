@@ -1,5 +1,6 @@
 package com.codestates.stackoverflow.answer.dto;
 
+import com.codestates.stackoverflow.answer.entity.Answer;
 import com.codestates.stackoverflow.member.dto.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 public class AnswerDto {
 
@@ -17,10 +19,12 @@ public class AnswerDto {
     @NoArgsConstructor
     public static class PostDto {
 
-        private long memberId;
+        private long member_id;
+
+        private long question_id;
 
         @NotBlank(message = "내용을 입력해 주세요.")
-        private String Body;
+        private String body;
 
     }
 
@@ -30,10 +34,10 @@ public class AnswerDto {
     @NoArgsConstructor
     public static class PatchDto {
 
-        private long memberId;
+        private long member_id;
 
         @NotBlank(message = "내용을 입력해 주세요.")
-        private String Body;
+        private String body;
 
     }
 
@@ -43,19 +47,28 @@ public class AnswerDto {
     @NoArgsConstructor
     public static class ResponseDto {
 
-        private long answerId;
+        private long answer_id;
 
-        private long memberId;
+        private long member_id;
 
-        private long questionId;
+        private long question_id;
 
         private boolean accepted;
 
         private String body;
 
-        private String createdAt;
+        private String created_at;
 
-        private String lastModifiedAt;
+        private String last_modified_at;
 
+    }
+
+    @Setter
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ListResponseDto {
+
+        private List<ResponseDto> answers;
     }
 }

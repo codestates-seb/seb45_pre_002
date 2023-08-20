@@ -40,4 +40,17 @@ public class Answer extends Auditable {
     @OneToMany(targetEntity = AnswerComment.class, mappedBy = "answer")
     private List<AnswerComment> answerComments = new ArrayList<>();
 
+    public void setMember(Member member) {
+        this.member = member;
+        if(!member.getAnswers().contains(this)) {
+            member.getAnswers().add(this);
+        }
+    }
+
+    public void setQuestion(Questions question) {
+        this.question = question;
+        if(!question.getAnswer().contains(this)) {
+            question.getAnswer().add(this);
+        }
+    }
 }

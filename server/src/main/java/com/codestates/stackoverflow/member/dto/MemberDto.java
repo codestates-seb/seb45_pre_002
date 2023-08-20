@@ -64,7 +64,7 @@ public class MemberDto {
     @NoArgsConstructor
     public static class PatchDto {
 
-        private long memberId;
+        private long member_id;
 
         @Column(name = "email", nullable = false, unique = true)
 //        @NotBlank(message = "이메일은 공백일 수 없습니다.")
