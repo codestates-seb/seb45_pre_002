@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class QuestionResponseDto {
 
     private Long questionId;
-    private Long userId;
+    private Long memberId;
     private String questionTitle;
     private String questionBody;
     private int viewCount;

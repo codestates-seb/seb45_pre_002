@@ -21,8 +21,6 @@ public class Questions extends TimeStamp{
     @Column
     private Long questionId;
 
-    //TODO: ToString.Exclude에 대해서 알아보기, ManyToOne Setter
-
     @ManyToOne
     @JoinColumn(name = "member_id")
     //@ToString.Exclude
@@ -44,11 +42,12 @@ public class Questions extends TimeStamp{
     @Column (columnDefinition = "integer default 0", nullable = false)
     private Long viewCount;
 
+    private Long voteCount;
+
     public void setViewCount(Long viewCount) {
         this.viewCount = viewCount;
     }
 
-    private Long voteCount;
 
     @ElementCollection
     public List<Long> upVotedUserId = new ArrayList<>();
@@ -67,6 +66,12 @@ public class Questions extends TimeStamp{
         this.voteCount = 0L;
 
     }
+
+    @ElementCollection
+    public List<Long> upVotedMemberId = new ArrayList<>();
+
+    @ElementCollection
+    public List<Long> downVotedMemberId = new ArrayList<>();
 
     public void updateViewCount(Long viewCount) {
         this.viewCount = viewCount;

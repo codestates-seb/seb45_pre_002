@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 public class QuestionsPatchDto {
 
     @NotNull
-    private Long userId;
+    private Long memberId;
 
 
     private Long questionId;
@@ -24,5 +24,4 @@ public class QuestionsPatchDto {
         this.questionId = questionId;
     }
 
-    //TODO : 제목, 질문 글자 수 정하기?
 }

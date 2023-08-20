@@ -1,6 +1,7 @@
 package com.codestates.stackoverflow.question.controller;
 
 import com.codestates.stackoverflow.question.dto.QuestionsPatchDto;
+import com.codestates.stackoverflow.question.dto.QuestionsPostDto;
 import com.codestates.stackoverflow.question.entity.Questions;
 import com.codestates.stackoverflow.question.mapper.QuestionsMapper;
 import com.codestates.stackoverflow.question.service.QuestionsService;
@@ -24,115 +25,88 @@ public class QuestionsController {
     private QuestionsService questionsService;
     private QuestionsMapper questionsMapper;
 
+
     public QuestionsController(QuestionsMapper questionsMapper, QuestionsService questionsService) {
+
         this.questionsMapper = questionsMapper;
         this.questionsService = questionsService;
+
     }
 
     //TODO: 이미지 삽입
+    //TODO: 로그인 했을 때만 가능하게
     @PostMapping
-    public ResponseEntity postQuestion(@Valid @RequestBody QuestionsPatchDto questionsDto) {
-/*
-        Questions questions = questionsService.createQuestion(questionsMapper.questionPostDtoToQuestion(questionPostDto),
-                questionPostDto.getUserId());
+    public ResponseEntity postQuestion(@Valid @RequestBody QuestionsPostDto questionsPostDto) {
 
-        return new ResponseEntity<>(
-                new ResponseDto<>(questionsMapper.questionToQuestionsSimpleResponseDto(question), HttpStatus.CREATED);
-       )
+        //질문 생성
+        Questions questions = questionsService.createQuestion(questionsMapper.questionsPostToQuestion(questionsPostDto),
+                questionsPostDto.getMemberId());
 
- */
-        return null;
+
+        return new ResponseEntity<>(questionsMapper.questionToQuestionsResponse(questions), HttpStatus.CREATED);
     }
 
     //TODO: 수정 날짜와 시간 표시
     @PatchMapping("/{question-id}")
-    public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive Long questionsId,
+    public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive Long questionId,
                                         @Valid @RequestBody QuestionsPatchDto questionsPatchDto) {
 
-      //  questionsPatchDto.setQuestionsId(questionsId);
-      //  Questions questions = questionsService.updateQuestions(questionsMapper.questionsPatchDtoToQuesions(questionsPatchDto),
-         //       questionsPatchDto.getUserId());
+        questionsPatchDto.setQuestionId(questionId);
+        Questions questions = questionsService.updateQuestions(questionsMapper.questionPatchToQuestion(questionsPatchDto),
+                questionsPatchDto.getMemberId());
 
-      //  return new ResponseEntity<>(
-       //         new ResponseDto<>(questionsMapper.questionToQuestionsSimpleResponseDto(questions),HttpStatus.OK);
-      //  )
 
-        return null;
+        return new ResponseEntity<>(questionsMapper.questionToQuestionsResponse(questions),HttpStatus.OK);
+
     }
 
     // 하나의 게시글만 조회
     @GetMapping("/{question-id}")
-    public ResponseEntity getQuestion (@PathVariable("question-id") @Positive Long questionsId,
-                                       HttpServletRequest req, HttpServletResponse res){
+    public ResponseEntity getQuestion (@PathVariable("question-id") @Positive Long questionId){
 
-      //  Questions questions = questionsService.findQuestions(questionsId);
-      //  questionsService.updateQuestionsViewCount(questions, questions.getViewCount());
+        Questions questions = questionsService.findQuestion(questionId);
+        questionsService.updateQuestionsViewCount(questions,questions.getViewCount());
 
-        javax.servlet.http.Cookie[] cookies = req.getCookies();
-        Map<String, String> mapCookies = new HashMap<String, String>();
-
-        if (req.getCookies() != null) {
-            for(javax.servlet.http.Cookie value : cookies) {
-                mapCookies.put(value.getName(), value.getValue());
-            }
-        }
-
-        String viewCount = (mapCookies.get("view_count"));
-
-       // questionsService.updateQuestionsViewCount (questions, questions,getViewCount());
-
-     //   return new ResponseEntity<>(
-           //    new ResponseDto(questionsMapper.questionsToQuestionsSimpleResponseDto(questions), HttpStatus.OK);
-
-      //  )
-
-        return null;
+        return new ResponseEntity<>(questionsMapper.questionToQuestionsResponse(questions), HttpStatus.OK);
     }
 
     // 전체 질문 조회
     @GetMapping()
     public ResponseEntity getQuestions() {
 
-      // List<Questions> questionsList = questionsService.getQuestions();
+        List<Questions> questionsList = questionsService.getAllquestions();
 
-      //  return new ResponseEntity<>(questionsMapper.questionsListToQuestionsSimpleResponseDto(questionsList), HttpStatus.OK);
+        return new ResponseEntity<>(questionsMapper.questionListToQuestionsResponse(questionsList), HttpStatus.OK);
 
-        return null;
     }
 
     @DeleteMapping (value = "/{question-id}")
     public ResponseEntity deleteQuestions (@PathVariable("question-id") @Positive Long questionId,
-                                           @Positive @RequestParam Long userId) {
-      //  questionsService.deleteQuestions(questionId, userId);
+                                           @Positive @RequestParam Long memberId) {
+        questionsService.deleteQuestions(questionId, memberId);
 
-      //  return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
-        return null;
     }
 
-    /*
-
-    //TODO : VOTEDTO 만들기 -> REQUESTBODY로 받아오기!
     //투표수 up
-    @PostMapping("/question-votes")
+    @PostMapping
     public ResponseEntity setUpVote(@PathVariable("question-id") @Positive Long questionId,
-                                  @Positive @RequestParam Long userId) {
-        questionsService.setUpVote(questionId, userId);
+                                    @Positive @RequestParam Long userId) {
+        //questionsService.setUpVote(questionId, userId);
 
-        return new ResponseEntity(new ResponseDto<>(questionsService.getVoteCount(questionId)), HttpStatus.OK);
+        return new ResponseEntity(questionsService.getVoteCount(questionId), HttpStatus.OK);
 
     }
 
     //투표수 down
-    @PostMapping("/question-votes")
+    @PostMapping
     public ResponseEntity setDownVote(@PathVariable("question-id") @Positive Long questionId,
                                       @Positive @RequestParam Long userId) {
 
-        questionsService.setDownVote(questionId, userId);
+       // questionsService.setDownVote(questionId, userId);
 
-        return new ResponseEntity(new ResponseDto<> (questionsService.getVoteCount(questionId)), HttpStatus.OK);
+        return new ResponseEntity(questionsService.getVoteCount(questionId), HttpStatus.OK);
 
     }
-
-     */
 }

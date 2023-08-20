@@ -9,11 +9,11 @@ import javax.validation.constraints.NotNull;
 public class QuestionsPostDto {
 
     @NotNull
-    private Long userId;
+    private Long memberId;
 
     @NotBlank
     private String questionTitle;
 
     @NotBlank
-    private String questionbody;
+    private String questionBody;
 }
