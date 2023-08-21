@@ -16,7 +16,7 @@ public class QuestionVote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long questionVoteId;
 
-    private boolean isLike;
+    private boolean isLike = false;
 
     @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
