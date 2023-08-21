@@ -37,6 +37,18 @@ public class QuestionCommentMapper {
         }
     }
 
+    public QuestionComment deleteToQuestionComment(QuestionCommentDto.DeleteDto deleteDto) {
+        if(deleteDto == null) {
+            return null;
+        }
+        else {
+            QuestionComment questionComment = new QuestionComment();
+            questionComment.setQuestionCommentId(deleteDto.getQuestion_comment_id());
+            questionComment.setMember(deleteToMember(deleteDto));
+            return questionComment;
+        }
+    }
+
     public QuestionCommentDto.ResponseDto questionCommentToResponse(QuestionComment questionComment) {
         if(questionComment == null) {
             return null;
@@ -90,6 +102,18 @@ public class QuestionCommentMapper {
         else {
             Member member = new Member();
             member.setMemberId(postDto.getMember_id());
+
+            return member;
+        }
+    }
+
+    private Member deleteToMember(QuestionCommentDto.DeleteDto deleteDto) {
+        if(deleteDto == null) {
+            return null;
+        }
+        else {
+            Member member = new Member();
+            member.setMemberId(deleteDto.getMember_id());
 
             return member;
         }

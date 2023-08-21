@@ -68,11 +68,15 @@ public class AnswerCommentService {
         return answerComments;
     }
 
-    public void deleteAnswerComment(long answerCommentId) {
-        //TODO: 남는 시간 보고 soft delete 구현하기
-        AnswerComment answerComment = findVerifiedAnswerComment(answerCommentId);
+    public void deleteAnswerComment(AnswerComment answerComment) {
+        AnswerComment findAnswerComment = findVerifiedAnswerComment(answerComment.getAnswerCommentId());
 
-        answerCommentRepository.delete(answerComment);
+        if(findAnswerComment.getMember().getMemberId() != answerComment.getMember().getMemberId()) {
+            throw new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND);
+        }
+        else {
+            answerCommentRepository.delete(answerComment);
+        }
     }
 
     private AnswerComment findVerifiedAnswerComment(long answerCommentId) {

@@ -33,6 +33,17 @@ public class QuestionCommentDto {
 
     @Getter
     @Setter
+    public static class DeleteDto {
+
+        @NotBlank
+        private long member_id;
+
+        @NotBlank
+        private long question_comment_id;
+    }
+
+    @Getter
+    @Setter
     public static class ResponseDto {
 
         private long question_comment_id;

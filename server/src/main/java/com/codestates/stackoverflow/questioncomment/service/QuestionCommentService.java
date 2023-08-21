@@ -22,8 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class QuestionCommentService {
 
-    //임시로 사용중인 QuestionsRepository 추후 questionsService 구현 완료 시 삭제
-    private final QuestionsRepository questionsRepository;
     private final QuestionsService questionsService;
 
     private final MemberService memberService;
@@ -34,10 +32,7 @@ public class QuestionCommentService {
         //멤버 검증
         Member findMember = memberService.findVerifiedMember(questionComment.getMember().getMemberId());
 
-        //Answer findAnswer = answerService.findVerifyAnswer(answerComment.getAnswer().getAnswerId());
-        //AnswerService 구현 완료되면 위의 검증 코드로 수정
-        Questions findQuestion = questionsRepository.findById(questionComment.getQuestion().getQuestionId())
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Questions findQuestion = questionsService.findVerifiedQuestionById(questionComment.getQuestion().getQuestionId());
 
         questionComment.setMember(findMember);
         questionComment.setQuestion(findQuestion);
@@ -68,16 +63,21 @@ public class QuestionCommentService {
         return questionComments;
     }
 
-    public void deleteQuestionComment(long questionCommentId) {
-        //TODO: 남는 시간 보고 soft delete 구현하기
-        QuestionComment questionComment = findVerifiedQuestionComment(questionCommentId);
+    public void deleteQuestionComment(QuestionComment questionComment) {
 
-        questionCommentRepository.delete(questionComment);
+        QuestionComment findQuestionComment = findVerifiedQuestionComment(questionComment.getQuestionCommentId());
+
+        if(findQuestionComment.getMember().getMemberId() != questionComment.getMember().getMemberId()) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
+        }
+        else {
+            questionCommentRepository.delete(questionComment);
+        }
     }
 
     private QuestionComment findVerifiedQuestionComment(long questionCommentId) {
         QuestionComment questionComment = questionCommentRepository.findById(questionCommentId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
 
         return questionComment;
     }

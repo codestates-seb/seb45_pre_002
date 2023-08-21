@@ -37,6 +37,19 @@ public class AnswerCommentMapper {
         }
     }
 
+    public AnswerComment deleteToAnswerComment(AnswerCommentDto.DeleteDto deleteDto) {
+        if(deleteDto == null) {
+            return null;
+        }
+        else {
+            AnswerComment answerComment = new AnswerComment();
+            answerComment.setAnswerCommentId(deleteDto.getAnswer_comment_id());
+            answerComment.setMember(deleteoMember(deleteDto));
+
+            return answerComment;
+        }
+    }
+
     public AnswerCommentDto.ResponseDto answerCommentToResponse(AnswerComment answerComment) {
         if(answerComment == null) {
             return null;
@@ -83,5 +96,12 @@ public class AnswerCommentMapper {
         answer.setAnswerId(postDto.getAnswer_id());
 
         return answer;
+    }
+
+    private Member deleteoMember(AnswerCommentDto.DeleteDto deleteDto) {
+        Member member = new Member();
+        member.setMemberId(deleteDto.getMember_id());
+
+        return member;
     }
 }

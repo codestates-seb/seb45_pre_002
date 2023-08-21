@@ -4,6 +4,7 @@ import com.codestates.stackoverflow.questioncomment.dto.QuestionCommentDto;
 import com.codestates.stackoverflow.questioncomment.entity.QuestionComment;
 import com.codestates.stackoverflow.questioncomment.mapper.QuestionCommentMapper;
 import com.codestates.stackoverflow.questioncomment.service.QuestionCommentService;
+import com.codestates.stackoverflow.questionvote.mapper.QuestionVoteMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -50,6 +51,7 @@ public class QuestionCommentController {
     @GetMapping("/{question-comment-id}")
     public ResponseEntity findQuestionComment(@PathVariable("question-comment-id") @Positive long questionCommentId) {
         QuestionComment questionComment = questionCommentService.findQuestionComment(questionCommentId);
+
         QuestionCommentDto.ResponseDto responseDto = questionCommentMapper.questionCommentToResponse(questionComment);
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
@@ -65,9 +67,11 @@ public class QuestionCommentController {
         return new ResponseEntity<>(pageResponseDto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{question-comment-id}")
-    public ResponseEntity deleteQuestionComment(@PathVariable("question-comment-id") @Positive long questionCommentId) {
-        questionCommentService.deleteQuestionComment(questionCommentId);
+    @DeleteMapping
+    public ResponseEntity deleteQuestionComment(@Valid @RequestBody QuestionCommentDto.DeleteDto deleteDto) {
+        QuestionComment questionComment = questionCommentMapper.deleteToQuestionComment(deleteDto);
+
+        questionCommentService.deleteQuestionComment(questionComment);
 
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
