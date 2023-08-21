@@ -9,6 +9,7 @@ import com.codestates.stackoverflow.member.entity.Member;
 import com.codestates.stackoverflow.member.service.MemberService;
 import com.codestates.stackoverflow.question.entity.Questions;
 import com.codestates.stackoverflow.question.repository.QuestionsRepository;
+import com.codestates.stackoverflow.question.service.QuestionsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ public class AnswerService {
 
     private final QuestionsRepository questionsRepository;
 
-//    private final QuestionService questionService;
+    private final QuestionsService questionService;
 
     private final AnswerMapper answerMapper;
 
@@ -51,6 +52,12 @@ public class AnswerService {
         return answerRepository.save(answer);
 
     }
+
+//    public Answer checkAccepted(Member member, Long questionId, Long answerId) {
+//        Questions findQuestion = questionService.findQuestion(questionId);
+//
+//        if(findQuestion.getQuestionId(questionId))
+//    }
 
     public Answer updateAnswer(Answer answer) {
 
@@ -72,7 +79,7 @@ public class AnswerService {
 
     public void deleteAnswer(long answerId) {
         Answer answer = verifyExistAnswer(answerId);
-
+        memberService.findVerifiedMember(verifyExistAnswer(answerId).getAnswerId());
         answerRepository.delete(answer);
     }
 
