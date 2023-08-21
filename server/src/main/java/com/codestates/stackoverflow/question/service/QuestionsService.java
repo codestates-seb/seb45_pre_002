@@ -96,13 +96,13 @@ public class QuestionsService {
         questionsRepository.delete(questions);
     }
 
-    private void verifyQuestion(Questions questions) {
+   public void verifyQuestion(Questions questions) {
 
         memberService.findMember(questions.getMember().getMemberId());
 
     }
 
-    private Questions findVerifiedQuestionById(Long questionId) {
+   public Questions findVerifiedQuestionById(Long questionId) {
 
         Optional<Questions> optionalQuestions = questionsRepository.findById(questionId);
         Questions foundQuestion = optionalQuestions.orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));

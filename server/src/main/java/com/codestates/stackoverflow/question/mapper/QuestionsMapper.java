@@ -6,19 +6,49 @@ import com.codestates.stackoverflow.question.dto.QuestionsPostDto;
 import com.codestates.stackoverflow.question.entity.Questions;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class QuestionsMapper {
     public Questions questionPatchToQuestion(QuestionsPatchDto questionsPatchDto) {
-        return null;
+
+        Questions.QuestionsBuilder questionsBuilder = Questions.builder();
+
+        if( questionsPatchDto.getQuestionTitle() != null ) {
+            questionsBuilder.questionTitle(questionsPatchDto.getQuestionTitle());
+        }
+
+        if(questionsPatchDto.getQuestionBody() != null) {
+            questionsBuilder.questionBody(questionsPatchDto.getQuestionBody());
+        }
+
+        return questionsBuilder.build();
     };
 
     public List<QuestionResponseDto> questionListToQuestionsResponse(List<Questions> questionsList) {
-        return null;
+
+        if(questionsList == null) {
+            return null;
+        }
+
+        List<QuestionResponseDto> responseDtoList = new ArrayList<>();
+
+       for(Questions questions : questionsList) {
+
+           QuestionResponseDto questionResponseDto = new QuestionResponseDto();
+           questionResponseDto.setQuestionId(questions.getQuestionId());
+           questionResponseDto.setQuestionTitle(questions.getQuestionTitle());
+           questionResponseDto.setQuestionBody(questions.getQuestionBody());
+
+           responseDtoList.add(questionResponseDto);
+       }
+
+        return responseDtoList;
     };
 
     public QuestionResponseDto questionToQuestionsResponse(Questions questions) {
+
         if(questions == null) {
             return null;
         }
