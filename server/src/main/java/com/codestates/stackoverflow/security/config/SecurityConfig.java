@@ -47,6 +47,8 @@ public class SecurityConfig {
 
     private final MemberAccessDeniedHandler accessDeniedHandler;
 
+    private final MemberRepository memberRepository;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.headers().frameOptions().sameOrigin()
@@ -85,7 +87,7 @@ public class SecurityConfig {
         public void configure(HttpSecurity httpSecurity) throws Exception {
             AuthenticationManager authenticationManager = httpSecurity.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, memberRepository);
             jwtAuthenticationFilter.setFilterProcessesUrl("/members/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(memberAuthenticationSuccessHandler);
             jwtAuthenticationFilter.setAuthenticationFailureHandler(memberAuthenticationFailureHandler);

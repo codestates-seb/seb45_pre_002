@@ -2,6 +2,7 @@ package com.codestates.stackoverflow.member.entity;
 
 import com.codestates.stackoverflow.answer.entity.Answer;
 import com.codestates.stackoverflow.answercomment.entity.AnswerComment;
+import com.codestates.stackoverflow.answervote.entity.AnswerVote;
 import com.codestates.stackoverflow.audit.Auditable;
 import com.codestates.stackoverflow.question.entity.Questions;
 import com.codestates.stackoverflow.questioncomment.entity.QuestionComment;
@@ -52,4 +53,7 @@ public class Member extends Auditable {
 
     @OneToMany(targetEntity = QuestionVote.class, mappedBy = "member")
     private List<QuestionVote> questionVotes = new ArrayList<>();
+
+    @OneToMany(targetEntity = AnswerVote.class, mappedBy = "member")
+    private List<AnswerVote> answerVotes = new ArrayList<>();
 }

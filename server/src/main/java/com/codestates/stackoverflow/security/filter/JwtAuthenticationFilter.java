@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -28,11 +29,21 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final AuthenticationManager authenticationManager;
 
+    private final MemberRepository memberRepository;
+
     @SneakyThrows // 예외 발생 시 RuntimeException 처리
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
             ObjectMapper objectMapper = new ObjectMapper();
             LoginDto.PostDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.PostDto.class);
+
+//            //이메일 인증이 완료되지 않은 멤버가 로그인 시 거절
+//            Member member = memberRepository.findByEmail(loginDto.getEmail())
+//                    .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+//
+//            if (!member.isUserStatus()) {
+//                throw new DisabledException("need email authentication");
+//            }
 
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
 
