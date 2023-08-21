@@ -37,13 +37,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             ObjectMapper objectMapper = new ObjectMapper();
             LoginDto.PostDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.PostDto.class);
 
-//            //이메일 인증이 완료되지 않은 멤버가 로그인 시 거절
-//            Member member = memberRepository.findByEmail(loginDto.getEmail())
-//                    .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-//
-//            if (!member.isUserStatus()) {
-//                throw new DisabledException("need email authentication");
-//            }
+            //이메일 인증이 완료되지 않은 멤버가 로그인 시 거절
+            Member member = memberRepository.findByEmail(loginDto.getEmail())
+                    .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+            if (!member.isUserStatus()) {
+                throw new DisabledException("need email authentication");
+            }
 
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
 
