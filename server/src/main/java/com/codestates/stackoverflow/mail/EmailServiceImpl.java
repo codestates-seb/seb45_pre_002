@@ -14,10 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class EmailServiceImpl implements EmailService{
 
     private final JavaMailSender emailSender;
@@ -84,9 +86,11 @@ public class EmailServiceImpl implements EmailService{
     public void codeAuthentication(String ePw) {
         Member member = memberRepository.findByCode(ePw).orElseThrow();
 
-        if(!member.getCode().equals(ePw))
-        {
+        if(!member.getCode().equals(ePw)) {
             throw new RuntimeException();
+        }
+        else {
+            member.setUserStatus(true);
         }
     }
 }

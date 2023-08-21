@@ -5,6 +5,7 @@ import com.codestates.stackoverflow.answercomment.entity.AnswerComment;
 import com.codestates.stackoverflow.audit.Auditable;
 import com.codestates.stackoverflow.question.entity.Questions;
 import com.codestates.stackoverflow.questioncomment.entity.QuestionComment;
+import com.codestates.stackoverflow.questionvote.entity.QuestionVote;
 import lombok.*;
 
 import javax.persistence.*;
@@ -48,4 +49,7 @@ public class Member extends Auditable {
 
     @OneToMany(targetEntity = AnswerComment.class, mappedBy = "member")
     private List<AnswerComment> answerComments = new ArrayList<>();
+
+    @OneToMany(targetEntity = QuestionVote.class, mappedBy = "member")
+    private List<QuestionVote> questionVotes = new ArrayList<>();
 }
