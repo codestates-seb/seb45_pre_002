@@ -1,7 +1,7 @@
-package com.codestates.stackoverflow.questionvote.entity;
+package com.codestates.stackoverflow.answervote.entity;
 
+import com.codestates.stackoverflow.answer.entity.Answer;
 import com.codestates.stackoverflow.member.entity.Member;
-import com.codestates.stackoverflow.question.entity.Questions;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,11 +10,11 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class QuestionVote {
+public class AnswerVote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long questionVoteId;
+    private long answerVoteId;
 
     private boolean like = false;
 
@@ -22,7 +22,7 @@ public class QuestionVote {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne(targetEntity = Questions.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_id")
-    private Questions question;
+    @ManyToOne(targetEntity = Answer.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "answer_id")
+    private Answer answer;
 }

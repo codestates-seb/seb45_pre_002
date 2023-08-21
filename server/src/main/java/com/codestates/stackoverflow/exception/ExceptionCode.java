@@ -12,6 +12,7 @@ public enum ExceptionCode {
     ANSWER_EXISTS(409, "Answer exists"),
     QUESTION_EXISTS(409, "Question exists"),
     QUESTION_VOTE_EXISTS(409, "QuestionVote exists"),
+    ANSWER_VOTE_EXISTS(409, "AnswerVote exists"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
     INVALID_MEMBER_STATUS(400, "Invalid member status"),
     UNAUTHORIZED_USER(404, "unauthorized user");
