@@ -46,14 +46,16 @@ public class AnswerController {
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
 
-//    @PostMapping("/{question-id}/{answer-id}")
-//    public ResponseEntity acceptedAnswer(@PathVariable("question-id") @Positive long questionId,
-//                                         @PathVariable("answer-id") @Positive long answerId,
-//                                         @Valid @RequestBody AnswerDto.PostDto postDto) {
-//        Answer answer = mapper.postToAnswer(postDto);
-//        answer =
-//
-//    }
+    @PostMapping("/{question-id}/{answer-id}")
+    public ResponseEntity acceptAnswer(@PathVariable("answer-id") @Positive long answerId) {
+        boolean success = service.AcceptedAnswer(answerId);
+
+        if(success) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @PatchMapping("/{answer-id}")
     public ResponseEntity patchAnswer(@PathVariable("answer-id") @Positive long answerId,

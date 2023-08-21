@@ -44,7 +44,6 @@ public class Answer extends Auditable {
     @OneToMany(targetEntity = AnswerVote.class, mappedBy = "answer")
     private List<AnswerVote> answerVotes = new ArrayList<>();
 
-
     private boolean Accepted;
 
     public void setMember(Member member) {

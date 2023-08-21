@@ -53,7 +53,7 @@ public class AnswerDto {
 
         private long question_id;
 
-        private boolean accepted;
+        private boolean adopt;
 
         private String body;
 

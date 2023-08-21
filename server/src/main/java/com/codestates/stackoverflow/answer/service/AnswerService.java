@@ -53,11 +53,19 @@ public class AnswerService {
 
     }
 
-//    public Answer checkAccepted(Member member, Long questionId, Long answerId) {
-//        Questions findQuestion = questionService.findQuestion(questionId);
-//
-//        if(findQuestion.getQuestionId(questionId))
-//    }
+    //채택 기능 구현
+    public boolean AcceptedAnswer(Long answerId) {
+        Optional<Answer> answerOptional = answerRepository.findById(answerId);
+
+        if(answerOptional.isPresent()) {
+            Answer answer = answerOptional.get();
+            answer.setAccepted(true);
+            answerRepository.save(answer);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public Answer updateAnswer(Answer answer) {
 
