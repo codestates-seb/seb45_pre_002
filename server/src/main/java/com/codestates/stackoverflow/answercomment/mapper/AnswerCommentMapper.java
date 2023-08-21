@@ -43,7 +43,7 @@ public class AnswerCommentMapper {
         }
         else {
             AnswerCommentDto.ResponseDto responseDto = new AnswerCommentDto.ResponseDto();
-            responseDto.setQuestion_comment_id(answerComment.getAnswerCommentId());
+            responseDto.setAnswer_comment_id(answerComment.getAnswerCommentId());
             responseDto.setBody(answerComment.getBody());
             responseDto.setCreated_at(answerComment.getCreatedAt());
             responseDto.setLast_modified_at(answerComment.getLastModifiedAt());

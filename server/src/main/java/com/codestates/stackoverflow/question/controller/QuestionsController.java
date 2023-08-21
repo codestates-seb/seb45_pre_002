@@ -5,6 +5,7 @@ import com.codestates.stackoverflow.question.dto.QuestionsPostDto;
 import com.codestates.stackoverflow.question.entity.Questions;
 import com.codestates.stackoverflow.question.mapper.QuestionsMapper;
 import com.codestates.stackoverflow.question.service.QuestionsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,17 +22,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/questions")
 @Validated
+@RequiredArgsConstructor
 public class QuestionsController {
-    private QuestionsService questionsService;
-    private QuestionsMapper questionsMapper;
-
-
-    public QuestionsController(QuestionsMapper questionsMapper, QuestionsService questionsService) {
-
-        this.questionsMapper = questionsMapper;
-        this.questionsService = questionsService;
-
-    }
+    private final QuestionsService questionsService;
+    private final QuestionsMapper questionsMapper;
 
     //TODO: 이미지 삽입
     //TODO: 로그인 했을 때만 가능하게
@@ -89,24 +83,24 @@ public class QuestionsController {
 
     }
 
-    //투표수 up
-    @PostMapping
-    public ResponseEntity setUpVote(@PathVariable("question-id") @Positive Long questionId,
-                                    @Positive @RequestParam Long userId) {
-        //questionsService.setUpVote(questionId, userId);
+    //TODO:투표수 up
+//    @PostMapping
+//    public ResponseEntity setUpVote(@PathVariable("question-id") @Positive Long questionId,
+//                                    @Positive @RequestParam Long userId) {
+//        //questionsService.setUpVote(questionId, userId);
+//
+//        return new ResponseEntity(questionsService.getVoteCount(questionId), HttpStatus.OK);
+//
+//    }
 
-        return new ResponseEntity(questionsService.getVoteCount(questionId), HttpStatus.OK);
-
-    }
-
-    //투표수 down
-    @PostMapping
-    public ResponseEntity setDownVote(@PathVariable("question-id") @Positive Long questionId,
-                                      @Positive @RequestParam Long userId) {
-
-       // questionsService.setDownVote(questionId, userId);
-
-        return new ResponseEntity(questionsService.getVoteCount(questionId), HttpStatus.OK);
-
-    }
+    //TODO:투표수 down
+//    @PostMapping
+//    public ResponseEntity setDownVote(@PathVariable("question-id") @Positive Long questionId,
+//                                      @Positive @RequestParam Long userId) {
+//
+//       // questionsService.setDownVote(questionId, userId);
+//
+//        return new ResponseEntity(questionsService.getVoteCount(questionId), HttpStatus.OK);
+//
+//    }
 }

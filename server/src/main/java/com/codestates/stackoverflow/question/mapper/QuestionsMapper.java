@@ -9,12 +9,16 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public interface QuestionsMapper {
-    Questions questionPatchToQuestion(QuestionsPatchDto questionsPatchDto);
+public class QuestionsMapper {
+    public Questions questionPatchToQuestion(QuestionsPatchDto questionsPatchDto) {
+        return null;
+    };
 
-    List<QuestionResponseDto> questionListToQuestionsResponse(List<Questions> questionsList);
+    public List<QuestionResponseDto> questionListToQuestionsResponse(List<Questions> questionsList) {
+        return null;
+    };
 
-    default QuestionResponseDto questionToQuestionsResponse(Questions questions) {
+    public QuestionResponseDto questionToQuestionsResponse(Questions questions) {
         if(questions == null) {
             return null;
         }
@@ -40,7 +44,7 @@ public interface QuestionsMapper {
         return questionResponseDto;
     }
 
-    default Questions questionsPostToQuestion (QuestionsPostDto questionsPostDto) {
+    public Questions questionsPostToQuestion (QuestionsPostDto questionsPostDto) {
 
         if( questionsPostDto == null) {
             return null;

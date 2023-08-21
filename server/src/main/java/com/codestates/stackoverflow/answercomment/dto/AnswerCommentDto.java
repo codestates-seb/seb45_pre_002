@@ -35,7 +35,7 @@ public class AnswerCommentDto {
     @Setter
     public static class ResponseDto {
 
-        private long question_comment_id;
+        private long answer_comment_id;
 
         private String body;
 

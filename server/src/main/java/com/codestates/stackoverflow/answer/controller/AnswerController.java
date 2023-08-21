@@ -56,7 +56,13 @@ public class AnswerController {
         Answer response = service.updateAnswer(answer);
 
         return new ResponseEntity<>(mapper.answerToResponse(response), HttpStatus.OK);
+    }
 
+    @GetMapping("/{answer-id}")
+    public ResponseEntity getAnswer(@PathVariable("answer-id") @Positive long answerId) {
+        Answer answer = service.findVerifiedAnswer(answerId);
+
+        return new ResponseEntity<>(mapper.answerToResponse(answer), HttpStatus.OK);
     }
 
     @GetMapping
@@ -67,7 +73,7 @@ public class AnswerController {
     }
 
     @DeleteMapping("/{answer-id}")
-    public ResponseEntity deleteAnswer(@Positive long answerId) {
+    public ResponseEntity deleteAnswer(@PathVariable("answer-id") @Positive long answerId) {
 
         service.deleteAnswer(answerId);
 

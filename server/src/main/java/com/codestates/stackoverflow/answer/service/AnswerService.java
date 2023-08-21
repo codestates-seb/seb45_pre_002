@@ -71,9 +71,9 @@ public class AnswerService {
 
 
     public void deleteAnswer(long answerId) {
+        Answer answer = verifyExistAnswer(answerId);
 
-        answerRepository.deleteById(answerId);
-
+        answerRepository.delete(answer);
     }
 
     @Transactional(readOnly = true)
@@ -85,18 +85,10 @@ public class AnswerService {
         return findAnswer;
     }
 
+    private Answer verifyExistAnswer(long answerId) {
+        Answer answer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
 
-    private void verifyExistAnswer(Answer answer) {
-        // member가 존재하는지 확인
-        Member member = memberService.findMember(answer.getMember().getMemberId());
-        answer.setMember(member);
-
-        // 질문이 존재하는지 확인
-//        Questions question = question.findQuestion(answer.getQuestion().getQuestionId());
-//        answer.setQuestion(question);
-
+        return answer;
     }
-
-
-
 }

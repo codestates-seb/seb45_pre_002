@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class AnswerMapper {
@@ -75,17 +76,13 @@ public class AnswerMapper {
         if(answers == null) {
             return null;
         } else {
-            List<AnswerDto.ResponseDto> responseDtos = new ArrayList<>();
-
-            for(int i = 0; i < answers.size(); i++) {
-                responseDtos.add(answerToResponse(answers.get(i)));
-            }
+            List<AnswerDto.ResponseDto> responseDtos = answers
+                    .stream().map(answer -> answerToResponse(answer)).collect(Collectors.toList());
 
             AnswerDto.ListResponseDto listResponseDto = new AnswerDto.ListResponseDto();
             listResponseDto.setAnswers(responseDtos);
 
             return listResponseDto;
         }
-
     }
 }
