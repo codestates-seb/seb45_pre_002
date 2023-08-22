@@ -1,14 +1,22 @@
 package com.codestates.stackoverflow.question.service;
 
 
+import com.codestates.stackoverflow.answercomment.entity.AnswerComment;
 import com.codestates.stackoverflow.exception.BusinessLogicException;
 import com.codestates.stackoverflow.exception.ExceptionCode;
 import com.codestates.stackoverflow.member.entity.Member;
 import com.codestates.stackoverflow.member.service.MemberService;
+import com.codestates.stackoverflow.question.dto.QuestionsPageDto;
 import com.codestates.stackoverflow.question.entity.Questions;
+import com.codestates.stackoverflow.question.mapper.QuestionsMapper;
 import com.codestates.stackoverflow.question.repository.QuestionsRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +36,15 @@ public class QuestionsService {
         this.memberService = memberService;
     }
 
+    public Page<Questions> findquestions(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by("questionId").ascending());
+        Page<Questions> question = questionsRepository.findAll(pageable);
 
-    public Questions createQuestion(Questions questions, Long memberId) {
+        return question;
+    }
+
+
+    public Questions createQuestion(Questions questions, long memberId) {
 
         questions.setMember(memberService.findMember(memberId));
         verifyQuestion(questions);
@@ -37,7 +52,7 @@ public class QuestionsService {
         return saveQuestion(questions);
     }
 
-    public Questions findQuestion(Long questionId) {
+    public Questions findQuestion(long questionId) {
         return findVerifiedQuestionById(questionId);
 
     }
@@ -60,13 +75,13 @@ public class QuestionsService {
 
     }
 
-    public void updateQuestionsViewCount(Questions questions, Long viewCount) {
+    public void updateQuestionsViewCount(Questions questions, long viewCount) {
 
         questions.updateViewCount(viewCount + 1);
         saveQuestion(questions);
     }
 
-    public Questions updateQuestions(Questions questions, Long memberId) {
+    public Questions updateQuestions(Questions questions, long memberId) {
 
         Questions foundQuestion = findQuestion(questions.getQuestionId());
 
@@ -80,15 +95,15 @@ public class QuestionsService {
         return saveQuestion(foundQuestion);
     }
 
-    public void verifyUserAuthorization(Long authorizedUserId, Long tryingMemberId) {
+    public void verifyUserAuthorization(long authorizedUserId, long tryingMemberId) {
         //member의 권한 확인
 
-        if (!Objects.equals(authorizedUserId,tryingMemberId))
+        if (authorizedUserId != tryingMemberId)
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
     }
 
 
-    public void  deleteQuestions(Long questionId, Long memberId) {
+    public void  deleteQuestions(long questionId, long memberId) {
 
         Questions questions = findVerifiedQuestionById(questionId);
         verifyUserAuthorization(questions.getMember().getMemberId(), memberId);
@@ -102,7 +117,7 @@ public class QuestionsService {
 
     }
 
-   public Questions findVerifiedQuestionById(Long questionId) {
+   public Questions findVerifiedQuestionById(long questionId) {
 
         Optional<Questions> optionalQuestions = questionsRepository.findById(questionId);
         Questions foundQuestion = optionalQuestions.orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
@@ -112,79 +127,13 @@ public class QuestionsService {
 
     private Questions saveQuestion(Questions questions) {
 
-        return questionsRepository.saveAndFlush(questions);
+        return questionsRepository.save(questions);
     }
 
-    public Long getVoteCount(Long questionId) {
+    public long getVoteCount(long questionId) {
 
         Questions questions = findVerifiedQuestionById(questionId);
         return questions.getVoteCount();
     }
 
-    //TODO: 투표 방식 다시 생각하기
-
-    /*
-    public void setUpVote(Long questionId, Long memberId ) {
-
-        memberService.findMember(memberId);
-
-        Questions questions = findVerifiedQuestionById(questionId);
-        VoteStatus status = getUserVoteStatus(questions, memberId);
-        Long voteCountNum = questions.getVoteCount();
-
-        if(status == VoteStatus.NO_VOTE) {
-            questions.upVotedUserId.add(memberId);
-            voteCountNum++;
-        }
-        questions.updateVoteCount(voteCountNum);
-    }
-
-    public void setDownVote(Long questionId, Long memberId) {
-
-        memberService.findMember(memberId);
-
-        Questions questions = findVerifiedQuestionById(questionId);
-        VoteStatus status = getUserVoteStatus(questions, memberId);
-        Long voteCountNum = questions.getVoteCount();
-
-        if(status == VoteStatus.NO_VOTE) {
-            questions.upVotedUserId.add(memberId);
-            voteCountNum++;
-        }
-
-        questions.updateVoteCount(voteCountNum);
-    }
-
-    private VoteStatus getUserVoteStatus (Questions questions, Long memberId) {
-
-        if(questions.getUpVotedUserId().contains(memberId)) {
-            return VoteStatus.DID_UP_VOTE;
-        }else if(questions.getDownVotedUserId().contains(memberId)){
-            return VoteStatus.DID_DOWN_VOTE;
-        }else{
-            return VoteStatus.NO_VOTE;
-        }
-    }
-
-     */
-
-    /*
-    public enum VoteStatus{
-        DID_UP_VOTE(1,"did up vote"),
-        NO_VOTE(2,"did no vote"),
-        DID_DOWN_VOTE(3,"did down vote");
-    }
-
-    @Getter
-    private int status;
-
-    @Getter
-    private String message;
-
-    VoteStatus(int code, String message) {
-        this.status = code;
-        this.message = message;
-    }
-
-     */
 }

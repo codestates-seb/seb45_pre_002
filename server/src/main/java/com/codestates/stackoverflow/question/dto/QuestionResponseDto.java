@@ -1,5 +1,7 @@
 package com.codestates.stackoverflow.question.dto;
 
+import com.codestates.stackoverflow.utils.PageInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,13 +11,13 @@ import java.time.LocalDateTime;
 @Setter
 public class QuestionResponseDto {
 
-    private Long questionId;
-    private Long memberId;
+    private long questionId;
+    private long memberId;
     private String questionTitle;
     private String questionBody;
-    private int viewCount;
-    private int voteCount;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    private long viewCount;
+    private long voteCount;
+    private String createdAt;
+    private String lastModifiedAt;
 
 }

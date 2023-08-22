@@ -4,16 +4,18 @@ import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Getter
 public class QuestionsPostDto {
 
     @NotNull
-    private Long memberId;
+    private long memberId;
 
     @NotBlank
     private String questionTitle;
 
     @NotBlank
     private String questionBody;
+
 }

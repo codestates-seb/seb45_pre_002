@@ -1,11 +1,15 @@
 package com.codestates.stackoverflow.question.controller;
 
+import com.codestates.stackoverflow.answercomment.dto.AnswerCommentDto;
+import com.codestates.stackoverflow.answercomment.entity.AnswerComment;
+import com.codestates.stackoverflow.question.dto.QuestionsPageDto;
 import com.codestates.stackoverflow.question.dto.QuestionsPatchDto;
 import com.codestates.stackoverflow.question.dto.QuestionsPostDto;
 import com.codestates.stackoverflow.question.entity.Questions;
 import com.codestates.stackoverflow.question.mapper.QuestionsMapper;
 import com.codestates.stackoverflow.question.service.QuestionsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -42,7 +46,7 @@ public class QuestionsController {
 
     //TODO: 수정 날짜와 시간 표시
     @PatchMapping("/{question-id}")
-    public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive Long questionId,
+    public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive long questionId,
                                         @Valid @RequestBody QuestionsPatchDto questionsPatchDto) {
 
         questionsPatchDto.setQuestionId(questionId);
@@ -56,7 +60,7 @@ public class QuestionsController {
 
     // 하나의 게시글만 조회
     @GetMapping("/{question-id}")
-    public ResponseEntity getQuestion (@PathVariable("question-id") @Positive Long questionId){
+    public ResponseEntity getQuestion (@PathVariable("question-id") @Positive long questionId){
 
         Questions questions = questionsService.findQuestion(questionId);
         questionsService.updateQuestionsViewCount(questions,questions.getViewCount());
@@ -65,7 +69,8 @@ public class QuestionsController {
     }
 
     // 전체 질문 조회
-    @GetMapping()
+    /*
+    @GetMapping
     public ResponseEntity getQuestions() {
 
         List<Questions> questionsList = questionsService.getAllquestions();
@@ -74,33 +79,24 @@ public class QuestionsController {
 
     }
 
+     */
+
     @DeleteMapping (value = "/{question-id}")
-    public ResponseEntity deleteQuestions (@PathVariable("question-id") @Positive Long questionId,
-                                           @Positive @RequestParam Long memberId) {
+    public ResponseEntity deleteQuestions (@PathVariable("question-id") @Positive long questionId,
+                                           @Positive @RequestParam long memberId) {
         questionsService.deleteQuestions(questionId, memberId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
 
-    //TODO:투표수 up
-//    @PostMapping
-//    public ResponseEntity setUpVote(@PathVariable("question-id") @Positive Long questionId,
-//                                    @Positive @RequestParam Long userId) {
-//        //questionsService.setUpVote(questionId, userId);
-//
-//        return new ResponseEntity(questionsService.getVoteCount(questionId), HttpStatus.OK);
-//
-//    }
+    @GetMapping("/pageNumber={pageNumber}/pageSize={pageSize}")
+    public ResponseEntity findquestions(@PathVariable ("pageNumber") @Positive int pageNumber,
+                                        @PathVariable ("pageSize") @Positive int pageSize) {
+        Page<Questions> question = questionsService.findquestions(pageNumber, pageSize);
 
-    //TODO:투표수 down
-//    @PostMapping
-//    public ResponseEntity setDownVote(@PathVariable("question-id") @Positive Long questionId,
-//                                      @Positive @RequestParam Long userId) {
-//
-//       // questionsService.setDownVote(questionId, userId);
-//
-//        return new ResponseEntity(questionsService.getVoteCount(questionId), HttpStatus.OK);
-//
-//    }
+        QuestionsPageDto.PageResponseDto pageResponseDto = questionsMapper.questionsPageToPageResponseDto(question);
+
+        return new ResponseEntity<>(pageResponseDto, HttpStatus.OK);
+    }
 }

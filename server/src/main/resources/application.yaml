@@ -11,7 +11,6 @@ spring:
       format_sql: true #쿼리 들여쓰기 등의 포맷에 맞춰 표출
       ddl-auto: create
     show-sql: true
-
 #파라미터 값 표출
 logging:
   level:

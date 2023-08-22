@@ -1,11 +1,20 @@
 package com.codestates.stackoverflow.question.mapper;
 
+import com.codestates.stackoverflow.answercomment.dto.AnswerCommentDto;
+import com.codestates.stackoverflow.answercomment.entity.AnswerComment;
+import com.codestates.stackoverflow.member.entity.Member;
 import com.codestates.stackoverflow.question.dto.QuestionResponseDto;
+import com.codestates.stackoverflow.question.dto.QuestionsPageDto;
 import com.codestates.stackoverflow.question.dto.QuestionsPatchDto;
 import com.codestates.stackoverflow.question.dto.QuestionsPostDto;
 import com.codestates.stackoverflow.question.entity.Questions;
+import com.codestates.stackoverflow.audit.Auditable;
+import com.codestates.stackoverflow.utils.PageInfo;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,17 +22,13 @@ import java.util.List;
 public class QuestionsMapper {
     public Questions questionPatchToQuestion(QuestionsPatchDto questionsPatchDto) {
 
-        Questions.QuestionsBuilder questionsBuilder = Questions.builder();
+        Questions questions = new Questions();
 
-        if( questionsPatchDto.getQuestionTitle() != null ) {
-            questionsBuilder.questionTitle(questionsPatchDto.getQuestionTitle());
-        }
+        questions.setQuestionTitle(questionsPatchDto.getQuestionTitle());
+        questions.setQuestionBody(questionsPatchDto.getQuestionBody());
+        questions.setQuestionId(questionsPatchDto.getQuestionId());
 
-        if(questionsPatchDto.getQuestionBody() != null) {
-            questionsBuilder.questionBody(questionsPatchDto.getQuestionBody());
-        }
-
-        return questionsBuilder.build();
+        return questions;
     };
 
     public List<QuestionResponseDto> questionListToQuestionsResponse(List<Questions> questionsList) {
@@ -59,17 +64,9 @@ public class QuestionsMapper {
         questionResponseDto.setMemberId(questions.getMember().getMemberId());
         questionResponseDto.setQuestionTitle(questions.getQuestionTitle());
         questionResponseDto.setQuestionBody(questions.getQuestionBody());
-
-        if ( questions.getViewCount() != null) {
-            questionResponseDto.setViewCount( questions.getViewCount().intValue());
-        }
-
-        if (questions.getVoteCount() != null) {
-            questionResponseDto.setVoteCount( questions.getVoteCount().intValue());
-        }
-
+        questionResponseDto.setViewCount(questions.getViewCount());
         questionResponseDto.setCreatedAt(questions.getCreatedAt());
-        questionResponseDto.setModifiedAt(questions.getModifiedAt());
+        questionResponseDto.setLastModifiedAt(questions.getLastModifiedAt());
 
         return questionResponseDto;
     }
@@ -79,14 +76,31 @@ public class QuestionsMapper {
         if( questionsPostDto == null) {
             return null;
         }
+        Questions questions = new Questions();
 
-        Questions.QuestionsBuilder questionsBuilder = Questions.builder();
-
-        questionsBuilder.questionTitle( questionsPostDto.getQuestionTitle());
-        questionsBuilder.questionBody(questionsPostDto.getQuestionBody());
-
-        Questions questions = questionsBuilder.build();
+        questions.setQuestionTitle(questionsPostDto.getQuestionTitle());
+        questions.setQuestionBody(questionsPostDto.getQuestionBody());
 
         return questions;
+    }
+
+    public QuestionsPageDto.PageResponseDto questionsPageToPageResponseDto(Page<Questions> question) {
+
+        if(question == null) {
+            return null;
+        }
+        else {
+            QuestionsPageDto.PageResponseDto pageResponseDto = new QuestionsPageDto.PageResponseDto();
+
+            pageResponseDto.setQuestions(question.getContent());
+            pageResponseDto.setPageInfo(PageInfo.builder()
+                    .pageNumber(question.getNumber())
+                    .pageSize(question.getSize())
+                    .totalElements(question.getTotalElements())
+                    .totalPages(question.getTotalPages())
+                    .build());
+
+            return pageResponseDto;
+        }
     }
 }
