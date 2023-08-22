@@ -39,6 +39,19 @@ function AskQuestion() {
 		// 여기서 유효성 검사 또는 다른 필요한 로직을 수행합니다.
 		// 그리고 나서 페이지 이동을 처리합니다.
 		// 대상 경로로 이동하도록 수정
+
+		fetch("https://test.com/questions", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"ngrok-skip-browser-warning": "69420",
+			},
+			body: JSON.stringify({ title: title, body: content }),
+		}).then((res) => {
+			res.json();
+		});
+		//  FIXME
+
 		navigate("/login", {
 			state: { title, content },
 		});
@@ -46,7 +59,6 @@ function AskQuestion() {
 
 	return (
 		<div className="AskQuestion-container">
-			<div className="AskQuestionSidebar">{/* Sidebar content */}</div>
 			<div className="AskQuestionContent">
 				<h1 id="AskTitle">Ask a public question</h1>
 				<div className="AskQuestionInstructions">
@@ -101,33 +113,8 @@ function AskQuestion() {
 					Post
 				</button>
 			</div>
-			<div className="sidebar-right"></div>
 		</div>
 	);
 }
 
 export default AskQuestion;
-/* import React, { useRef, useEffect } from "react";
-import { StacksEditor } from "@stackoverflow/stacks-editor";
-
-import "@stackoverflow/stacks-editor/dist/styles.css";
-import "@stackoverflow/stacks";
-import "@stackoverflow/stacks/dist/css/stacks.css";
-
-function AskQuestion() {
-	const editorRef = useRef(null);
-
-	useEffect(() => {
-		if (editorRef.current) {
-			new StacksEditor(editorRef.current, "", {});
-		}
-	});
-
-	return (
-		<div
-			id="editor"
-			ref={editorRef}></div>
-	);
-}
-
-export default AskQuestion; */

@@ -3,12 +3,18 @@ import { Link } from "react-router-dom";
 import "./LoginPasswordReset.css";
 import { useNavigate } from "react-router-dom";
 
+// 로그인이 된 상태에서 비밀번호 변경
 // 서버로 변경된 비밀번호 업데이트하는 fetch 함수 추가
 
 function LoginPasswordReset() {
 	const [newPassword, setNewPassword] = useState("");
 	const [confirmNewPassword, setConfirmNewPassword] = useState("");
 	const navigate = useNavigate();
+
+	fetch("https://test.com/members/{member-id}/change-password", {
+		method: "PATCH",
+		headers: {},
+	});
 
 	const handleOkClick = () => {
 		if (newPassword && newPassword === confirmNewPassword) {

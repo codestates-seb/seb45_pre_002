@@ -4,10 +4,7 @@ import SignUpButton from "./SignUpButton";
 import LoginButton from "./LoginButton";
 import { Link } from "react-router-dom";
 
-function Header({ loginState, setLoginState }) {
-	// 로그인상태
-	// const [loginState, setLoginState] = useState(false);
-
+function Header({ loginState, setLoginState, userName }) {
 	return (
 		<div className="header-container">
 			<header className="header">
@@ -52,7 +49,9 @@ function Header({ loginState, setLoginState }) {
 				</div>
 				<div className="header-login-signup">
 					{loginState ? (
-						<span className="username">베이컨햄버거</span>
+						<span className="username">
+							<Link to="/myinfo">{userName}</Link>
+						</span>
 					) : (
 						<LoginButton />
 					)}

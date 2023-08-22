@@ -9,7 +9,7 @@ import "./LoginForm.css";
 // Access-Control-Allow-Headers: Content-Type, Authorization
 // Access-Control-Allow-Credentials: true
 
-function LoginForm() {
+function LoginForm({ loginState, setLoginState, setUserName }) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
@@ -21,7 +21,10 @@ function LoginForm() {
 	});
 
 	const handleLogin = () => {
+		setLoginState(!loginState);
 		navigate("/question-list");
+		setUserName("스파이더맨");
+
 		// if (!email) {
 		// 	alert("이메일을 입력해주세요.");
 		// } else {
@@ -31,8 +34,6 @@ function LoginForm() {
 		// 		headers,
 		// 		body: JSON.stringify({ email, password }), // 요청 바디에 데이터 전달
 		// 	})
-		// 		// .then((response) => response.json())
-
 		// 		.then((res) => {
 		// 			if (res.status === 200) {
 		// 				const authorizationHeader = res.headers.get("Authorization");
@@ -40,7 +41,7 @@ function LoginForm() {
 		// 				const contentTypeHeader = res.headers.get("Content-Type");
 		// 				console.log(authorizationHeader, contentTypeHeader);
 		// 				//   alert("로그인 성공!");
-		// 				// navigate("/question-list");
+		// 				navigate("/question-list");
 		// 				// .then((response) => {
 		// 				// 	if (response.email && response.password) {
 		// 				// 		// 로그인 성공 시 main 페이지로 이동

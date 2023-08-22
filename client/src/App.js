@@ -14,17 +14,21 @@ import Reply from "./page/Reply";
 import AskQuestion from "./page/AskQuestion";
 import QuestionListPage from "./page/QuestionListPage";
 import Question from "./page/Question";
+import ForgotPasswordReset from "./page/ForgotPasswordReset";
 // import SidebarLeft from "./component/SidebarLeft";
 
 function App() {
-	// const initialLoginState = localStorage.getItem("loginState") === "true";
+	const initialLoginState = localStorage.getItem("loginState") === "true";
+	const initialUserName = localStorage.getItem("userName") || "defaultUserName";
 
-	// const [loginState, setLoginState] = useState(initialLoginState);
-	const [loginState, setLoginState] = useState(true);
+	const [loginState, setLoginState] = useState(initialLoginState);
+	const [userName, setUserName] = useState(initialUserName);
+	console.log(loginState);
 
 	useEffect(() => {
 		localStorage.setItem("loginState", loginState);
-	}, [loginState]);
+		localStorage.setItem("userName", userName);
+	}, [loginState, userName]);
 
 	return (
 		<BrowserRouter>
@@ -32,6 +36,7 @@ function App() {
 				<Header
 					loginState={loginState}
 					setLoginState={setLoginState}
+					userName={userName}
 				/>
 				<div className="content">
 					<Routes>
@@ -46,6 +51,7 @@ function App() {
 								<LoginForm
 									loginState={loginState}
 									setLoginState={setLoginState}
+									setUserName={setUserName}
 								/>
 							}
 						/>
@@ -65,10 +71,17 @@ function App() {
 							element={<VerificationComponent />}></Route>
 						<Route
 							path="/myinfo"
-							element={<MyInfo />}></Route>
+							element={
+								<MyInfo
+									userName={userName}
+									setUserName={setUserName}
+								/>
+							}></Route>
 						<Route
 							path="/changepw"
-							element={<LoginPasswordReset />}></Route>
+							element={
+								loginState ? <LoginPasswordReset /> : <ForgotPasswordReset />
+							}></Route>
 						<Route
 							path="/reply"
 							element={<Reply />}></Route>
