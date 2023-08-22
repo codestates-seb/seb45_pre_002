@@ -25,31 +25,19 @@ import java.util.Optional;
 @Validated
 public class MemberController{
 
-    private final static String USER_DEFAULT_URL = "/members";
-
     private final MemberMapper mapper;
 
     private final MemberService service;
 
-    @GetMapping("/login")
-    public String loginForm() { // 로그인 폼 요청 메서드
-        return "login";
-    }
-
-    @GetMapping("/signup") //로컬 테스트용 추후 배포 시 삭제
-    public String signupForm() {
-        return"signup";
-    }
-
     @PostMapping("/signup")
-    public ResponseEntity postMember(@RequestBody MemberDto.PostDto postDto) {
+    public ResponseEntity postMember(@Valid @RequestBody MemberDto.PostDto postDto) {
         Member member = mapper.postToMember(postDto);
 
         member = service.createMember(member);
 
-        URI location = UriCreator.createUri(USER_DEFAULT_URL, member.getMemberId());
+        MemberDto.ResponseDto response = mapper.memberToResponse(member);
 
-        return new ResponseEntity<>(location, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PatchMapping("/{member_id}")

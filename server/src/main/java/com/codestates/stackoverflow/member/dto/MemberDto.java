@@ -28,14 +28,13 @@ public class MemberDto {
 
         @Column(name = "username", nullable = false, unique = true)
         @NotBlank(message = "닉네임은 공백일 수 없습니다.")
-        @Pattern(regexp = "^(?!\\s*$)[a-zA-Z0-9가-힣-_]$", message = "분리된 자모음 혹은 사용할 수 없는 특수문자가 들어있습니다.")
-        @Size(min = 2, max = 8, message = "닉네임은 2자리 이상 8자리 이하여야 합니다.")
+        @Pattern(regexp = "^(?!\\s*$)[a-zA-Z0-9가-힣-_].{1,7}$", message = "닉네임은 2자리 이상 8자리 이하여야 하며, 분리된 자모음 혹은 사용할 수 없는 특수문자가 포함되지 말아야 합니다..")
         private String username;
 
         @Column(name = "password", nullable = false)
         @NotBlank(message = "비밀번호는 공백일 수 없습니다.")
-        @Pattern(regexp = "^(?!\\s*$)((?=.*[a-zA-Z])|(?=.*\\d)|(?=.*\\W))$", message = "하나 이상의 영문, 특수문자, 숫자가 조합되어야 합니다.")
         @Size(min = 8, max = 16, message = "비밀번호는 8자리 이상 16자리 이하여야 합니다.")
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).+$", message = "하나 이상의 영문, 숫자, 특수문자가 조합되어야 합니다.")
         private String password;
     }
 
@@ -69,8 +68,7 @@ public class MemberDto {
         private String email;
 
         @Column(name = "username", nullable = false, unique = true)
-        @Pattern(regexp = "^(?!\\s*$)[a-zA-Z0-9가-힣-_].{8,16}$", message = "분리된 자모음 혹은 사용할 수 없는 특수문자가 들어있습니다.")
-        //@Size(min = 2, max = 8, message = "닉네임은 2자리 이상 8자리 이하여야 합니다.")
+        @Pattern(regexp = "^(?!\\s*$)[a-zA-Z0-9가-힣-_].{1,7}$", message = "닉네임은 2자리 이상 8자리 이하여야 하며, 분리된 자모음 혹은 사용할 수 없는 특수문자가 포함되지 말아야 합니다..")
         private String username;
 
         @Column(name = "password", nullable = false)

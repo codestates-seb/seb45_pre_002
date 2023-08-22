@@ -48,8 +48,10 @@ public class AnswerCommentController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    @GetMapping("/answer-comments/{answer-comment-id}")
-    public ResponseEntity findAnswerComment(@PathVariable("answer-comment-id") @Positive long answerCommentId) {
+    @GetMapping("/questions/{question-id}/answers/{answer-id}/comments/{answer-comment-id}")
+    public ResponseEntity findAnswerComment(@PathVariable("question-id") @Positive long questionId,
+                                            @PathVariable("answer-id") @Positive long answerId,
+                                            @PathVariable("answer-comment-id") @Positive long answerCommentId) {
         AnswerComment answerComment = answerCommentService.findAnswerComment(answerCommentId);
         AnswerCommentDto.ResponseDto responseDto = answerCommentMapper.answerCommentToResponse(answerComment);
 
