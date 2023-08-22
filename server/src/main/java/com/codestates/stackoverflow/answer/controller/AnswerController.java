@@ -21,7 +21,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
-@RequestMapping("/answers")
+@RequestMapping
 @RequiredArgsConstructor
 @Validated
 public class AnswerController {
@@ -34,7 +34,7 @@ public class AnswerController {
 
     private final MemberService memberService;
 
-    @PostMapping
+    @PostMapping("/answers")
     public ResponseEntity postAnswer(@Valid @RequestBody AnswerDto.PostDto postDto) {
 
         memberService.findMember(postDto.getMember_id());
@@ -46,7 +46,7 @@ public class AnswerController {
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
 
-    @PostMapping("/{question-id}/{answer-id}")
+    @PostMapping("/answers/{answer-id}")
     public ResponseEntity acceptAnswer(@PathVariable("answer-id") @Positive long answerId) {
         boolean success = service.AcceptedAnswer(answerId);
 
@@ -57,7 +57,7 @@ public class AnswerController {
         }
     }
 
-    @PatchMapping("/{answer-id}")
+    @PatchMapping("/answers/{answer-id}")
     public ResponseEntity patchAnswer(@PathVariable("answer-id") @Positive long answerId,
                                       @Valid @RequestBody AnswerDto.PatchDto patchDto){
 
@@ -70,21 +70,23 @@ public class AnswerController {
         return new ResponseEntity<>(mapper.answerToResponse(response), HttpStatus.OK);
     }
 
-    @GetMapping("/{answer-id}")
-    public ResponseEntity getAnswer(@PathVariable("answer-id") @Positive long answerId) {
-        Answer answer = service.findVerifiedAnswer(answerId);
+    @GetMapping("/questions/{question-id}/answers/{answer-id}")
+    public ResponseEntity getAnswer(@PathVariable("question-id") @Positive long questionId,
+                                    @PathVariable("answer-id") @Positive long answerId) {
+
+        Answer answer = service.findAnswer(questionId, answerId);
 
         return new ResponseEntity<>(mapper.answerToResponse(answer), HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity getAnswers() {
-        List<Answer> answer = service.findAnswer();
+    @GetMapping("/questions/{question-id}/answers")
+    public ResponseEntity getAnswers(@PathVariable("question-id") @Positive long questionId) {
+        List<Answer> answer = service.findAnswers(questionId);
 
         return new ResponseEntity<>(mapper.answersToListResponseDto(answer), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{answer-id}")
+    @DeleteMapping("/answers/{answer-id}")
     public ResponseEntity deleteAnswer(@PathVariable("answer-id") @Positive long answerId) {
 
         service.deleteAnswer(answerId);

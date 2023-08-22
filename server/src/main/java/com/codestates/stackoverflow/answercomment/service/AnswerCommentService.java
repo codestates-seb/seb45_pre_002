@@ -61,9 +61,8 @@ public class AnswerCommentService {
 
     public Page<AnswerComment> findAnswerComments(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by("answerCommentId").ascending());
-        Page<AnswerComment> answerComments = answerCommentRepository.findAll(pageable);
 
-        //TODO: soft delete 구현했을때 boolean isDelete 가 true 인 객체는 리스트에서 제외하는 기능 추가
+        Page<AnswerComment> answerComments = answerCommentRepository.findAll(pageable);
 
         return answerComments;
     }

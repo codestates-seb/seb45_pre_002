@@ -78,10 +78,14 @@ public class AnswerService {
     }
 
     @Transactional(readOnly = true)
-    public List<Answer> findAnswer() {
-        List<Answer> answers = answerRepository.findAll();
+    public List<Answer> findAnswers(long questionId) {
+        List<Answer> answers = answerRepository.findByQuestionQuestionId(questionId);
 
         return answers;
+    }
+
+    public Answer findAnswer(long questionId, long answerId) {
+        return verifyExistAnswer(answerId);
     }
 
 
