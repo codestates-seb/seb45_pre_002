@@ -3,6 +3,8 @@ import "./ForgotPasswordReset.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+// 로그인이 안된 상태에서 비밀번호 변경
+
 function ForgotPasswordReset() {
 	const [currentPassword, setCurrentPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
@@ -19,6 +21,8 @@ function ForgotPasswordReset() {
 			alert("비밀번호가 일치하지 않습니다.");
 		}
 	};
+
+	fetch("https://test.com/members/{member-id}");
 
 	return (
 		<div className="reset-container">
