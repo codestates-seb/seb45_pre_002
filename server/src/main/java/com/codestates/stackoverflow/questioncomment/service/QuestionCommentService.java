@@ -84,8 +84,4 @@ public class QuestionCommentService {
 
         return questionComment;
     }
-
-    private void verifyExistQuestionComment(QuestionComment questionComment) {
-
-    }
 }
