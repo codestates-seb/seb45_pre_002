@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
@@ -53,7 +54,6 @@ public class MemberController{
 
     @PatchMapping("/{member_id}")
     public ResponseEntity patchMember (@PathVariable("member_id") @Positive long memberId, @Valid @RequestBody MemberDto.PatchDto patchDto) {
-
         Member member = mapper.patchToMember(patchDto);
 
         member.setMemberId(memberId);
@@ -61,6 +61,14 @@ public class MemberController{
         Member response = service.updateMember(member);
 
         return new ResponseEntity<>(mapper.memberToResponse(response), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{member-id}/change-password")
+    public ResponseEntity changePassword(@PathVariable("member-id") @Positive long memberId,
+                                         @RequestBody @Valid MemberDto.ChangePasswordDto changePasswordDto) {
+        Member member = service.changePassword(memberId, changePasswordDto.getOld_password(), changePasswordDto.getNew_password());
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @GetMapping("/{member_id}")

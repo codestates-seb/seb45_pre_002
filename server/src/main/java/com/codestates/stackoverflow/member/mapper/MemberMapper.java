@@ -45,7 +45,6 @@ public class MemberMapper {
             MemberDto.ResponseDto responseDto = new MemberDto.ResponseDto();
             responseDto.setMember_id(member.getMemberId());
             responseDto.setEmail(member.getEmail());
-            responseDto.setPassword(member.getPassword());
             responseDto.setUsername(member.getUsername());
             responseDto.setCreated_at(member.getCreatedAt());
             responseDto.setLast_modified_at(member.getLastModifiedAt());

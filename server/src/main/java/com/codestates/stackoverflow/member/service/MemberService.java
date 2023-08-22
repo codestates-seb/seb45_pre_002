@@ -5,6 +5,7 @@ import com.codestates.stackoverflow.exception.ExceptionCode;
 import com.codestates.stackoverflow.member.entity.Member;
 import com.codestates.stackoverflow.member.repository.MemberRepository;
 import com.codestates.stackoverflow.security.utils.CustomAuthorityUtils;
+import io.jsonwebtoken.io.Decoders;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,12 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberService {
 
     private final MemberRepository repository;
@@ -27,15 +30,12 @@ public class MemberService {
     public Member createMember(Member member) {
         verifyExistMember(member);
 
-        String encodedPassword = passwordEncoder.encode(member.getPassword());
-
-        member.setPassword(encodedPassword);
+        member.setPassword(member.getPassword());
         member.setRoles(authorityUtils.createRoles());
 
         return repository.save(member);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Member updateMember(Member member) {
         Member updateMember = findVerifiedMember(member.getMemberId());
 
@@ -49,12 +49,22 @@ public class MemberService {
         return updateMember;
     }
 
-    @Transactional(readOnly = true)
+    public Member changePassword(long memberId, String oldPassword, String newPassword) {
+        Member findMember = findVerifiedMember(memberId);
+
+        if(oldPassword.equals(findMember.getPassword())) {
+            findMember.setPassword(newPassword);
+            return findMember;
+        }
+        else {
+            throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCHED);
+        }
+    }
+
     public Member findMember(long memberId) {
         return findVerifiedMember(memberId);
     }
 
-    @Transactional(readOnly = true)
     public Member findVerifiedMember(long memberId) {
         Optional<Member> optionalMember =
                 repository.findById(memberId);

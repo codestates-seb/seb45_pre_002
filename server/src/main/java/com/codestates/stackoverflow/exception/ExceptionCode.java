@@ -15,6 +15,7 @@ public enum ExceptionCode {
     ANSWER_VOTE_EXISTS(409, "AnswerVote exists"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
     INVALID_MEMBER_STATUS(400, "Invalid member status"),
+    PASSWORD_NOT_MATCHED(409, "Password not matched"),
     UNAUTHORIZED_USER(404, "unauthorized user");
 
     @Getter
