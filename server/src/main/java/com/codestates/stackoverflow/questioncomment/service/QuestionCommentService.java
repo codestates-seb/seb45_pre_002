@@ -31,7 +31,11 @@ public class QuestionCommentService {
     private final QuestionCommentRepository questionCommentRepository;
 
     public QuestionComment createQuestionComment(QuestionComment questionComment) {
-        //TODO: 한 멤버가 여러개의 댓글을 작성하지 못하게 하는 로직 추가
+        //한 멤버가 여러개의 댓글을 작성하지 못하게 하는 로직
+        if(questionCommentRepository.findByQuestionQuestionIdAndMemberMemberId(questionComment.getQuestion().getQuestionId(), questionComment.getMember().getMemberId()).isPresent()) {
+            throw new BusinessLogicException(ExceptionCode.COMMENT_EXISTS);
+        };
+
         Member findMember = memberService.findVerifiedMember(questionComment.getMember().getMemberId());
 
         Questions findQuestion = questionsService.findVerifiedQuestionById(questionComment.getQuestion().getQuestionId());
@@ -79,5 +83,9 @@ public class QuestionCommentService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
 
         return questionComment;
+    }
+
+    private void verifyExistQuestionComment(QuestionComment questionComment) {
+
     }
 }

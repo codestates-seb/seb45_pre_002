@@ -29,7 +29,6 @@ public class MemberService {
 
     public Member createMember(Member member) {
         verifyExistMember(member);
-        //member.setPassword(member.getPassword());
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         member.setRoles(authorityUtils.createRoles());
 
@@ -52,8 +51,8 @@ public class MemberService {
     public Member changePassword(long memberId, String oldPassword, String newPassword) {
         Member findMember = findVerifiedMember(memberId);
 
-        if(oldPassword.equals(findMember.getPassword())) {
-            findMember.setPassword(newPassword);
+        if(passwordEncoder.matches(oldPassword, findMember.getPassword())) {
+            findMember.setPassword(passwordEncoder.encode(newPassword));
             return findMember;
         }
         else {

@@ -36,7 +36,6 @@ public class QuestionVoteController {
 
     @GetMapping("/questions/{question-id}/votes")
     public ResponseEntity getAnswerVotes(@PathVariable("question-id") @Positive long questionId) {
-        //TODO:수정 필요함
         long totalVoteCount = questionVoteService.getTotalVoteCount(questionId);
 
         QuestionVoteDto.TotalVoteCountResponseDto responseDto = questionVoteMapper.questionVoteTotalVoteCountResponse(totalVoteCount);

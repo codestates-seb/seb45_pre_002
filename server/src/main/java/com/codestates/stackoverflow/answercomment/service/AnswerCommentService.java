@@ -33,13 +33,14 @@ public class AnswerCommentService {
     private final AnswerCommentRepository answerCommentRepository;
 
     public AnswerComment createAnswerComment(AnswerComment answerComment) {
+        //한 멤버가 여러개의 댓글을 작성하지 못하게 하는 로직
+        if(answerCommentRepository.findByAnswerAnswerIdAndMemberMemberId(answerComment.getAnswer().getAnswerId(), answerComment.getMember().getMemberId()).isPresent()) {
+            throw new BusinessLogicException(ExceptionCode.COMMENT_EXISTS);
+        }
         //멤버 검증
         Member findMember = memberService.findVerifiedMember(answerComment.getMember().getMemberId());
 
-        //Answer findAnswer = answerService.findVerifyAnswer(answerComment.getAnswer().getAnswerId());
-        //AnswerService 구현 완료되면 위의 검증 코드로 수정
-        Answer findAnswer = answerRepository.findById(answerComment.getAnswer().getAnswerId())
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Answer findAnswer = answerService.findVerifiedAnswer(answerComment.getAnswer().getAnswerId());
 
         answerComment.setMember(findMember);
         answerComment.setAnswer(findAnswer);
