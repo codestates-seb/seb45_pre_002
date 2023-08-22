@@ -1,11 +1,13 @@
 package com.codestates.stackoverflow.answercomment.dto;
 
+import com.codestates.stackoverflow.answercomment.entity.AnswerComment;
 import com.codestates.stackoverflow.utils.PageInfo;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 public class AnswerCommentDto {
 
@@ -57,10 +59,8 @@ public class AnswerCommentDto {
 
     @Getter
     @Setter
-    public static class PageResponseDto<T> {
+    public static class ListResponseDto {
 
-        private T data;
-
-        private PageInfo pageInfo;
+        private List<ResponseDto> answerComments;
     }
 }

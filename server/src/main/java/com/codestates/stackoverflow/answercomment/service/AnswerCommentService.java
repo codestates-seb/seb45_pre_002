@@ -17,6 +17,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -59,10 +61,8 @@ public class AnswerCommentService {
         return findVerifiedAnswerComment(answerCommentId);
     }
 
-    public Page<AnswerComment> findAnswerComments(int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by("answerCommentId").ascending());
-
-        Page<AnswerComment> answerComments = answerCommentRepository.findAll(pageable);
+    public List<AnswerComment> findAnswerComments(long questionId, long answerId) {
+        List<AnswerComment> answerComments = answerCommentRepository.findByAnswerAnswerId(answerId);
 
         return answerComments;
     }
