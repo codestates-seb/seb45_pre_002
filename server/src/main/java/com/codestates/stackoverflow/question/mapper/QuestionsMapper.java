@@ -1,5 +1,7 @@
 package com.codestates.stackoverflow.question.mapper;
 
+import com.codestates.stackoverflow.answer.dto.AnswerDto;
+import com.codestates.stackoverflow.answer.entity.Answer;
 import com.codestates.stackoverflow.answercomment.dto.AnswerCommentDto;
 import com.codestates.stackoverflow.answercomment.entity.AnswerComment;
 import com.codestates.stackoverflow.member.entity.Member;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class QuestionsMapper {
@@ -24,32 +27,11 @@ public class QuestionsMapper {
 
         Questions questions = new Questions();
 
-        questions.setQuestionTitle(questionsPatchDto.getQuestionTitle());
-        questions.setQuestionBody(questionsPatchDto.getQuestionBody());
-        questions.setQuestionId(questionsPatchDto.getQuestionId());
+        questions.setQuestionTitle(questionsPatchDto.getTitle());
+        questions.setQuestionBody(questionsPatchDto.getBody());
+        questions.setQuestionId(questionsPatchDto.getQuestion_id());
 
         return questions;
-    };
-
-    public List<QuestionResponseDto> questionListToQuestionsResponse(List<Questions> questionsList) {
-
-        if(questionsList == null) {
-            return null;
-        }
-
-        List<QuestionResponseDto> responseDtoList = new ArrayList<>();
-
-       for(Questions questions : questionsList) {
-
-           QuestionResponseDto questionResponseDto = new QuestionResponseDto();
-           questionResponseDto.setQuestionId(questions.getQuestionId());
-           questionResponseDto.setQuestionTitle(questions.getQuestionTitle());
-           questionResponseDto.setQuestionBody(questions.getQuestionBody());
-
-           responseDtoList.add(questionResponseDto);
-       }
-
-        return responseDtoList;
     };
 
     public QuestionResponseDto questionToQuestionsResponse(Questions questions) {
@@ -60,13 +42,13 @@ public class QuestionsMapper {
 
         QuestionResponseDto questionResponseDto = new QuestionResponseDto();
 
-        questionResponseDto.setQuestionId(questions.getQuestionId());
-        questionResponseDto.setMemberId(questions.getMember().getMemberId());
-        questionResponseDto.setQuestionTitle(questions.getQuestionTitle());
-        questionResponseDto.setQuestionBody(questions.getQuestionBody());
-        questionResponseDto.setViewCount(questions.getViewCount());
-        questionResponseDto.setCreatedAt(questions.getCreatedAt());
-        questionResponseDto.setLastModifiedAt(questions.getLastModifiedAt());
+        questionResponseDto.setQuestion_id(questions.getQuestionId());
+        questionResponseDto.setMember_id(questions.getMember().getMemberId());
+        questionResponseDto.setTitle(questions.getQuestionTitle());
+        questionResponseDto.setBody(questions.getQuestionBody());
+        questionResponseDto.setView_count(questions.getViewCount());
+        questionResponseDto.setCreated_at(questions.getCreatedAt());
+        questionResponseDto.setLast_modified_at(questions.getLastModifiedAt());
 
         return questionResponseDto;
     }
@@ -78,26 +60,52 @@ public class QuestionsMapper {
         }
         Questions questions = new Questions();
 
-        questions.setQuestionTitle(questionsPostDto.getQuestionTitle());
-        questions.setQuestionBody(questionsPostDto.getQuestionBody());
+        questions.setQuestionTitle(questionsPostDto.getTitle());
+        questions.setQuestionBody(questionsPostDto.getBody());
 
         return questions;
     }
 
-    public QuestionsPageDto.PageResponseDto questionsPageToPageResponseDto(Page<Questions> question) {
+    public List<QuestionResponseDto> questionListToQuestionsResponse(List<Questions> questionsList) {
 
-        if(question == null) {
+        if(questionsList == null) {
+            return null;
+        }
+
+        List<QuestionResponseDto> responseDtoList = new ArrayList<>();
+
+        for(Questions questions : questionsList) {
+
+            QuestionResponseDto questionResponseDto = new QuestionResponseDto();
+            questionResponseDto.setQuestion_id(questions.getQuestionId());
+            questionResponseDto.setTitle(questions.getQuestionTitle());
+            questionResponseDto.setBody(questions.getQuestionBody());
+
+            responseDtoList.add(questionResponseDto);
+        }
+
+        return responseDtoList;
+    };
+
+    public QuestionsPageDto.PageResponseDto questionsPageToPageResponseDto(Page<Questions> questions) {
+
+        if(questions == null) {
             return null;
         }
         else {
             QuestionsPageDto.PageResponseDto pageResponseDto = new QuestionsPageDto.PageResponseDto();
 
-            pageResponseDto.setQuestions(question.getContent());
+            List<QuestionResponseDto> pageResponseDtos = questions
+                    .stream()
+                            .map(question -> questionToQuestionsResponse(question))
+                                    .collect(Collectors.toList());
+
+            pageResponseDto.setQuestions(pageResponseDtos);
             pageResponseDto.setPageInfo(PageInfo.builder()
-                    .pageNumber(question.getNumber())
-                    .pageSize(question.getSize())
-                    .totalElements(question.getTotalElements())
-                    .totalPages(question.getTotalPages())
+                    .pageNumber(questions.getNumber())
+                    .pageSize(questions.getSize())
+                    .totalElements(questions.getTotalElements())
+                    .totalPages(questions.getTotalPages())
                     .build());
 
             return pageResponseDto;

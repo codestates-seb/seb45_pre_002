@@ -11,13 +11,12 @@ import java.time.LocalDateTime;
 @Setter
 public class QuestionResponseDto {
 
-    private long questionId;
-    private long memberId;
-    private String questionTitle;
-    private String questionBody;
-    private long viewCount;
-    private long voteCount;
-    private String createdAt;
-    private String lastModifiedAt;
+    private long question_id;
+    private long member_id;
+    private String title;
+    private String body;
+    private long view_count;
+    private String created_at;
+    private String last_modified_at;
 
 }

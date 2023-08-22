@@ -12,14 +12,14 @@ import java.time.LocalDateTime;
 public class QuestionsPatchDto {
 
     @NotNull
-    private long memberId;
+    private long member_id;
 
-    private long questionId;
-
-    @NotBlank
-    private String questionTitle;
+    private long question_id;
 
     @NotBlank
-    private String questionBody;
+    private String title;
+
+    @NotBlank
+    private String body;
 
 }

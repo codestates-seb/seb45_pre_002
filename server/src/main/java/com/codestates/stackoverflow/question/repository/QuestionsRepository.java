@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface QuestionsRepository extends JpaRepository<Questions,Long> {
 
-    Optional<List<Questions>> findByQuestionTitleContaining(String questionTitle);
+    Optional<List<Questions>> findByQuestionTitleContaining(String title);
     Optional<List<Questions>> findAllByOrderByCreatedAtDesc();
 
 }

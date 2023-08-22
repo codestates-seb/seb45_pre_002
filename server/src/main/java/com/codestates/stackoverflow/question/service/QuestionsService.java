@@ -36,11 +36,11 @@ public class QuestionsService {
         this.memberService = memberService;
     }
 
-    public Page<Questions> findquestions(int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by("questionId").ascending());
-        Page<Questions> question = questionsRepository.findAll(pageable);
+    public Page<Questions> findQuestions(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by("questionId").descending());
+        Page<Questions> questions = questionsRepository.findAll(pageable);
 
-        return question;
+        return questions;
     }
 
 
@@ -66,9 +66,9 @@ public class QuestionsService {
 
     }
 
-    public List<Questions> searchQuestionsByTitle(String questionTitle) {
+    public List<Questions> searchQuestionsByTitle(String title) {
 
-        Optional<List<Questions>> questionsList = questionsRepository.findByQuestionTitleContaining(questionTitle);
+        Optional<List<Questions>> questionsList = questionsRepository.findByQuestionTitleContaining(title);
         List<Questions> foundQuestionList = questionsList.orElseThrow(() -> new BusinessLogicException((ExceptionCode.QUESTION_NOT_FOUND)));
 
         return foundQuestionList;
@@ -130,10 +130,5 @@ public class QuestionsService {
         return questionsRepository.save(questions);
     }
 
-    public long getVoteCount(long questionId) {
-
-        Questions questions = findVerifiedQuestionById(questionId);
-        return questions.getVoteCount();
-    }
 
 }

@@ -38,7 +38,7 @@ public class QuestionsController {
 
         //질문 생성
         Questions questions = questionsService.createQuestion(questionsMapper.questionsPostToQuestion(questionsPostDto),
-                questionsPostDto.getMemberId());
+                questionsPostDto.getMember_id());
 
 
         return new ResponseEntity<>(questionsMapper.questionToQuestionsResponse(questions), HttpStatus.CREATED);
@@ -46,12 +46,12 @@ public class QuestionsController {
 
     //TODO: 수정 날짜와 시간 표시
     @PatchMapping("/{question-id}")
-    public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive long questionId,
+    public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive long question_id,
                                         @Valid @RequestBody QuestionsPatchDto questionsPatchDto) {
 
-        questionsPatchDto.setQuestionId(questionId);
+        questionsPatchDto.setQuestion_id(question_id);
         Questions questions = questionsService.updateQuestions(questionsMapper.questionPatchToQuestion(questionsPatchDto),
-                questionsPatchDto.getMemberId());
+                questionsPatchDto.getMember_id());
 
 
         return new ResponseEntity<>(questionsMapper.questionToQuestionsResponse(questions),HttpStatus.OK);
@@ -60,42 +60,29 @@ public class QuestionsController {
 
     // 하나의 게시글만 조회
     @GetMapping("/{question-id}")
-    public ResponseEntity getQuestion (@PathVariable("question-id") @Positive long questionId){
+    public ResponseEntity getQuestion (@PathVariable("question-id") @Positive long question_id){
 
-        Questions questions = questionsService.findQuestion(questionId);
+        Questions questions = questionsService.findQuestion(question_id);
         questionsService.updateQuestionsViewCount(questions,questions.getViewCount());
 
         return new ResponseEntity<>(questionsMapper.questionToQuestionsResponse(questions), HttpStatus.OK);
     }
 
-    // 전체 질문 조회
-    /*
-    @GetMapping
-    public ResponseEntity getQuestions() {
-
-        List<Questions> questionsList = questionsService.getAllquestions();
-
-        return new ResponseEntity<>(questionsMapper.questionListToQuestionsResponse(questionsList), HttpStatus.OK);
-
-    }
-
-     */
-
     @DeleteMapping (value = "/{question-id}")
-    public ResponseEntity deleteQuestions (@PathVariable("question-id") @Positive long questionId,
-                                           @Positive @RequestParam long memberId) {
-        questionsService.deleteQuestions(questionId, memberId);
+    public ResponseEntity deleteQuestions (@PathVariable("question-id") @Positive long question_id,
+                                           @Positive @RequestParam long member_id) {
+        questionsService.deleteQuestions(question_id, member_id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
 
-    @GetMapping("/pageNumber={pageNumber}/pageSize={pageSize}")
-    public ResponseEntity findquestions(@PathVariable ("pageNumber") @Positive int pageNumber,
-                                        @PathVariable ("pageSize") @Positive int pageSize) {
-        Page<Questions> question = questionsService.findquestions(pageNumber, pageSize);
+    @GetMapping
+    public ResponseEntity findQuestions(@RequestParam @Positive int pageNumber,
+                                        @RequestParam @Positive int pageSize) {
+        Page<Questions> questions = questionsService.findQuestions(pageNumber, pageSize);
 
-        QuestionsPageDto.PageResponseDto pageResponseDto = questionsMapper.questionsPageToPageResponseDto(question);
+        QuestionsPageDto.PageResponseDto pageResponseDto = questionsMapper.questionsPageToPageResponseDto(questions);
 
         return new ResponseEntity<>(pageResponseDto, HttpStatus.OK);
     }

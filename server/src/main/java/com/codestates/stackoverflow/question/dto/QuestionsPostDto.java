@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 public class QuestionsPostDto {
 
     @NotNull
-    private long memberId;
+    private long member_id;
 
     @NotBlank
-    private String questionTitle;
+    private String title;
 
     @NotBlank
-    private String questionBody;
+    private String body;
 
 }

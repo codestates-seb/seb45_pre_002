@@ -24,13 +24,10 @@ public class Questions extends Auditable{
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column
     private long questionId;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
-    //@ToString.Exclude
-    @Setter
     private Member member;
 
     @OneToMany(targetEntity = QuestionComment.class, mappedBy = "question")
@@ -50,17 +47,15 @@ public class Questions extends Auditable{
     @Column (columnDefinition = "integer default 0", nullable = false)
     private long viewCount;
 
-    private long voteCount;
-
     public void setViewCount(long viewCount) {
         this.viewCount = viewCount;
     }
 
-    public Long getQuestionId() {
+    public long getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(Long questionId) {
+    public void setQuestionId(long questionId) {
         this.questionId = questionId;
     }
 
@@ -88,27 +83,11 @@ public class Questions extends Auditable{
         this.questionTitle = questionTitle;
     }
 
-    public Long getViewCount() {
+    public long getViewCount() {
         return viewCount;
-    }
-
-    public void setViewCount(Long viewCount) {
-        this.viewCount = viewCount;
-    }
-
-    public Long getVoteCount() {
-        return voteCount;
-    }
-
-    public void setVoteCount(Long voteCount) {
-        this.voteCount = voteCount;
     }
 
     public void updateViewCount(long viewCount) {
         this.viewCount = viewCount;
-    }
-
-    public void updateVoteCount (long voteCount) {
-        this.voteCount = voteCount;
     }
 }
