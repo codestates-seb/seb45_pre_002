@@ -43,6 +43,20 @@ public class AnswerDto {
 
     @Getter
     @Setter
+    public static class DeleteDto {
+
+        @Positive
+        private long member_id;
+
+        @Positive
+        private long question_id;
+
+        @Positive
+        private long answer_id;
+    }
+
+    @Getter
+    @Setter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ResponseDto {
@@ -53,7 +67,7 @@ public class AnswerDto {
 
         private long question_id;
 
-        private boolean adopt;
+        private boolean accepted;
 
         private String body;
 

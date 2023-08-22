@@ -2,6 +2,7 @@ package com.codestates.stackoverflow.answer.mapper;
 
 import com.codestates.stackoverflow.answer.dto.AnswerDto;
 import com.codestates.stackoverflow.answer.entity.Answer;
+import com.codestates.stackoverflow.answercomment.dto.AnswerCommentDto;
 import com.codestates.stackoverflow.member.dto.MemberDto;
 import com.codestates.stackoverflow.member.entity.Member;
 import com.codestates.stackoverflow.question.entity.Questions;
@@ -28,6 +29,19 @@ public class AnswerMapper {
         }
     }
 
+//    public Answer answerToAccepted(AnswerDto.PostDto acceptedDto) {
+//        if(acceptedDto == null) {
+//            return null;
+//        } else {
+//            Answer answer = new Answer();
+//            answer.setAccepted(false);
+//
+//            answer.setAnswerId();
+//            answer.setQuestion();
+//
+//        }
+//    }
+
     public Answer patchToAnswer(AnswerDto.PatchDto patchDto) {
         if(patchDto == null) {
             return null;
@@ -48,8 +62,9 @@ public class AnswerMapper {
             AnswerDto.ResponseDto responseDto = new AnswerDto.ResponseDto();
             responseDto.setMember_id(answer.getMember().getMemberId());
             responseDto.setAnswer_id(answer.getAnswerId());
+            responseDto.setQuestion_id(answer.getQuestion().getQuestionId());
             responseDto.setBody(answer.getBody());
-//            responseDto.setAccepted(answer.getAccepted());
+            responseDto.setAccepted(answer.isAccepted());
             responseDto.setCreated_at(answer.getCreatedAt());
             responseDto.setLast_modified_at(answer.getLastModifiedAt());
 
@@ -71,6 +86,19 @@ public class AnswerMapper {
         return questions;
     }
 
+    public Answer deleteToAnswer(AnswerDto.DeleteDto deleteDto) {
+        if(deleteDto == null) {
+            return null;
+        }
+        else {
+            Answer answer = new Answer();
+            answer.setAnswerId(deleteDto.getAnswer_id());
+            answer.setMember(deleteMember(deleteDto));
+
+            return answer;
+        }
+    }
+
 
     public AnswerDto.ListResponseDto answersToListResponseDto(List<Answer> answers) {
         if(answers == null) {
@@ -84,5 +112,12 @@ public class AnswerMapper {
 
             return listResponseDto;
         }
+    }
+
+    private Member deleteMember(AnswerDto.DeleteDto deleteDto) {
+        Member member = new Member();
+        member.setMemberId(deleteDto.getMember_id());
+
+        return member;
     }
 }

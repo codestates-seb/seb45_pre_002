@@ -54,17 +54,20 @@ public class AnswerService {
     }
 
     //채택 기능 구현
-    public boolean AcceptedAnswer(Long answerId) {
-        Optional<Answer> answerOptional = answerRepository.findById(answerId);
+    //QuestionId를 불러와서 그 아래에 있는 답변들 확인.
+    //해당 답변들 중에서 채택된 것이 있는지 확인하고 없다면 채택 가능.
+    //있다면 채택 불가능.
+    public boolean acceptedAnswer(long answerId, long questionId) {
+        List<Answer> answersForQuestion = answerRepository.findByQuestionQuestionId(questionId);
 
-        if(answerOptional.isPresent()) {
-            Answer answer = answerOptional.get();
-            answer.setAccepted(true);
-            answerRepository.save(answer);
-            return true;
-        } else {
-            return false;
+        for(Answer answer : answersForQuestion) {
+            if(answer.getAnswerId() == answerId) {
+                answer.setAccepted(true);
+                answerRepository.save(answer);
+                return true;
+            }
         }
+        return false;
     }
 
     public Answer updateAnswer(Answer answer) {
@@ -85,14 +88,20 @@ public class AnswerService {
     }
 
     public Answer findAnswer(long questionId, long answerId) {
+
         return verifyExistAnswer(answerId);
     }
 
 
-    public void deleteAnswer(long answerId) {
-        Answer answer = verifyExistAnswer(answerId);
-        memberService.findVerifiedMember(verifyExistAnswer(answerId).getAnswerId());
-        answerRepository.delete(answer);
+    public void deleteAnswer(Answer answer) {
+        Answer findanswer = verifyExistAnswer(answer.getAnswerId());
+
+        if(findanswer.getMember().getMemberId() != answer.getMember().getMemberId()) {
+            throw new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND);
+        }
+        else {
+            answerRepository.delete(answer);
+        }
     }
 
     @Transactional(readOnly = true)
@@ -110,4 +119,5 @@ public class AnswerService {
 
         return answer;
     }
+
 }

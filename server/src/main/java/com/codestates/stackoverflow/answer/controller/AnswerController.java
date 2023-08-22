@@ -10,6 +10,7 @@ import com.codestates.stackoverflow.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -46,9 +47,11 @@ public class AnswerController {
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
 
-    @PostMapping("/answers/{answer-id}")
-    public ResponseEntity acceptAnswer(@PathVariable("answer-id") @Positive long answerId) {
-        boolean success = service.AcceptedAnswer(answerId);
+    @PostMapping("/questions/{question-id}/answers/{answer-id}")
+    public ResponseEntity acceptAnswer(@PathVariable("answer-id") @Positive long answerId,
+                                       @PathVariable("question-id") @Positive long questionId) {
+
+        boolean success = service.acceptedAnswer(questionId, answerId);
 
         if(success) {
             return ResponseEntity.ok().build();
@@ -86,12 +89,14 @@ public class AnswerController {
         return new ResponseEntity<>(mapper.answersToListResponseDto(answer), HttpStatus.OK);
     }
 
-    @DeleteMapping("/answers/{answer-id}")
-    public ResponseEntity deleteAnswer(@PathVariable("answer-id") @Positive long answerId) {
+    @DeleteMapping("/questions/{question-id}/answers/{answer-id}")
+    public ResponseEntity deleteAnswer(@Valid @RequestBody AnswerDto.DeleteDto deleteDto) {
 
-        service.deleteAnswer(answerId);
+        Answer answer = mapper.deleteToAnswer(deleteDto);
 
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        service.deleteAnswer(answer);
+
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 
     }
 
