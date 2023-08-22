@@ -1,4 +1,4 @@
-header {
+.header {
 	width: 1280px;
 	height: 52px;
 	padding: 0 8px;
@@ -16,6 +16,10 @@ header {
 	border-top: 3px solid rgb(244, 130, 37);
 	border-bottom: 1px solid rgb(214, 217, 220);
 	background-color: white;
+}
+
+.fa-quora {
+	font-size: 30px;
 }
 
 .header-logo {

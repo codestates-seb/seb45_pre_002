@@ -1,23 +1,86 @@
-.page-container {
-    display: flex;
-    height: 100vh;
-    width: 100%;
-  }
-  
-  .sidebar {
-    padding: 100px;
-  }
-  
-  .instructions {
-    border: 5px solid #a7d0ff;
-    background-color: #a7d0ff;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-  }
-  .instructions ol {
-    padding-left: 20px;
-    margin-left: 0;
-    list-style-type: decimal;
-  }
-  
+#AskTitle {
+	margin-top: 100px;
+}
+.AskQuestion-container {
+	display: flex;
+	justify-content: center;
+	height: 100vh;
+	width: 100%;
+}
+
+.AskQuestionInstructions {
+	border: 5px solid #dae9fa;
+	background-color: #dae9fa;
+	padding: 20px;
+	margin-bottom: 20px;
+	border-radius: 10px;
+}
+.AskQuestionInstructions ol {
+	padding-left: 20px;
+	margin-left: 0;
+	list-style-type: decimal;
+}
+.QuestionTitle {
+	border: 2px solid #ccc;
+	padding: 10px;
+	border-radius: 5px;
+
+	margin-bottom: 20px;
+}
+#questionTitleBtn {
+	width: 60px;
+	height: 28px;
+	font-size: 13px;
+	border: none;
+	background-color: #3f96f7;
+	color: #ffffff;
+	border-radius: 6px;
+	margin-top: 5px;
+}
+
+#questionTitleBtn:hover {
+	background-color: #b9d2e8;
+	cursor: pointer;
+}
+#questionTitleBtn a {
+	text-decoration: none;
+	color: #477399;
+}
+
+.QuestionTitle input {
+	width: 100%;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	outline: none;
+	margin-top: 10px;
+}
+.QuestionTitle .s-description {
+	font-size: 12px;
+}
+
+.stacks-editor-container {
+	/* Add your desired styles here */
+	/* For example: */
+	width: 100%;
+	height: 400px;
+	border: 1px solid #ccc;
+}
+#QPost {
+	width: 60px;
+	height: 33px;
+	font-size: 13px;
+	border: none;
+	background-color: #3f96f7;
+	color: #ffffff;
+	border-radius: 6px;
+	margin-top: 5px;
+}
+#QPost:hover {
+	background-color: #b9d2e8;
+	cursor: pointer;
+}
+#QPost a {
+	text-decoration: none;
+	color: #477399;
+}

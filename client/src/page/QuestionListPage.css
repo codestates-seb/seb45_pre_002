@@ -1,0 +1,11 @@
+.question-list--page {
+	display: flex;
+	justify-content: center;
+}
+
+.question-list--container {
+	display: flex;
+	flex-direction: column;
+	padding-top: 54px;
+	border-left: 1px solid #e3e4e6;
+}

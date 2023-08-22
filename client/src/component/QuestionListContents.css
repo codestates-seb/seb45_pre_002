@@ -1,0 +1,83 @@
+.question-list--items {
+	/* padding: 16px; */
+	width: 1100px;
+	/* border: 0.3px solid black; */
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.-list-items {
+	display: flex;
+	align-items: center;
+	height: 110px;
+	padding: 16px;
+	border-bottom: 2px solid #e3e4e6;
+	gap: 16px;
+}
+
+.-list-item--left,
+.-list-item--right {
+	display: flex;
+	flex-direction: column;
+	height: 78px;
+}
+
+.preview-votes,
+.preview-answers,
+.preview-views {
+	text-align: right;
+	margin-bottom: 5px;
+	color: rgb(106, 115, 124);
+	font-size: 13px;
+}
+
+.-list-item--left {
+	width: 164px;
+	padding-left: 80px;
+}
+
+/* item.view_count가 있으면 폰트 굵게 */
+.preview-bolder {
+	font-size: 14px;
+}
+
+.preview-votes {
+	color: black;
+}
+
+.-list-item--right {
+	width: 888px;
+}
+
+.-item--right--title {
+	color: rgb(0, 69, 122);
+	font-size: 17px;
+}
+
+.-item--right--title:hover {
+	color: #2d75c6;
+}
+
+.-item--right--username {
+	margin-top: 5px;
+	font-size: 12px;
+	text-align: right;
+}
+
+.selection {
+	border-radius: 6px;
+	background-color: green;
+	color: white;
+	font-size: 14px;
+	padding: 3px;
+}
+
+.fa-check {
+	margin-right: 8px;
+}
+
+.preview-views--orange {
+	font-size: 14px;
+	color: rgb(146, 32, 36);
+}

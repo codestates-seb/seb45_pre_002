@@ -1,0 +1,33 @@
+.question-container {
+	padding-top: 54px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.question-container--header,
+.question-container--body {
+	width: 1100px;
+	padding: 24px;
+	display: flex;
+	border-left: 1px solid #e3e4e6;
+	gap: 10px;
+}
+
+.question-container--body {
+	flex-direction: column;
+}
+.question-container--header {
+	border-bottom: 2px solid #e3e4e6;
+	justify-content: space-between;
+}
+
+.question-title {
+	font-weight: 300;
+}
+
+.question-title--left > span {
+	font-size: 14px;
+	color: rgb(106, 115, 124);
+	margin-right: 20px;
+}

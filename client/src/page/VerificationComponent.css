@@ -12,7 +12,7 @@
 }
 
 .verification-container form {
-	width: 340px;
+	width: 400px;
 	height: 340px;
 	box-shadow: 3px 3px 30px 0 #d6d6d6;
 	border-radius: 8px;
@@ -59,4 +59,24 @@
 	color: crimson;
 	font-size: 14px;
 	font-weight: 700;
+}
+
+.timer,
+.timer-end {
+	font-size: 22px;
+	margin-bottom: 30px;
+	font-weight: 700;
+}
+
+.timer {
+	color: green;
+}
+
+.timer-end {
+	color: crimson;
+}
+
+.timer::before,
+.timer-end::before {
+	content: "남은 시간: ";
 }
