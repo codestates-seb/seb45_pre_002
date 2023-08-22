@@ -1,5 +1,6 @@
 package com.codestates.stackoverflow.questionvote.service;
 
+import com.codestates.stackoverflow.answer.entity.Answer;
 import com.codestates.stackoverflow.exception.BusinessLogicException;
 import com.codestates.stackoverflow.exception.ExceptionCode;
 import com.codestates.stackoverflow.question.entity.Questions;
@@ -53,6 +54,14 @@ public class QuestionVoteService {
         question.getQuestionVotes().add(savedQuestionVote);
 
         return savedQuestionVote;
+    }
+
+    public long getTotalVoteCount(long questionId) {
+        Questions question = questionsService.findVerifiedQuestionById(questionId);
+
+        long totalVoteCount = question.getQuestionVotes().size();
+
+        return totalVoteCount;
     }
 
     public QuestionVote verifyExistQuestionVote(long questionVoteId) {

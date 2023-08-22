@@ -28,4 +28,10 @@ public class QuestionVoteDto {
 
         private boolean like;
     }
+
+    @Getter
+    @Setter
+    public static class TotalVoteCountResponseDto {
+        private long totalVoteCount;
+    }
 }

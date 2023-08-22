@@ -57,6 +57,14 @@ public class AnswerVoteService {
         return savedAnswerVote;
     }
 
+    public long getTotalVoteCount(long questionId, long answerId) {
+        Answer answer = answerService.findVerifiedAnswer(answerId);
+
+        long totalVoteCount = answer.getAnswerVotes().size();
+
+        return totalVoteCount;
+    }
+
     public AnswerVote verifyExistQuestionVote(long answerVoteId) {
         AnswerVote answerVote = answerVoteRepository.findById(answerVoteId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));

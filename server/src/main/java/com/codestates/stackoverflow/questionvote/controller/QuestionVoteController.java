@@ -1,5 +1,6 @@
 package com.codestates.stackoverflow.questionvote.controller;
 
+import com.codestates.stackoverflow.answervote.dto.AnswerVoteDto;
 import com.codestates.stackoverflow.questionvote.dto.QuestionVoteDto;
 import com.codestates.stackoverflow.questionvote.entity.QuestionVote;
 import com.codestates.stackoverflow.questionvote.mapper.QuestionVoteMapper;
@@ -10,9 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 
 @RestController
-@RequestMapping("/question-votes")
+@RequestMapping
 @CrossOrigin(value = "*")
 @RequiredArgsConstructor
 public class QuestionVoteController {
@@ -21,13 +23,23 @@ public class QuestionVoteController {
 
     private final QuestionVoteMapper questionVoteMapper;
 
-    @PostMapping
+    @PostMapping("/question-votes")
     public ResponseEntity postQuestionVote(@RequestBody QuestionVoteDto.PostDto postDto) {
         QuestionVote questionVote = questionVoteMapper.postToQuestionVote(postDto);
 
         questionVote = questionVoteService.createQuestionVote(questionVote);
 
         QuestionVoteDto.ResponseDto responseDto = questionVoteMapper.questionVoteToResponse(questionVote);
+
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/questions/{question-id}/votes")
+    public ResponseEntity getAnswerVotes(@PathVariable("question-id") @Positive long questionId) {
+        //TODO:수정 필요함
+        long totalVoteCount = questionVoteService.getTotalVoteCount(questionId);
+
+        QuestionVoteDto.TotalVoteCountResponseDto responseDto = questionVoteMapper.questionVoteTotalVoteCountResponse(totalVoteCount);
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }

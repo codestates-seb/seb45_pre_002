@@ -37,6 +37,13 @@ public class AnswerVoteMapper {
         }
     }
 
+    public AnswerVoteDto.TotalVoteCountResponseDto answerVoteTotalVoteCountResponse(long totalVoteCount) {
+        AnswerVoteDto.TotalVoteCountResponseDto responseDto = new AnswerVoteDto.TotalVoteCountResponseDto();
+        responseDto.setTotalVoteCount(totalVoteCount);
+
+        return responseDto;
+    }
+
     private Member postToMember(AnswerVoteDto.PostDto postDto) {
         Member member = new Member();
         member.setMemberId(postDto.getMember_id());

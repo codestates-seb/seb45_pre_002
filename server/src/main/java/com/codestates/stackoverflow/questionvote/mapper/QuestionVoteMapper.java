@@ -1,5 +1,6 @@
 package com.codestates.stackoverflow.questionvote.mapper;
 
+import com.codestates.stackoverflow.answervote.dto.AnswerVoteDto;
 import com.codestates.stackoverflow.member.entity.Member;
 import com.codestates.stackoverflow.question.entity.Questions;
 import com.codestates.stackoverflow.questionvote.dto.QuestionVoteDto;
@@ -36,6 +37,13 @@ public class QuestionVoteMapper {
 
             return responseDto;
         }
+    }
+
+    public QuestionVoteDto.TotalVoteCountResponseDto questionVoteTotalVoteCountResponse(long totalVoteCount) {
+        QuestionVoteDto.TotalVoteCountResponseDto responseDto = new QuestionVoteDto.TotalVoteCountResponseDto();
+        responseDto.setTotalVoteCount(totalVoteCount);
+
+        return responseDto;
     }
 
     private Member postToMember(QuestionVoteDto.PostDto postDto) {
