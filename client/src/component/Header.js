@@ -4,9 +4,9 @@ import SignUpButton from "./SignUpButton";
 import LoginButton from "./LoginButton";
 import { Link } from "react-router-dom";
 
-function Header() {
+function Header({ loginState, setLoginState }) {
 	// 로그인상태
-	const [loginState, setLoginState] = useState(false);
+	// const [loginState, setLoginState] = useState(false);
 
 	return (
 		<div className="header-container">
@@ -20,7 +20,7 @@ function Header() {
 				)}
 
 				<div className="header-logo">
-					<Link to="/">
+					<Link to={loginState ? "/question-list" : "/"}>
 						<img
 							src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Stack_Overflow_logo.svg/1600px-Stack_Overflow_logo.svg.png"
 							alt="logo"
@@ -56,7 +56,10 @@ function Header() {
 					) : (
 						<LoginButton />
 					)}
-					<SignUpButton loginState={loginState} />
+					<SignUpButton
+						loginState={loginState}
+						setLoginState={setLoginState}
+					/>
 				</div>
 			</header>
 		</div>

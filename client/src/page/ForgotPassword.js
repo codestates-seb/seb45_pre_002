@@ -7,8 +7,20 @@ function ForgotPassword() {
 	const [successMailAlert, setSuccessMailAlert] = useState(false);
 
 	function sendRecoveryEmail() {
-		console.log(recoveryEmail);
 		setSuccessMailAlert(true);
+
+		fetch("https://test.com/email", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"ngrok-skip-browser-warning": "69420",
+			},
+			body: JSON.stringify({ email: recoveryEmail }),
+		}).then((res) => {
+			if (res.status === "200") {
+				setSuccessMailAlert(true);
+			}
+		});
 	}
 
 	return (

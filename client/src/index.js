@@ -1,12 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+// import React from "react";
+// import ReactDOM from "react-dom/client";
+// import "./index.css";
+// import App from "./App";
 
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+// root.render(
+// 	<App />
+// 	// <React.StrictMode>
+// 	//   <App />
+// 	// </React.StrictMode>
+// );
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// 리덕스 세팅
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import { Provider } from "react-redux";
+import store from "./store";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+	<Provider store={store}>
+		<App />
+	</Provider>
 );

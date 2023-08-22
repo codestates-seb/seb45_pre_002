@@ -1,0 +1,24 @@
+.vote-container {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.vote-container #vote-up,
+.vote-container #vote-down,
+.vote-container #votes {
+	font-size: 32px;
+	text-align: center;
+}
+
+#vote-up,
+#vote-down {
+	border: 1px solid #e3e4e6;
+	border-radius: 100%;
+	padding: 10px 16px;
+}
+
+#vote-up:hover,
+#vote-down:hover {
+	background-color: #fee3cd;
+}

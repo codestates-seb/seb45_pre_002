@@ -1,0 +1,21 @@
+#askBtn {
+	width: 130px;
+	height: 40px;
+	font-size: 15px;
+	font-weight: 700;
+	margin-left: 4px;
+	border: none;
+	background-color: #3f96f7;
+	color: white;
+	border-radius: 6px;
+}
+
+#askBtn:hover {
+	background-color: #2d75c6;
+	cursor: pointer;
+}
+
+#askBtn a {
+	text-decoration: none;
+	color: white;
+}

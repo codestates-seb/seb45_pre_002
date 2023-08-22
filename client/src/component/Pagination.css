@@ -1,0 +1,18 @@
+.pagination-container {
+  text-align: center;
+}
+
+.data-list {
+  list-style: none;
+  padding: 0;
+}
+
+.data-item {
+  padding: 10px;
+  border: 1px solid #ddd;
+  margin: 5px 0;
+}
+
+.pagination {
+  margin-top: 10px;
+}

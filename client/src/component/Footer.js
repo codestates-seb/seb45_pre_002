@@ -3,7 +3,7 @@ import "./Footer.css"; // 스타일링을 위한 CSS 파일
 
 function Footer() {
 	return (
-		<footer>
+		<footer className="footer">
 			<div className="footer-container">
 				<div className="footer-col">
 					<img
@@ -14,14 +14,14 @@ function Footer() {
 				</div>
 				<div className="footer-col">
 					<h5 className="footer-col--title">STACK OVERFLOW</h5>
-					<ul>
+					<ul className="footer-col-list">
 						<li>Questions</li>
 						<li>Help</li>
 					</ul>
 				</div>
 				<div className="footer-col">
 					<h5 className="footer-col--title">PRODUCTS</h5>
-					<ul>
+					<ul className="footer-col-list">
 						<li>Teams</li>
 						<li>Advertising</li>
 						<li>Collectives</li>
@@ -30,7 +30,7 @@ function Footer() {
 				</div>
 				<div className="footer-col">
 					<h5 className="footer-col--title">COMPANY</h5>
-					<ul>
+					<ul className="footer-col-list">
 						<li>About</li>
 						<li>Press</li>
 						<li>Work Here</li>
@@ -44,7 +44,7 @@ function Footer() {
 				</div>
 				<div className="footer-col">
 					<h5 className="footer-col--title">STACK EXCHANGE NETWORK</h5>
-					<ul>
+					<ul className="footer-col-list">
 						<li>Technology</li>
 						<li>Culture & recreation</li>
 						<li>Life & arts</li>

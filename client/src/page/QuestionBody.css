@@ -1,0 +1,14 @@
+.question-body > div {
+	display: flex;
+}
+
+.question-body--right {
+	display: flex;
+	flex-direction: column;
+	margin-left: 20px;
+}
+
+.question-body--right p {
+	font-size: 16px;
+	line-height: 24.5px;
+}

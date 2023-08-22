@@ -1,0 +1,66 @@
+#AnswerTitle {
+    margin-top: 100px;
+  }
+
+  .Answer-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+  }
+  
+  .AskQuestionSidebar {
+    padding: 100px;
+  }
+  
+  
+  #questionTitleBtn:hover {
+    background-color: #b9d2e8;
+    cursor: pointer;
+  }
+  #questionTitleBtn a {
+    text-decoration: none;
+    color: #477399;
+  }
+  
+  .QuestionTitle input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    outline: none;
+    margin-top: 10px;
+  }
+  .QuestionTitle .s-description {
+    font-size: 12px;
+  }
+  
+  .stacks-editor-container {
+    /* Add your desired styles here */
+    /* For example: */
+    width: 100%;
+    height: 400px;
+    border: 1px solid #ccc;
+  }
+
+  #APost {
+    width: 120px;
+    height: 35px;
+    font-size: 13px;
+    border: none;
+    background-color: #3f96f7;
+    color: #ffffff;
+    border-radius: 6px;
+    margin-top: 5px;
+  }
+  #APost:hover {
+    background-color: #b9d2e8;
+    cursor: pointer;
+  }
+  #APost a {
+    text-decoration: none;
+    color: #477399;
+  }
+
+  .answer-editor{
+    margin-bottom: 20px;
+  }
