@@ -17,6 +17,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -29,7 +31,7 @@ public class QuestionCommentService {
     private final QuestionCommentRepository questionCommentRepository;
 
     public QuestionComment createQuestionComment(QuestionComment questionComment) {
-        //멤버 검증
+        //TODO: 한 멤버가 여러개의 댓글을 작성하지 못하게 하는 로직 추가
         Member findMember = memberService.findVerifiedMember(questionComment.getMember().getMemberId());
 
         Questions findQuestion = questionsService.findVerifiedQuestionById(questionComment.getQuestion().getQuestionId());
@@ -54,11 +56,8 @@ public class QuestionCommentService {
         return findVerifiedQuestionComment(questionCommentId);
     }
 
-    public Page<QuestionComment> findQuestionComments(int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by("questionCommentId").ascending());
-        Page<QuestionComment> questionComments = questionCommentRepository.findAll(pageable);
-
-        //TODO: soft delete 구현했을때 boolean isDelete 가 true 인 객체는 리스트에서 제외하는 기능 추가
+    public List<QuestionComment> findQuestionComments(long questionId) {
+        List<QuestionComment> questionComments = questionCommentRepository.findByQuestionQuestionIdOrderByQuestionCommentIdDesc(questionId);
 
         return questionComments;
     }

@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 public class QuestionCommentDto {
 
@@ -57,10 +58,8 @@ public class QuestionCommentDto {
 
     @Getter
     @Setter
-    public static class PageResponseDto<T> {
+    public static class ListResponseDto {
 
-        private T data;
-
-        private PageInfo pageInfo;
+        private List<ResponseDto> questionComments;
     }
 }

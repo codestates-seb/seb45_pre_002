@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 @RestController
-@RequestMapping("/question-comments")
+@RequestMapping
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class QuestionCommentController {
@@ -24,7 +25,7 @@ public class QuestionCommentController {
 
     private final QuestionCommentService questionCommentService;
 
-    @PostMapping
+    @PostMapping("/question-comments")
     public ResponseEntity postQuestionComment(@Valid @RequestBody QuestionCommentDto.PostDto postDto) {
         QuestionComment questionComment = questionCommentMapper.postToQuestionComment(postDto);
 
@@ -35,7 +36,7 @@ public class QuestionCommentController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    @PatchMapping("/{question-comment-id}")
+    @PatchMapping("/question-comments/{question-comment-id}")
     public ResponseEntity patchQuestionComment(@PathVariable("question-comment-id") @Positive long questionCommentId,
                                                @Valid @RequestBody QuestionCommentDto.PatchDto patchDto) {
         QuestionComment questionComment = questionCommentMapper.patchToQuestionComment(patchDto);
@@ -48,7 +49,7 @@ public class QuestionCommentController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    @GetMapping("/{question-comment-id}")
+    @GetMapping("/question-comments/{question-comment-id}")
     public ResponseEntity findQuestionComment(@PathVariable("question-comment-id") @Positive long questionCommentId) {
         QuestionComment questionComment = questionCommentService.findQuestionComment(questionCommentId);
 
@@ -57,17 +58,16 @@ public class QuestionCommentController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity findQuestionComments(@RequestParam @Positive int pageNumber,
-                                               @RequestParam @Positive int pageSize) {
-        Page<QuestionComment> questionComment = questionCommentService.findQuestionComments(pageNumber, pageSize);
+    @GetMapping("/questions/{question-id}/comments")
+    public ResponseEntity findQuestionComments(@PathVariable("question-id") @Positive long questionId) {
+        List<QuestionComment> questionComments = questionCommentService.findQuestionComments(questionId);
 
-        QuestionCommentDto.PageResponseDto pageResponseDto = questionCommentMapper.questionCommentPageToPageResponseDto(questionComment);
+        QuestionCommentDto.ListResponseDto pageResponseDto = questionCommentMapper.questionCommentPageToPageResponseDto(questionComments);
 
         return new ResponseEntity<>(pageResponseDto, HttpStatus.OK);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/question-comments")
     public ResponseEntity deleteQuestionComment(@Valid @RequestBody QuestionCommentDto.DeleteDto deleteDto) {
         QuestionComment questionComment = questionCommentMapper.deleteToQuestionComment(deleteDto);
 

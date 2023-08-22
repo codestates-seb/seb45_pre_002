@@ -8,6 +8,9 @@ import com.codestates.stackoverflow.utils.PageInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class QuestionCommentMapper {
 
@@ -64,22 +67,18 @@ public class QuestionCommentMapper {
         }
     }
 
-    public QuestionCommentDto.PageResponseDto questionCommentPageToPageResponseDto(Page<QuestionComment> questionComments) {
+    public QuestionCommentDto.ListResponseDto questionCommentPageToPageResponseDto(List<QuestionComment> questionComments) {
         if(questionComments == null) {
             return null;
         }
         else {
-            QuestionCommentDto.PageResponseDto pageResponseDto = new QuestionCommentDto.PageResponseDto();
+            List<QuestionCommentDto.ResponseDto> responseDtos = questionComments.stream()
+                    .map(questionComment -> questionCommentToResponse(questionComment)).collect(Collectors.toList());
 
-            pageResponseDto.setData(questionComments.getContent());
-            pageResponseDto.setPageInfo(PageInfo.builder()
-                    .pageNumber(questionComments.getNumber())
-                    .pageSize(questionComments.getSize())
-                    .totalElements(questionComments.getTotalElements())
-                    .totalPages(questionComments.getTotalPages())
-                    .build());
+            QuestionCommentDto.ListResponseDto listResponseDto = new QuestionCommentDto.ListResponseDto();
+            listResponseDto.setQuestionComments(responseDtos);
 
-            return pageResponseDto;
+            return listResponseDto;
         }
     }
 

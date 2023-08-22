@@ -62,7 +62,7 @@ public class AnswerCommentService {
     }
 
     public List<AnswerComment> findAnswerComments(long questionId, long answerId) {
-        List<AnswerComment> answerComments = answerCommentRepository.findByAnswerAnswerId(answerId);
+        List<AnswerComment> answerComments = answerCommentRepository.findByAnswerAnswerIdOrderByAnswerCommentIdDesc(answerId);
 
         return answerComments;
     }

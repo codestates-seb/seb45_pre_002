@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface AnswerCommentRepository extends JpaRepository<AnswerComment, Long> {
-    List<AnswerComment> findByAnswerAnswerId(long answerId);
+    List<AnswerComment> findByAnswerAnswerIdOrderByAnswerCommentIdDesc(long answerId);
 }
