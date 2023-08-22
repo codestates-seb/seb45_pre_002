@@ -3,6 +3,7 @@ package com.codestates.stackoverflow.member.controller;
 import com.codestates.stackoverflow.member.dto.MemberDto;
 import com.codestates.stackoverflow.member.mapper.MemberMapper;
 import com.codestates.stackoverflow.member.service.MemberService;
+import com.codestates.stackoverflow.security.provider.JwtTokenProvider;
 import com.codestates.stackoverflow.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.codestates.stackoverflow.member.entity.Member;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -29,6 +31,8 @@ public class MemberController{
 
     private final MemberService service;
 
+    private final JwtTokenProvider jwtTokenProvider;
+
     @PostMapping("/signup")
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.PostDto postDto) {
         Member member = mapper.postToMember(postDto);
@@ -38,6 +42,19 @@ public class MemberController{
         MemberDto.ResponseDto response = mapper.memberToResponse(member);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity logout(HttpServletRequest request) {
+        String jws = request.getHeader("Authorization");
+
+        if (jwtTokenProvider.isTokenInBlackList(jws)) {
+            return ResponseEntity.badRequest().body("Token has already been invalidated.");
+        }
+
+        jwtTokenProvider.addToUsedToken(jws); // 사용된 토큰목록에 토큰 추가
+
+        return ResponseEntity.ok().body("Successfully logged out.");
     }
 
     @PatchMapping("/{member_id}")

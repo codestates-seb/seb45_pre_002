@@ -29,8 +29,8 @@ public class MemberService {
 
     public Member createMember(Member member) {
         verifyExistMember(member);
-
-        member.setPassword(member.getPassword());
+        //member.setPassword(member.getPassword());
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
         member.setRoles(authorityUtils.createRoles());
 
         return repository.save(member);

@@ -3,16 +3,15 @@ package com.codestates.stackoverflow.security.provider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.*;
 
@@ -24,12 +23,11 @@ public class JwtTokenProvider {
     @Value("${jwt.key}")
     private String secretKey;
 
-    private final UserDetailsService userDetailsService;
+    private final Map<String, Long> usedTokenMap = new HashMap<>();
 
-
-    //secretKey 를 Base64로 인코딩
     @PostConstruct
     protected void init() {
+        //secretKey 를 Base64로 인코딩
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
@@ -48,17 +46,6 @@ public class JwtTokenProvider {
                 .signWith(getSecretKeySignedHS256(secretKey))
                 .compact();
     }
-
-//    일단 refreshToken 은 사용 안하는것으로.. 추후에 추가
-//    public String createRefreshToken(String username) {
-//        return Jwts
-//                .builder()
-//                .setSubject(username)
-//                .setIssuedAt(Calendar.getInstance().getTime())
-//                .setExpiration(refreshTokenExpirationTime)
-//                .signWith(getSecretKeySignedHS256(secretKey))
-//                .compact();
-//    }
 
     private Key getSecretKeySignedHS256(String secretKey) {
         byte[] secretKeyBytes = Decoders.BASE64.decode(secretKey);
@@ -83,5 +70,28 @@ public class JwtTokenProvider {
         Key secretKey = Keys.hmacShaKeyFor(decodedKey);
 
         return secretKey;
+    }
+
+    public boolean isTokenInBlackList(String jws) {
+        if (!usedTokenMap.containsKey(jws)) {
+            return false;
+        }
+
+        long expirationTime = usedTokenMap.get(jws);
+
+        if (System.currentTimeMillis() < expirationTime) {
+            usedTokenMap.remove(jws);
+            return false;
+        }
+
+        return true;
+    }
+
+    public void addToUsedToken(String jws) {
+        byte[] decodedKey = Decoders.BASE64.decode(secretKey);
+        SecretKey key = Keys.hmacShaKeyFor(decodedKey);
+        long expirationTime = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jws).getBody().getExpiration().getTime();
+
+        usedTokenMap.put(jws, expirationTime);
     }
 }
