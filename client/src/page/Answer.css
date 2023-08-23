@@ -4,13 +4,11 @@
 
   .Answer-container {
     display: flex;
+    justify-content: center;
     height: 100vh;
     width: 100%;
   }
   
-  .AskQuestionSidebar {
-    padding: 100px;
-  }
   
   
   #questionTitleBtn:hover {

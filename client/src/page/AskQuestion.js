@@ -35,30 +35,39 @@ function AskQuestion() {
 		setIsValid(title.trim().length > 0 && content.trim().length > 0);
 	}, [title, content]);
 
-	const handlePostClick = () => {
-		// 여기서 유효성 검사 또는 다른 필요한 로직을 수행합니다.
-		// 그리고 나서 페이지 이동을 처리합니다.
-		// 대상 경로로 이동하도록 수정
-
-		fetch("https://test.com/questions", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				"ngrok-skip-browser-warning": "69420",
-			},
-			body: JSON.stringify({ title: title, body: content }),
-		}).then((res) => {
-			res.json();
-		});
-		//  FIXME
-
-		navigate("/login", {
-			state: { title, content },
-		});
+	const handlePostClick = async () => {
+		if (isValid) {
+			try {
+				const response = await fetch("https://40ea-61-101-53-142.ngrok-free.app/questions", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						title: title,
+						content: content
+					})
+				});
+	
+				if (response.ok) {
+					// Success: Data posted to the server
+					alert("질문이 성공적으로 등록되었습니다.");
+					navigate("/login"); // 페이지 이동
+				} else {
+					// Handle error cases here
+					alert("질문 등록에 실패하였습니다.");
+				}
+			} catch (error) {
+				console.error("Error posting question:", error);
+			}
+		} else {
+			alert("제목과 내용을 모두 입력하세요.");
+		}
 	};
 
 	return (
 		<div className="AskQuestion-container">
+			<div className="AskQuestionSidebar">{/* Sidebar content */}</div>
 			<div className="AskQuestionContent">
 				<h1 id="AskTitle">Ask a public question</h1>
 				<div className="AskQuestionInstructions">
@@ -113,6 +122,7 @@ function AskQuestion() {
 					Post
 				</button>
 			</div>
+			<div className="sidebar-right"></div>
 		</div>
 	);
 }

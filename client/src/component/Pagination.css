@@ -1,18 +1,29 @@
-.pagination-container {
-  text-align: center;
-}
-
 .data-list {
-  list-style: none;
-  padding: 0;
+	list-style: none;
+	margin: 0;
 }
 
-.data-item {
-  padding: 10px;
-  border: 1px solid #ddd;
-  margin: 5px 0;
+.pagination-button--container {
+	margin: 40px;
 }
 
-.pagination {
-  margin-top: 10px;
+.pagination-button {
+	width: 30px;
+	height: 30px;
+	margin-right: 5px;
+	border: 0.3px solid #c8cacb;
+	font-size: 15px;
+	background-color: white;
+	border-radius: 6px;
+}
+
+.pagination-button:hover {
+	color: white;
+	background-color: #d6d8da;
+}
+
+.pagination-button:focus {
+	color: white;
+	border: none;
+	background-color: rgb(244, 130, 37);
 }

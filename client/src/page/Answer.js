@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import "./Answer.css";
 import { StacksEditor } from "@stackoverflow/stacks-editor";
 import "@stackoverflow/stacks-editor/dist/styles.css";
@@ -11,9 +12,13 @@ function Answer() {
     const stacksEditorRef = useRef(null);
     const [postedAnswer, setPostedAnswer] = useState(null);
     const [postTime, setPostTime] = useState(null); // 추가: 시간 상태 추가
-    const [member_id, setMemberId] = useState(1); // 예시로 1을 초기값으로 설정하였습니다. 실제로는 사용자 ID나 로그인 정보를 가져와야 합니다.
-    const [question_id, setQuestionId] = useState(1); // 현재 질문의 ID를 설정해야 합니다.
-    
+    // const [member_id, setMemberId] = useState(1); // 예시로 1을 초기값으로 설정하였습니다. 실제로는 사용자 ID나 로그인 정보를 가져와야 합니다.
+    // const [question_id, setQuestionId] = useState(1); // 현재 질문의 ID를 설정해야 합니다.
+    const { questionId } = useParams();
+    const memberIdFromStorage = localStorage.getItem("member_id");
+
+  const [member_id, setMemberId] = useState(memberIdFromStorage);
+  const [question_id, setQuestionId] = useState(questionId);
     
 
     useEffect(() => {
@@ -41,15 +46,17 @@ function Answer() {
     setPostTime(currentTime);
     
     const requestData = {
-      member_id: 7,
-      question_id: 7,
+      member_id: member_id,  // 수정된 부분
+      question_id: question_id,  // 수정된 부분
       body: content
     }
 
-    fetch('https://80c2-61-101-53-142.ngrok-free.app/answers', {
+    fetch(`https://40ea-61-101-53--142.ngrok-free.app/questions/${question_id}/answers`, {
         method: 'POST', 
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "ngrok-skip-browser-warning": "69420",
+
         },
         body: JSON.stringify(requestData)
     })
@@ -96,7 +103,6 @@ function Answer() {
 
   return (
     <div className="Answer-container">
-      <div className="AskQuestionSidebar">{/* Sidebar content */}</div>
       <div className="AskQuestionContent">
         <h1 id="AnswerTitle">Your Answer</h1>
          <div ref={editorContainerRef} className="answer-editor" id="editor-container"></div>

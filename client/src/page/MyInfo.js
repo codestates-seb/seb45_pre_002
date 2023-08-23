@@ -4,46 +4,49 @@ import "./Myinfo.css";
 
 function MyInfo({ userName, setUserName }) {
 	const [isEditing, setIsEditing] = useState(false);
+	const [tempUserName, setTempUserName] = useState(userName); // 임시 사용자 이름 상태 추가
 	const inputRef = useRef(null); // Ref를 생성합니다.
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		fetchUsername();
-	}, []);
+	// useEffect(() => {
+	// 	fetchUsername();
+	// }, []);
 
-	const fetchUsername = () => {
-		fetch("https://33d0-61-101-53-142.ngrok-free.app/members/1", {
-			method: "GET", // GET, POST 등 HTTP 메서드 선택
-			headers: {
-				"Content-Type": "application/json",
-				"ngrok-skip-browser-warning": "69420",
-			},
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				setUserName(data.username);
-			})
-			.catch((error) => {
-				console.error("Error fetching username:", error);
-			});
-	};
+	// const fetchUsername = () => {
+	// 	fetch("https://33d0-61-101-53-142.ngrok-free.app/members/1", {
+	// 		method: "GET", // GET, POST 등 HTTP 메서드 선택
+	// 		headers: {
+	// 			"Content-Type": "application/json",
+	// 			"ngrok-skip-browser-warning": "69420",
+	// 		},
+	// 	})
+	// 		.then((response) => response.json())
+	// 		.then((data) => {
+	// 			setUserName(data.username);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error("Error fetching username:", error);
+	// 		});
+	// };
 
 	const handleEditClick = () => {
 		setIsEditing(true);
 	};
 
 	const handleUsernameChange = (event) => {
-		setUserName(event.target.value);
+		setTempUserName(event.target.value); // 임시 사용자 이름을 변경
 	};
 
 	const handleSaveClick = () => {
-		fetch("https://33d0-61-101-53-142.ngrok-free.app/members/1", {
+		setUserName(tempUserName); // 임시 사용자 이름을 실제 사용자 이름으로 변경
+		setIsEditing(false);
+		fetch("https://40ea-61-101-53-142.ngrok-free.app/members/1", {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
 				"ngrok-skip-browser-warning": "69420",
 			},
-			body: JSON.stringify({ userame: userName }),
+			body: JSON.stringify({ username: userName }),
 		})
 			.then((response) => response.json())
 			.then((data) => {
@@ -85,7 +88,7 @@ function MyInfo({ userName, setUserName }) {
 								className="username-change"
 								ref={inputRef}
 								type="text"
-								value={userName}
+								value={tempUserName}
 								onChange={handleUsernameChange}
 								onKeyDown={handleEnterKey}
 							/>

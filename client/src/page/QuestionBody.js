@@ -3,37 +3,37 @@ import VoteComponent from "../component/VoteComponent";
 import AnswerList from "./AnswerList";
 
 function QuestionBody({ testobj, question_id }) {
-	/* const answerFetch = () => {
-		fetch(`https://test.com/questions/${question_id}/answers`, {
-			method: "GET", // GET, POST 등 HTTP 메서드 선택
-			headers: {
-				"Content-Type": "application/json",
-				"ngrok-skip-browser-warning": "69420",
-			},
-		}).then((response) => response.json());
-	}; */
-	return (
-		<div className="question-body">
-			{testobj.map((item) => {
-				return (
-					<div key={item.question_id}>
-						<VoteComponent vote={item.votes} />
-						<div className="question-body--right">
-							<p>{item.body}</p>
-							{item.answers ? (
-								<div>
-									<span>{item.answers.length} Answers</span>
-								</div>
-							) : (
-								""
-							)}
-							<AnswerList />
-						</div>
-					</div>
-				);
-			})}
-		</div>
-	);
+  const answerFetch = () => {
+    fetch(`https://0251-61-101-53-142.ngrok-free.app/questions/${question_id}/answers`, {
+      method: "GET", // GET, POST 등 HTTP 메서드 선택
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "69420",
+      },
+    }).then((response) => response.json());
+  };
+  return (
+    <div className="question-body">
+      {testobj.map((item) => {
+        return (
+          <div key={item.question_id}>
+            <VoteComponent vote={item.votes} />
+            <div className="question-body--right">
+              <p>{item.body}</p>
+              {item.answers ? (
+                <div>
+                  <span>{item.answers.length} Answers</span>
+                </div>
+              ) : (
+                ""
+              )}
+              <AnswerList />
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 export default QuestionBody;
 /* {

@@ -5,21 +5,6 @@ import { useNavigate } from "react-router-dom";
 // test recovery code
 const testCode = "111111"; // 메일로 보낸 인증번호
 
-function VerificationNumber(codeNum) {
-	fetch("https://test.com/email/auth-code", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			"ngrok-skip-browser-warning": "69420",
-		},
-		body: JSON.stringify({ code: codeNum }),
-	}).then((res) => {
-		if (res.status === "200") {
-			// 다음페이지로 이동
-		}
-	});
-}
-
 function VerificationComponent() {
 	const [verificationCode, setVerificationCode] = useState(Array(6).fill(""));
 	const [isValid, setIsValid] = useState(false);
@@ -40,6 +25,21 @@ function VerificationComponent() {
 
 	const formattedTime = new Date(time * 1000).toISOString().substring(14, 19);
 
+	function VerificationNumber(codeNum) {
+		fetch("https://40ea-61-101-53-142.ngrok-free.app/email/auth-code", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"ngrok-skip-browser-warning": "69420",
+			},
+			body: JSON.stringify({ code: codeNum }),
+		}).then((res) => {
+			if (res.status === "200") {
+				navigate("/changepw");
+			}
+		});
+	}
+
 	// 입력값이 모두 숫자인지 판별하는 함수
 	const handleVerificationChange = (index, value) => {
 		const newCode = [...verificationCode];
@@ -59,7 +59,7 @@ function VerificationComponent() {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const code = verificationCode.join("");
-		if (isValid && testCode === code) {
+		if (isValid) {
 			// 여기에서 검증 로직을 수행하거나 서버에 인증번호를 보내 검증합니다.
 			VerificationNumber(code);
 			setWarning(false);

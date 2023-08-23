@@ -4,6 +4,7 @@
 }
 
 .answerList-container {
+    margin-top: 40px;
     display: flex;
     /* border: 1px solid gray; */
 }
@@ -24,10 +25,15 @@
 }
 
 .answer-content {
-    padding: 10px;
-    width: 400px;
-    height: 200px;
-    line-height: 22px;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    min-width: 930px;
+    padding-left: 30px;
+    line-height: 24.5px;
+    font-size: 16px;
 }
 
 .answer-arrow {
@@ -78,13 +84,122 @@
 
 .answer-share-button{
     width: 70px;
-    height: 20px;
+    height: 30px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-left: 30px;
+
+ }
+
+ .answer-button{
+    width: 70px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left:10px;
 
  }
 
  .answer-profile-username {
     padding-bottom: 3px;
  }
+
+ .share-popup {
+    padding-top: 28px;
+    padding-bottom: 18px;
+    position: relative;
+    font-weight: 600;
+    font-size: 14px;
+    width: 300px;
+    height: 130px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    line-height: 40px;
+}
+ 
+
+.share-popup-overlay {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(25, 25, 25, 0.183); /* 반투명한 검은색 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; 
+}
+
+.share-button-close {
+    padding: 3px;
+    width: 80px;
+    height: 35px;
+border: none;
+border-radius: 7px;
+
+}
+
+.share-link {
+    padding-bottom: 15px;
+}
+
+.comment-container {
+    line-height: 25px;
+    margin-left: 35px;
+}
+
+.comment-username {
+    color: #3f96f7;
+    font-weight: 600;
+    margin-left: 7px;
+    margin-right: 7px;
+}
+
+.add-comment-input {
+    border: none;
+    padding-left: 30px;
+    border-radius:5px;
+    font-weight: 600;
+    width: 100%;
+    height: 30px;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    margin-right: 10px;
+}
+
+.comment-button {
+    border: none;
+    height: 30px;
+    width: 70px;
+    border-radius: 5px;
+    margin-top: 12px;
+}
+
+.add-comment {
+    display: flex;
+}
+
+.comment-divider {
+    width: 100%;
+    height: 1px;
+    background-color: #E4E5E7;
+    margin: 0.5rem 0;
+}
+
+.edit-mode {
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px;
+    border: rgba(171, 171, 171, 0.5) solid 1px;
+}

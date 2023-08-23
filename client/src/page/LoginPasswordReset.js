@@ -1,24 +1,52 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import "./LoginPasswordReset.css";
 import { useNavigate } from "react-router-dom";
-
-// 로그인이 된 상태에서 비밀번호 변경
-// 서버로 변경된 비밀번호 업데이트하는 fetch 함수 추가
 
 function LoginPasswordReset() {
 	const [newPassword, setNewPassword] = useState("");
 	const [confirmNewPassword, setConfirmNewPassword] = useState("");
+	const [memberId, setMemberId] = useState(""); // 사용자 ID를 저장하는 state
 	const navigate = useNavigate();
 
-	fetch("https://test.com/members/{member-id}/change-password", {
-		method: "PATCH",
-		headers: {},
-	});
+	// 사용자 ID를 얻어오는 함수
+	const fetchMemberId = async () => {
+		try {
+			const response = await fetch("https://40ea-61-101-53-142.ngrok-free.app/get-member-id-endpoint");
+			const data = await response.json();
+			setMemberId(data.memberId);
+		} catch (error) {
+			console.error("Error fetching member ID:", error);
+		}
+	};
 
-	const handleOkClick = () => {
+	useEffect(() => {
+		fetchMemberId(); // 컴포넌트가 마운트되었을 때 사용자 ID를 가져옴
+	}, []);
+
+	const handleOkClick = async () => {
 		if (newPassword && newPassword === confirmNewPassword) {
-			alert("비밀번호가 변경되었습니다");
+			try {
+				const endpoint = `https://40ea-61-101-53-142.ngrok-free.app/members/${memberId}/change-password`;
+				const response = await fetch(endpoint, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						newPassword: newPassword
+					})
+				});
+	
+				if (response.ok) {
+					// Success: Password updated on the server
+					alert("비밀번호가 변경되었습니다");
+				} else {
+					// Handle error cases here
+					alert("비밀번호 변경에 실패하였습니다.");
+				}
+			} catch (error) {
+				console.error("Error updating password:", error);
+			}
 		} else if (!newPassword || !confirmNewPassword) {
 			alert("새 비밀번호를 입력해주세요.");
 		} else {
@@ -68,4 +96,4 @@ function LoginPasswordReset() {
 	);
 }
 
-export default LoginPasswordReset;
+export default LoginPasswordReset

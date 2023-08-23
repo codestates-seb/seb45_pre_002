@@ -3,53 +3,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SignupForm.css";
 
-function validate(data) {
-	let errors = {};
-
-	checkUsernameExists(data.username).then((isExists) => {
-		if (isExists) {
-			alert("이미 사용중인 유저네임입니다. 다른 유저네임을 선택해주세요.");
-			return;
-		}
-	});
-
-	if (!data.username) errors.username = alert("닉네임을 입력해주세요");
-	else if (!data.email) errors.email = alert("이메일주소를 입력해주세요");
-	else if (!data.password) errors.password = alert("비밀번호를 입력해주세요");
-	// 다른 유효성 검사 조건도 추가 가능
-
-	return errors;
-}
-
-function checkUsernameExists(username) {
-	return fetch("/api/check-username?username=" + username)
-		.then((response) => response.json())
-		.then((data) => data.exists); // 예상 응답 포맷: { exists: true/false }
-}
-
-function submitToServer(data) {
-	fetch("https://67b0-61-101-53-142.ngrok-free.app/members/signup", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(data),
-	})
-		.then((res) => {
-			if (res.status === 200) {
-				console.log(res.json());
-				alert("회원가입 성공!");
-
-				window.location.href = "/question";
-			} else {
-				alert("오류 발생: " + res.statusText);
-			}
-		})
-		.catch((error) => {
-			console.error("Error:", error);
-		});
-}
-
 function SignupForm() {
 	const initialFormData = {
 		username: "",
@@ -60,6 +13,54 @@ function SignupForm() {
 	const [formData, setFormData] = useState(initialFormData);
 	const [errors, setErrors] = useState({});
 	const navigate = useNavigate();
+
+	function validate(data) {
+		let errors = {};
+
+		checkUsernameExists(data.username).then((isExists) => {
+			if (isExists) {
+				alert("이미 사용중인 유저네임입니다. 다른 유저네임을 선택해주세요.");
+				return;
+			}
+		});
+
+		if (!data.username) errors.username = alert("닉네임을 입력해주세요");
+		else if (!data.email) errors.email = alert("이메일주소를 입력해주세요");
+		else if (!data.password) errors.password = alert("비밀번호를 입력해주세요");
+		// 다른 유효성 검사 조건도 추가 가능
+
+		return errors;
+	}
+
+	function checkUsernameExists(username) {
+		return fetch("/api/check-username?username=" + username)
+			.then((response) => response.json())
+			.then((data) => data.exists); // 예상 응답 포맷: { exists: true/false }
+	}
+
+	function submitToServer(data) {
+		fetch("https://40ea-61-101-53-142.ngrok-free.app/members/signup", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"ngrok-skip-browser-warning": "69420",
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => {
+				if (res.status === 200) {
+					console.log(res.json());
+					alert("회원가입 성공!");
+
+					navigate("/login");
+				} else {
+					alert("오류 발생: " + res.statusText);
+				}
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+			});
+	}
 
 	const handleChange = (e) => {
 		setFormData({
@@ -75,8 +76,9 @@ function SignupForm() {
 		if (Object.keys(validationErrors).length === 0) {
 			// 서버에 요청하는 함수 호출
 			submitToServer(formData);
+
 			// 메일 인증 페이지
-			navigate("/verify");
+			// navigate("/verify");
 		} else {
 			setErrors(validationErrors);
 		}
