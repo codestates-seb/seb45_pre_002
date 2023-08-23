@@ -3,8 +3,8 @@ package com.codestates.stackoverflow.member.controller;
 import com.codestates.stackoverflow.member.dto.MemberDto;
 import com.codestates.stackoverflow.member.mapper.MemberMapper;
 import com.codestates.stackoverflow.member.service.MemberService;
+import com.codestates.stackoverflow.question.service.QuestionsService;
 import com.codestates.stackoverflow.security.provider.JwtTokenProvider;
-import com.codestates.stackoverflow.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import com.codestates.stackoverflow.member.entity.Member;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.net.URI;
-import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
@@ -82,10 +79,5 @@ public class MemberController{
         Member member = service.findMember(memberId);
 
         return new ResponseEntity<>(mapper.memberToResponse(member), HttpStatus.OK);
-    }
-
-    @PostMapping("/jwtTest") // jwt 테스트용 추후 삭제
-    public ResponseEntity jwtTest() {
-        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }

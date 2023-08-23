@@ -1,16 +1,10 @@
 package com.codestates.stackoverflow.question.mapper;
 
-import com.codestates.stackoverflow.answer.dto.AnswerDto;
-import com.codestates.stackoverflow.answer.entity.Answer;
-import com.codestates.stackoverflow.answercomment.dto.AnswerCommentDto;
-import com.codestates.stackoverflow.answercomment.entity.AnswerComment;
-import com.codestates.stackoverflow.member.entity.Member;
 import com.codestates.stackoverflow.question.dto.QuestionResponseDto;
 import com.codestates.stackoverflow.question.dto.QuestionsPageDto;
 import com.codestates.stackoverflow.question.dto.QuestionsPatchDto;
 import com.codestates.stackoverflow.question.dto.QuestionsPostDto;
 import com.codestates.stackoverflow.question.entity.Questions;
-import com.codestates.stackoverflow.audit.Auditable;
 import com.codestates.stackoverflow.utils.PageInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -102,7 +96,7 @@ public class QuestionsMapper {
 
             pageResponseDto.setQuestions(pageResponseDtos);
             pageResponseDto.setPageInfo(PageInfo.builder()
-                    .pageNumber(questions.getNumber())
+                    .pageNumber(questions.getNumber() + 1)
                     .pageSize(questions.getSize())
                     .totalElements(questions.getTotalElements())
                     .totalPages(questions.getTotalPages())

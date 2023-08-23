@@ -15,8 +15,6 @@ public class AnswerDto {
 
     @Getter
     @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class PostDto {
 
         private long member_id;
@@ -30,8 +28,6 @@ public class AnswerDto {
 
     @Getter
     @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class PatchDto {
 
         private long member_id;
@@ -57,8 +53,6 @@ public class AnswerDto {
 
     @Getter
     @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class ResponseDto {
 
         private long answer_id;
@@ -79,8 +73,6 @@ public class AnswerDto {
 
     @Setter
     @Getter
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class ListResponseDto {
 
         private List<ResponseDto> answers;

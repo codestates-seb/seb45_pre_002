@@ -1,18 +1,11 @@
 package com.codestates.stackoverflow.question.service;
 
 
-import com.codestates.stackoverflow.answercomment.entity.AnswerComment;
 import com.codestates.stackoverflow.exception.BusinessLogicException;
 import com.codestates.stackoverflow.exception.ExceptionCode;
-import com.codestates.stackoverflow.member.entity.Member;
 import com.codestates.stackoverflow.member.service.MemberService;
-import com.codestates.stackoverflow.question.dto.QuestionsPageDto;
 import com.codestates.stackoverflow.question.entity.Questions;
-import com.codestates.stackoverflow.question.mapper.QuestionsMapper;
 import com.codestates.stackoverflow.question.repository.QuestionsRepository;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Transactional
@@ -129,6 +121,4 @@ public class QuestionsService {
 
         return questionsRepository.save(questions);
     }
-
-
 }

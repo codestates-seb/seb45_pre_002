@@ -73,7 +73,7 @@ public class SecurityConfig {
 
                         .antMatchers(HttpMethod.GET, "/**").permitAll() // 테스트용
                         .antMatchers(HttpMethod.PATCH, "/**").permitAll() // 테스트용
-                        .antMatchers(HttpMethod.POST, "/members/jwtTest").hasRole("USER") //테스트용
+                        .antMatchers(HttpMethod.POST, "/**").permitAll() // 테스트용
 
                         .antMatchers(HttpMethod.POST, "/members/login", "/members/signup").permitAll()
                         .anyRequest().permitAll());

@@ -72,8 +72,8 @@ public class MemberDto {
         private String username;
 
         @Column(name = "password", nullable = false)
-        @Pattern(regexp = "^(?!\\s*$)((?=.*[a-zA-Z])|(?=.*\\d)|(?=.*\\W))$", message = "하나 이상의 영문, 특수문자, 숫자가 조합되어야 합니다.")
         @Size(min = 8, max = 16, message = "비밀번호는 8자리 이상 16자리 이하여야 합니다.")
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).+$", message = "하나 이상의 영문, 숫자, 특수문자가 조합되어야 합니다.")
         private String password;
     }
 
